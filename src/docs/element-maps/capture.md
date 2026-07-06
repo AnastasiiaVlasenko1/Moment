@@ -15,6 +15,7 @@ capture
 │   ├── capture-bar                        — Floating "Log a moment" bar
 │   │   └── capture-bar-add                — Opens the compose dialog directly
 │   └── capture-composer                   — Moment compose dialog
+│       ├── capture-composer-category-picker       — Five colored category chips (first block)
 │       ├── capture-composer-mood-presets  — Quick mood chips (mood category)
 │       ├── capture-composer-text          — Note textarea ("What happened?")
 │       ├── capture-composer-attach-screenshot     — Reveal button for the screenshot field
@@ -22,7 +23,6 @@ capture
 │       ├── capture-composer-screenshot-preview    — Selected image preview
 │       ├── capture-composer-add-link      — Reveal button for the link field
 │       ├── capture-composer-url           — URL input (revealed, optional)
-│       ├── capture-composer-category-picker       — Five colored category chips
 │       ├── capture-composer-project-trigger       — Project selector (popover)
 │       ├── capture-composer-date          — Date input (defaults today, editable)
 │       └── capture-composer-save          — Save button

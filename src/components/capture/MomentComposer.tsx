@@ -103,6 +103,14 @@ export function MomentComposer({
           <DialogTitle>{isEdit ? "Edit moment" : "Log a moment"}</DialogTitle>
         </DialogHeader>
 
+        <div className="grid gap-1.5">
+          <Label>Category</Label>
+          <CategoryPicker
+            value={values.category}
+            onChange={(c) => set("category", c)}
+          />
+        </div>
+
         {isMood && (
           <div className="flex flex-wrap gap-1.5" data-el="capture-composer-mood-presets">
             {MOOD_PRESETS.map((mood) => (
@@ -195,33 +203,24 @@ export function MomentComposer({
           )}
         </div>
 
-        <div className="grid gap-3">
+        <div className="grid grid-cols-2 gap-3">
           <div className="grid gap-1.5">
-            <Label>Category</Label>
-            <CategoryPicker
-              value={values.category}
-              onChange={(c) => set("category", c)}
+            <Label>Project</Label>
+            <ProjectPicker
+              value={values.projectId}
+              onChange={(p) => set("projectId", p)}
+              allowNone={isMood}
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="grid gap-1.5">
-              <Label>Project</Label>
-              <ProjectPicker
-                value={values.projectId}
-                onChange={(p) => set("projectId", p)}
-                allowNone={isMood}
-              />
-            </div>
-            <div className="grid gap-1.5">
-              <Label htmlFor="moment-date">Date</Label>
-              <Input
-                id="moment-date"
-                data-el="capture-composer-date"
-                type="date"
-                value={values.date}
-                onChange={(e) => set("date", e.target.value)}
-              />
-            </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="moment-date">Date</Label>
+            <Input
+              id="moment-date"
+              data-el="capture-composer-date"
+              type="date"
+              value={values.date}
+              onChange={(e) => set("date", e.target.value)}
+            />
           </div>
         </div>
 
