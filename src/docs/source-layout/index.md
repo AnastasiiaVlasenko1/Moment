@@ -20,10 +20,12 @@ src/
 │   │   ├── DayColumn.tsx          # One day column with its moment cards
 │   │   ├── MomentCard.tsx         # A single logged moment (text/screenshot/link)
 │   │   ├── CaptureBar.tsx         # Floating "+" content-type block picker
-│   │   ├── MomentComposer.tsx     # Compose dialog: fields + save
+│   │   ├── MomentComposer.tsx     # Compose panel (right fly-out sheet): fields + save
 │   │   ├── ScreenshotInput.tsx    # Paste/upload image zone with preview
 │   │   ├── CategoryPicker.tsx     # Five colored category chips
-│   │   ├── ProjectPicker.tsx      # Searchable project selector + create
+│   │   ├── ProjectPicker.tsx      # Searchable project selector + create + "Manage projects"
+│   │   ├── ProjectManager.tsx     # Project CRUD dialog (add / list) 
+│   │   ├── ProjectManagerRow.tsx  # One editable project row (recolor / rename / delete)
 │   │   ├── useWeekNavigation.ts   # Week anchor state + prev/next/today/weekends
 │   │   ├── useMomentComposer.ts   # Compose form state (seeded once per session)
 │   │   └── useMomentImage.ts      # Loads a screenshot object URL from IndexedDB

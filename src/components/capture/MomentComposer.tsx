@@ -3,11 +3,13 @@ import { toast } from "sonner"
 import { Image, Link as LinkIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -91,18 +93,23 @@ export function MomentComposer({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="right"
         data-el="capture-composer"
-        className="sm:max-w-lg"
+        className="w-full gap-0 p-0 sm:max-w-lg"
         onKeyDown={(e) => {
           if ((e.metaKey || e.ctrlKey) && e.key === "Enter") handleSubmit()
         }}
       >
-        <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit moment" : "Log a moment"}</DialogTitle>
-        </DialogHeader>
+        <SheetHeader className="border-b">
+          <SheetTitle>{isEdit ? "Edit moment" : "Log a moment"}</SheetTitle>
+          <SheetDescription>
+            Capture a note, screenshot, or link — pick a category to file it.
+          </SheetDescription>
+        </SheetHeader>
 
+        <div className="flex-1 space-y-4 overflow-y-auto p-4">
         <div className="grid gap-1.5">
           <Label>Category</Label>
           <CategoryPicker
@@ -131,13 +138,17 @@ export function MomentComposer({
           </div>
         )}
 
-        <Textarea
-          data-el="capture-composer-text"
-          placeholder={isMood ? "How did the day feel?" : "What happened?"}
-          value={values.text}
-          onChange={(e) => set("text", e.target.value)}
-          rows={3}
-        />
+        <div className="grid gap-1.5">
+          <Label htmlFor="moment-note">Note</Label>
+          <Textarea
+            id="moment-note"
+            data-el="capture-composer-text"
+            placeholder={isMood ? "How did the day feel?" : "What happened?"}
+            value={values.text}
+            onChange={(e) => set("text", e.target.value)}
+            rows={3}
+          />
+        </div>
 
         {/* Optional attachments — revealed on demand */}
         {showScreenshot && (
@@ -159,22 +170,26 @@ export function MomentComposer({
           </div>
         )}
         {showLink && (
-          <div className="flex items-center gap-2">
-            <Input
-              data-el="capture-composer-url"
-              placeholder="https://…"
-              value={values.url}
-              onChange={(e) => set("url", e.target.value)}
-              autoFocus
-            />
-            <button
-              type="button"
-              onClick={removeLink}
-              aria-label="Remove link field"
-              className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
-            >
-              <X className="size-4" />
-            </button>
+          <div className="grid gap-1.5">
+            <Label htmlFor="moment-url">Link</Label>
+            <div className="flex items-center gap-2">
+              <Input
+                id="moment-url"
+                data-el="capture-composer-url"
+                placeholder="https://…"
+                value={values.url}
+                onChange={(e) => set("url", e.target.value)}
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={removeLink}
+                aria-label="Remove link field"
+                className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
           </div>
         )}
 
@@ -223,8 +238,9 @@ export function MomentComposer({
             />
           </div>
         </div>
+        </div>
 
-        <div className="flex justify-end gap-2">
+        <SheetFooter className="flex-row justify-end gap-2 border-t">
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
@@ -235,8 +251,8 @@ export function MomentComposer({
           >
             {isEdit ? "Save changes" : "Save moment"}
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   )
 }

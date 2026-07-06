@@ -26,7 +26,7 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
             className={cn(
               "inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-sm transition-colors",
               active
-                ? cn("border-transparent font-medium", meta.chipClass)
+                ? cn("border-current font-medium", meta.chipClass)
                 : "border-border text-muted-foreground hover:bg-accent",
             )}
           >

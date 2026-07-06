@@ -42,9 +42,20 @@ const momentsSlice = createSlice({
     deleteMoment(state, action: PayloadAction<string>) {
       state.items = state.items.filter((m) => m.id !== action.payload)
     },
+    /** Clear the project reference from every moment filed under it (on project delete). */
+    unassignProject(state, action: PayloadAction<string>) {
+      for (const moment of state.items) {
+        if (moment.projectId === action.payload) moment.projectId = undefined
+      }
+    },
   },
 })
 
-export const { addMoment, updateMoment, moveMomentToDate, deleteMoment } =
-  momentsSlice.actions
+export const {
+  addMoment,
+  updateMoment,
+  moveMomentToDate,
+  deleteMoment,
+  unassignProject,
+} = momentsSlice.actions
 export default momentsSlice.reducer

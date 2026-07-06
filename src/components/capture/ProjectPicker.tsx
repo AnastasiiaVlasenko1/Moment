@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronsUpDown, Plus } from "lucide-react"
+import { Check, ChevronsUpDown, Plus, Settings2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -8,6 +8,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command"
 import {
   Popover,
@@ -17,6 +18,7 @@ import {
 import { cn } from "@/lib/utils"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { addProject } from "@/store/projectsSlice"
+import { ProjectManager } from "./ProjectManager"
 
 interface ProjectPickerProps {
   value: string | undefined
@@ -32,6 +34,7 @@ export function ProjectPicker({
   allowNone,
 }: ProjectPickerProps) {
   const [open, setOpen] = useState(false)
+  const [manageOpen, setManageOpen] = useState(false)
   const [query, setQuery] = useState("")
   const dispatch = useAppDispatch()
   const projects = useAppSelector((s) => s.projects.items)
@@ -47,6 +50,7 @@ export function ProjectPicker({
   }
 
   return (
+    <>
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
@@ -134,9 +138,24 @@ export function ProjectPicker({
                 </CommandItem>
               ))}
             </CommandGroup>
+            <CommandSeparator />
+            <CommandGroup>
+              <CommandItem
+                value="__manage__"
+                onSelect={() => {
+                  setOpen(false)
+                  setManageOpen(true)
+                }}
+              >
+                <Settings2 className="size-4" />
+                Manage projects
+              </CommandItem>
+            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
     </Popover>
+    <ProjectManager open={manageOpen} onOpenChange={setManageOpen} />
+    </>
   )
 }
