@@ -6,14 +6,18 @@ import type { Category, Project } from "@/types/review"
 export function CategoryChip({
   category,
   className,
+  ...props
 }: {
   category: Category
   className?: string
-}) {
+} & React.ComponentProps<typeof Badge>) {
   const meta = CATEGORY_CONFIG[category]
   const Icon = meta.icon
   return (
-    <Badge className={cn("gap-1 border-transparent", meta.chipClass, className)}>
+    <Badge
+      className={cn("gap-1 border-transparent", meta.chipClass, className)}
+      {...props}
+    >
       <Icon data-icon="inline-start" />
       {meta.label}
     </Badge>

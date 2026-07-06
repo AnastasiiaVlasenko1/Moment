@@ -1,11 +1,9 @@
 import { useState } from "react"
 import { ExternalLink, Pencil, Trash2 } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { deleteMoment } from "@/store/momentsSlice"
-import { CATEGORY_CONFIG } from "@/data/categories"
 import type { Moment } from "@/types/review"
-import { CategoryChip, ProjectChip } from "@/components/shared/MomentTags"
+import { CategoryChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
 import { MomentComposer } from "./MomentComposer"
 
@@ -16,14 +14,12 @@ export function MomentCard({ moment }: { moment: Moment }) {
     s.projects.items.find((p) => p.id === moment.projectId),
   )
   const imageUrl = useMomentImage(moment.imageId)
-  const accent = CATEGORY_CONFIG[moment.category].chartToken
   const [editing, setEditing] = useState(false)
 
   return (
     <div
       data-el="capture-moment-card"
       className="group relative rounded-md border bg-card p-2.5 text-sm shadow-xs"
-      style={{ borderLeft: `3px solid ${accent}` }}
     >
       <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
         <button
@@ -46,16 +42,28 @@ export function MomentCard({ moment }: { moment: Moment }) {
         </button>
       </div>
 
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt={moment.text || "Screenshot"}
-          className="mb-2 max-h-32 w-full rounded object-cover"
-        />
+      <CategoryChip
+        category={moment.category}
+        className="text-[11px]"
+        data-el="capture-moment-card-category"
+      />
+
+      {project && (
+        <p
+          data-el="capture-moment-card-project"
+          className="mt-1.5 font-semibold break-words"
+        >
+          {project.name}
+        </p>
       )}
 
       {moment.text && (
-        <p className="pr-10 break-words">{moment.text}</p>
+        <p
+          data-el="capture-moment-card-note"
+          className="mt-1.5 pr-10 break-words"
+        >
+          {moment.text}
+        </p>
       )}
 
       {moment.url && (
@@ -63,20 +71,22 @@ export function MomentCard({ moment }: { moment: Moment }) {
           href={moment.url}
           target="_blank"
           rel="noreferrer"
-          className={cn(
-            "flex items-start gap-1 pr-10 text-primary hover:underline",
-            moment.text && "mt-1",
-          )}
+          data-el="capture-moment-card-link"
+          className="mt-1.5 flex items-start gap-1 pr-10 text-primary hover:underline"
         >
           <ExternalLink className="mt-0.5 size-3.5 shrink-0" />
           <span className="break-all">{moment.url}</span>
         </a>
       )}
 
-      <div className="mt-2 flex flex-wrap gap-1">
-        <CategoryChip category={moment.category} className="text-[11px]" />
-        <ProjectChip project={project} className="text-[11px]" />
-      </div>
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={moment.text || "Screenshot"}
+          data-el="capture-moment-card-attachment"
+          className="mt-1.5 max-h-20 rounded border object-cover"
+        />
+      )}
 
       {editing && (
         <MomentComposer
