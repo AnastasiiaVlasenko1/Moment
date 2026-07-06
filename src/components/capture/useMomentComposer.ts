@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { Category } from "@/types/review"
+import type { Category, Moment } from "@/types/review"
 
 export interface ComposerValues {
   text: string
@@ -7,12 +7,16 @@ export interface ComposerValues {
   category: Category
   projectId: string | undefined
   date: string
-  /** Selected screenshot file, if one is attached. */
+  /** Newly selected screenshot file, if one is attached this session. */
   file: File | null
+  /** IndexedDB id of an already-saved screenshot (edit mode); cleared on removal. */
+  existingImageId: string | undefined
 }
 
 interface ComposerInit {
   date: string
+  /** When present, the form is seeded for editing this moment. */
+  moment?: Moment
 }
 
 const emptyValues = (date: string): ComposerValues => ({
@@ -22,16 +26,31 @@ const emptyValues = (date: string): ComposerValues => ({
   projectId: undefined,
   date,
   file: null,
+  existingImageId: undefined,
 })
 
+const seedValues = ({ date, moment }: ComposerInit): ComposerValues =>
+  moment
+    ? {
+        text: moment.text,
+        url: moment.url ?? "",
+        category: moment.category,
+        projectId: moment.projectId,
+        date: moment.date,
+        file: null,
+        existingImageId: moment.imageId,
+      }
+    : emptyValues(date)
+
 /**
- * Form state for composing a single moment: a note with optional screenshot and
- * link attachments that can coexist. Seeded once from the given date — the
- * parent remounts the composer (via `key`) to start a fresh session, so no reset
- * effect is needed. Submission/persistence is handled by the component.
+ * Form state for composing or editing a single moment: a note with optional
+ * screenshot and link attachments that can coexist. Seeded once — from the given
+ * date for a new moment, or from an existing moment in edit mode. The parent
+ * remounts the composer (via `key`) to start a fresh session, so no reset effect
+ * is needed. Submission/persistence is handled by the component.
  */
-export function useMomentComposer({ date }: ComposerInit) {
-  const [values, setValues] = useState<ComposerValues>(() => emptyValues(date))
+export function useMomentComposer(init: ComposerInit) {
+  const [values, setValues] = useState<ComposerValues>(() => seedValues(init))
 
   const set = <K extends keyof ComposerValues>(
     key: K,
@@ -41,6 +60,7 @@ export function useMomentComposer({ date }: ComposerInit) {
   const canSubmit =
     values.text.trim().length > 0 ||
     values.file !== null ||
+    values.existingImageId !== undefined ||
     values.url.trim().length > 0
 
   return { values, set, canSubmit }

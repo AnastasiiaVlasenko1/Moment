@@ -25,3 +25,6 @@ dist-ssr
 
 # CLAUDE
 CLAUDE.md
+
+# MCP (local, per-developer)
+.mcp.json

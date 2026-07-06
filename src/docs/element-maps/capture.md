@@ -10,6 +10,8 @@ capture
 │   ├── capture-week-grid                  — Grid of day columns
 │   │   └── capture-day-column             — One day (repeated); header + moment list
 │   │       └── capture-moment-card        — A single logged moment (repeated)
+│   │           ├── capture-moment-card-edit    — Opens the composer to edit this moment
+│   │           └── capture-moment-card-delete  — Deletes this moment
 │   ├── capture-bar                        — Floating "Log a moment" bar
 │   │   └── capture-bar-add                — Opens the compose dialog directly
 │   └── capture-composer                   — Moment compose dialog

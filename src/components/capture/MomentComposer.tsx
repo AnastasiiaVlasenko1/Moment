@@ -13,10 +13,12 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/store/hooks"
-import { addMoment } from "@/store/momentsSlice"
-import { putImage } from "@/lib/image-store"
+import { addMoment, updateMoment } from "@/store/momentsSlice"
+import { deleteImage, putImage } from "@/lib/image-store"
 import { MOOD_PRESETS } from "@/data/categories"
+import type { Moment } from "@/types/review"
 import { useMomentComposer } from "./useMomentComposer"
+import { useMomentImage } from "./useMomentImage"
 import { CategoryPicker } from "./CategoryPicker"
 import { ProjectPicker } from "./ProjectPicker"
 import { ScreenshotInput } from "./ScreenshotInput"
@@ -25,21 +27,32 @@ interface MomentComposerProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   initialDate: string
+  /** When provided, the dialog edits this moment instead of creating a new one. */
+  moment?: Moment
 }
 
 export function MomentComposer({
   open,
   onOpenChange,
   initialDate,
+  moment,
 }: MomentComposerProps) {
   const dispatch = useAppDispatch()
-  const { values, set, canSubmit } = useMomentComposer({ date: initialDate })
-  const [showScreenshot, setShowScreenshot] = useState(false)
-  const [showLink, setShowLink] = useState(false)
+  const isEdit = moment !== undefined
+  const { values, set, canSubmit } = useMomentComposer({
+    date: initialDate,
+    moment,
+  })
+  const existingImageUrl = useMomentImage(values.existingImageId)
+  const [showScreenshot, setShowScreenshot] = useState(
+    () => values.existingImageId !== undefined,
+  )
+  const [showLink, setShowLink] = useState(() => values.url.trim().length > 0)
   const isMood = values.category === "mood"
 
   const removeScreenshot = () => {
     set("file", null)
+    set("existingImageId", undefined)
     setShowScreenshot(false)
   }
   const removeLink = () => {
@@ -49,20 +62,31 @@ export function MomentComposer({
 
   const handleSubmit = async () => {
     if (!canSubmit) return
-    let imageId: string | undefined
-    if (values.file) imageId = await putImage(values.file)
     const url = values.url.trim()
-    dispatch(
-      addMoment({
-        text: values.text.trim(),
-        url: url.length > 0 ? url : undefined,
-        imageId,
-        projectId: values.projectId,
-        category: values.category,
-        date: values.date,
-      }),
-    )
-    toast.success("Moment logged")
+    // A new file wins; otherwise keep whatever existing image survived edits.
+    let imageId = values.existingImageId
+    if (values.file) imageId = await putImage(values.file)
+    // Release the previous blob if it was replaced or removed.
+    if (isEdit && moment.imageId && moment.imageId !== imageId) {
+      deleteImage(moment.imageId)
+    }
+
+    const fields = {
+      text: values.text.trim(),
+      url: url.length > 0 ? url : undefined,
+      imageId,
+      projectId: values.projectId,
+      category: values.category,
+      date: values.date,
+    }
+
+    if (isEdit) {
+      dispatch(updateMoment({ id: moment.id, changes: fields }))
+      toast.success("Moment updated")
+    } else {
+      dispatch(addMoment(fields))
+      toast.success("Moment logged")
+    }
     onOpenChange(false)
   }
 
@@ -76,7 +100,7 @@ export function MomentComposer({
         }}
       >
         <DialogHeader>
-          <DialogTitle>Log a moment</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit moment" : "Log a moment"}</DialogTitle>
         </DialogHeader>
 
         {isMood && (
@@ -110,7 +134,12 @@ export function MomentComposer({
         {/* Optional attachments — revealed on demand */}
         {showScreenshot && (
           <div className="relative">
-            <ScreenshotInput file={values.file} onChange={(f) => set("file", f)} />
+            <ScreenshotInput
+              file={values.file}
+              onChange={(f) => set("file", f)}
+              existingUrl={existingImageUrl}
+              onRemoveExisting={() => set("existingImageId", undefined)}
+            />
             <button
               type="button"
               onClick={removeScreenshot}
@@ -205,7 +234,7 @@ export function MomentComposer({
             onClick={handleSubmit}
             disabled={!canSubmit}
           >
-            Save moment
+            {isEdit ? "Save changes" : "Save moment"}
           </Button>
         </div>
       </DialogContent>
