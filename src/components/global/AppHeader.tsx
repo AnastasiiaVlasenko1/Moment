@@ -29,7 +29,7 @@ export function AppHeader() {
         <Link
           to="/"
           data-el="global-nav-logo"
-          className="flex items-center gap-2 font-semibold"
+          className="flex items-center gap-2 font-handwritten text-2xl leading-none text-foreground"
         >
           <Sparkles className="size-5 text-primary" />
           Monthly Review Builder

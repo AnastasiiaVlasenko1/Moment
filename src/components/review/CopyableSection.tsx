@@ -30,7 +30,7 @@ export function CopyableSection({
   return (
     <Card data-el={dataEl}>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="font-handwritten text-2xl leading-none">{title}</CardTitle>
         <CardAction className="flex items-center gap-2">
           {action}
           <Button

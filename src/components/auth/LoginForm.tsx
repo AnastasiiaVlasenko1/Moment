@@ -34,7 +34,7 @@ export function LoginForm() {
       <Card data-el="login-card" className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <MailCheck className="size-8 text-primary" />
-          <CardTitle data-el="login-confirmation-title">Check your email</CardTitle>
+          <CardTitle data-el="login-confirmation-title" className="font-handwritten text-3xl leading-none">Check your email</CardTitle>
           <CardDescription data-el="login-confirmation-subtitle">
             We sent a confirmation link to <strong>{email}</strong>. Click it to
             activate your account, then come back and sign in.
@@ -48,7 +48,7 @@ export function LoginForm() {
     <Card data-el="login-card" className="w-full max-w-sm">
       <CardHeader className="items-center text-center">
         <Sparkles className="size-7 text-primary" />
-        <CardTitle data-el="login-title">
+        <CardTitle data-el="login-title" className="font-handwritten text-3xl leading-none">
           {isSignup ? "Create your account" : "Welcome back"}
         </CardTitle>
         <CardDescription data-el="login-subtitle">

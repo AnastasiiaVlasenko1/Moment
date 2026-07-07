@@ -73,12 +73,14 @@ src/
 │   └── hooks.ts           # Typed hooks: useAppDispatch(), useAppSelector()
 ├── assets/
 │   └── fonts/
-│       ├── InterVariable.woff2         # Inter variable font (weight 100–900, normal)
-│       └── InterVariable-Italic.woff2  # Inter variable font (weight 100–900, italic)
+│       ├── InterVariable.woff2         # Inter variable font (weight 100–900, normal) — body text
+│       ├── InterVariable-Italic.woff2  # Inter variable font (weight 100–900, italic)
+│       ├── Caveat.woff2                # Caveat handwritten font (latin) — headings/dates accent
+│       └── Caveat-Latin-Ext.woff2      # Caveat handwritten font (latin-ext subset)
 ├── styles/
 │   ├── index.css          # Main stylesheet entry — imports Tailwind, shadcn, fonts, theme
 │   ├── theme.css          # CSS theme tokens (light/dark), @theme inline config, base typography
-│   └── fonts.css          # @font-face declarations for Inter + base font settings
+│   └── fonts.css          # @font-face declarations for Inter + Caveat + base font settings
 ├── hooks/
 │   ├── use-debounce.ts    # useDebouncedValue<T>() — generic debounce hook
 │   ├── use-mobile.ts      # useIsMobile() — detects <768px viewport

@@ -38,7 +38,7 @@ export function WeekHeader({
         </Button>
         <span
           data-el="capture-week-range"
-          className="ml-1 text-sm font-medium text-muted-foreground"
+          className="ml-1 font-handwritten text-xl leading-none text-foreground/80"
         >
           {weekRangeLabel(days)}
         </span>

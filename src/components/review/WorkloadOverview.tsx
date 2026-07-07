@@ -37,7 +37,7 @@ export function WorkloadOverview({ model }: { model: ReviewModel }) {
   return (
     <section data-el="review-overview" className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Activity overview</h2>
+        <h2 className="font-handwritten text-2xl leading-none">Activity overview</h2>
         <Button
           variant="outline"
           size="sm"

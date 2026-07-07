@@ -54,7 +54,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: GraduationCap,
     section: "learning",
     chipClass:
-      "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+      "bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
     chartToken: "var(--chart-3)",
   },
   mood: {

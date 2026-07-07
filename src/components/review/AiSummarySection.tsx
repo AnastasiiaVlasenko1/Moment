@@ -42,7 +42,7 @@ export function AiSummarySection({ model }: { model: ReviewModel }) {
   return (
     <Card data-el="review-ai-summary">
       <CardHeader>
-        <CardTitle>AI summary</CardTitle>
+        <CardTitle className="font-handwritten text-2xl leading-none">AI summary</CardTitle>
         <CardDescription>
           Turn this month's moments into a polished paragraph you can drop into
           your review.

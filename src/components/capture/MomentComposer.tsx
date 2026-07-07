@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/store/hooks"
 import { addMoment, updateMoment } from "@/store/momentsSlice"
 import { deleteImage, putImage } from "@/lib/image-store"
-import { MOOD_PRESETS } from "@/data/categories"
+import { CATEGORY_CONFIG, MOOD_PRESETS } from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { useMomentComposer } from "./useMomentComposer"
 import { useMomentImage } from "./useMomentImage"
@@ -128,7 +128,7 @@ export function MomentComposer({
                 className={cn(
                   "rounded-full border px-3 py-1 text-sm transition-colors",
                   values.text === mood
-                    ? "border-transparent bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300"
+                    ? cn("border-transparent", CATEGORY_CONFIG.mood.chipClass)
                     : "border-border text-muted-foreground hover:bg-accent",
                 )}
               >

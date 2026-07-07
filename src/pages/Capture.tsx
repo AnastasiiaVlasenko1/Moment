@@ -8,7 +8,7 @@ export default function Capture() {
       <AppHeader />
       <main className="px-4 py-6 sm:px-6 lg:px-8">
         <div data-el="capture-intro" className="mb-5">
-          <h1 className="text-2xl font-semibold tracking-tight">This week</h1>
+          <h1 className="font-handwritten text-4xl leading-none">This week</h1>
           <p className="text-sm text-muted-foreground">
             Capture a quick moment — a note, screenshot, or link — as it happens.
           </p>

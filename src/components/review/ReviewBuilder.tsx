@@ -20,7 +20,7 @@ export function ReviewBuilder() {
     <div data-el="review-builder" className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Monthly review</h1>
+          <h1 className="font-handwritten text-4xl leading-none">Monthly review</h1>
           <p className="text-sm text-muted-foreground">
             Copy each section into your Figma Slides template.
           </p>

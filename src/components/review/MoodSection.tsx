@@ -1,6 +1,8 @@
 import { format, parseISO } from "date-fns"
 import { Badge } from "@/components/ui/badge"
 import { formatMomentsText, type ReviewModel } from "@/lib/assembly"
+import { CATEGORY_CONFIG } from "@/data/categories"
+import { cn } from "@/lib/utils"
 import { CopyableSection } from "./CopyableSection"
 
 export function MoodSection({ model }: { model: ReviewModel }) {
@@ -29,10 +31,10 @@ export function MoodSection({ model }: { model: ReviewModel }) {
         {ranked.map(([label, count]) => (
           <Badge
             key={label}
-            className="gap-1.5 border-transparent bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300"
+            className={cn("gap-1.5 border-transparent", CATEGORY_CONFIG.mood.chipClass)}
           >
             {label}
-            <span className="rounded-full bg-purple-200/70 px-1.5 text-[11px] dark:bg-purple-900">
+            <span className="rounded-full bg-black/5 px-1.5 text-[11px] dark:bg-white/10">
               {count}
             </span>
           </Badge>

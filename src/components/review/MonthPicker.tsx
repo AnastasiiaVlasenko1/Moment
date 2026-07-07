@@ -22,7 +22,7 @@ export function MonthPicker({
       </Button>
       <span
         data-el="review-month-label"
-        className="min-w-36 text-center text-lg font-semibold"
+        className="min-w-36 text-center font-handwritten text-2xl leading-none"
       >
         {monthLabel(monthKey)}
       </span>

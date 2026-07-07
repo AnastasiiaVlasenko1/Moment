@@ -53,7 +53,7 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
   return (
     <Card data-el="review-gallery">
       <CardHeader>
-        <CardTitle>Screenshots</CardTitle>
+        <CardTitle className="font-handwritten text-2xl leading-none">Screenshots</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         {groups.map((group) => (
