@@ -24,7 +24,7 @@ export function WeekHeader({
   return (
     <div
       data-el="capture-week-header"
-      className="flex flex-wrap items-center justify-between gap-3"
+      className="flex shrink-0 flex-wrap items-center justify-between gap-3"
     >
       <div className="flex items-center gap-2">
         <Button variant="outline" size="icon" onClick={onPrev} aria-label="Previous week">

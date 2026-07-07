@@ -40,7 +40,10 @@ export function WeekView() {
     setComposer((c) => ({ open: true, date, seq: c.seq + 1 }))
 
   return (
-    <div data-el="capture-week" className="flex flex-col gap-4">
+    <div
+      data-el="capture-week"
+      className="flex flex-col gap-4 xl:min-h-0 xl:flex-1"
+    >
       <WeekHeader
         days={week.days}
         showWeekends={week.showWeekends}
@@ -52,7 +55,7 @@ export function WeekView() {
 
       <div
         data-el="capture-week-grid"
-        className="grid gap-3 md:auto-cols-fr md:grid-flow-col"
+        className="grid gap-3 xl:min-h-0 xl:flex-1 xl:auto-cols-fr xl:grid-flow-col xl:grid-rows-1"
       >
         {week.days.map((date) => (
           <DayColumn
