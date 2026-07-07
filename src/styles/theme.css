@@ -26,6 +26,8 @@
     --font-weight-medium: 500;
     --font-weight-normal: 400;
     --ring: #d8a24a;
+    /* Amber is too light for text on cream; use a darker amber for link/interactive text (>= 4.5:1). */
+    --link: #8c5e18;
     /* Warm categorical accents: mood(1) achievement(2) learning(3) interesting(4) challenge(5) */
     --chart-1: #b5798f;
     --chart-2: #7c8a4e;
@@ -66,6 +68,8 @@
     --input-background: #2e2721;
     --switch-background: #4a4038;
     --ring: #e0b15e;
+    /* On espresso the bright amber already clears 4.5:1, so link text can match the accent. */
+    --link: #e0b15e;
     --font-weight-medium: 500;
     --font-weight-normal: 400;
     /* Warm categorical accents (brightened for dark): mood(1) achievement(2) learning(3) interesting(4) challenge(5) */
@@ -107,6 +111,7 @@
     --color-input-background: var(--input-background);
     --color-switch-background: var(--switch-background);
     --color-ring: var(--ring);
+    --color-link: var(--link);
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
     --color-chart-3: var(--chart-3);

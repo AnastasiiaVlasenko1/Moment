@@ -6,7 +6,7 @@ function NotFound() {
       <div className="text-center">
         <h1 data-el="not-found-title" className="text-4xl font-bold tracking-tight">404</h1>
         <p data-el="not-found-subtitle" className="mt-2 text-muted-foreground">Page not found</p>
-        <Link data-el="not-found-home-link" to="/" className="mt-4 inline-block rounded-sm text-sm underline underline-offset-4 hover:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none">
+        <Link data-el="not-found-home-link" to="/" className="mt-4 inline-block rounded-sm text-sm underline underline-offset-4 hover:text-link focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none">
           Go home
         </Link>
       </div>
