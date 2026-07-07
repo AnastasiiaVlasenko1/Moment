@@ -47,7 +47,7 @@ export function AppHeader() {
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                    "flex min-h-11 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
                     active
                       ? "bg-secondary text-secondary-foreground"
                       : "text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -69,6 +69,7 @@ export function AppHeader() {
               size="sm"
               onClick={handleSignOut}
               aria-label="Sign out"
+              className="h-11 min-w-11"
             >
               <LogOut className="size-4" />
               <span className="hidden sm:inline">Sign out</span>

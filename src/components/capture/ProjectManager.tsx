@@ -80,6 +80,7 @@ export function ProjectManager({ open, onOpenChange }: ProjectManagerProps) {
         >
           <Input
             data-el="project-manager-add-input"
+            aria-label="New project name"
             placeholder="New project name…"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}

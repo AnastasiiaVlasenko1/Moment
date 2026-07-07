@@ -41,7 +41,7 @@ export function DayColumn({ date, moments, onAdd }: DayColumnProps) {
           type="button"
           onClick={() => onAdd(iso)}
           aria-label={`Add moment on ${weekday} ${day}`}
-          className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
+          className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           <Plus className="size-4" />
         </button>

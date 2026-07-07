@@ -6,7 +6,6 @@ import {
   CardAction,
   CardContent,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { copyText } from "@/lib/clipboard"
 
@@ -30,7 +29,12 @@ export function CopyableSection({
   return (
     <Card data-el={dataEl}>
       <CardHeader>
-        <CardTitle className="font-handwritten text-2xl leading-none">{title}</CardTitle>
+        <h2
+          data-slot="card-title"
+          className="font-handwritten text-2xl leading-none font-semibold"
+        >
+          {title}
+        </h2>
         <CardAction className="flex items-center gap-2">
           {action}
           <Button

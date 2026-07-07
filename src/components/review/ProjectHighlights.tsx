@@ -17,6 +17,7 @@ export function ProjectHighlights({ model }: { model: ReviewModel }) {
           <div key={h.project.id} data-el="review-highlights-project">
             <div className="mb-2 flex items-center gap-2">
               <span
+                aria-hidden="true"
                 className="size-2.5 rounded-full"
                 style={{ backgroundColor: h.project.color }}
               />

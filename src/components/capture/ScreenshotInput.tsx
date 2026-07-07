@@ -54,7 +54,7 @@ export function ScreenshotInput({
         <button
           type="button"
           onClick={removePreview}
-          className="absolute top-2 right-2 rounded-md bg-background/80 p-1 text-foreground shadow-sm hover:bg-background"
+          className="absolute top-2 right-2 rounded-md bg-background/80 p-2.5 text-foreground shadow-sm hover:bg-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           aria-label="Remove screenshot"
         >
           <X className="size-4" />
@@ -80,6 +80,7 @@ export function ScreenshotInput({
         ref={inputRef}
         type="file"
         accept="image/*"
+        aria-label="Upload screenshot"
         className="hidden"
         onChange={(e) => onChange(e.target.files?.[0] ?? null)}
       />

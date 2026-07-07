@@ -6,7 +6,6 @@ import {
   CardAction,
   CardContent,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { useAppSelector } from "@/store/hooks"
 import { downloadImages } from "@/lib/download"
@@ -53,7 +52,12 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
   return (
     <Card data-el="review-gallery">
       <CardHeader>
-        <CardTitle className="font-handwritten text-2xl leading-none">Screenshots</CardTitle>
+        <h2
+          data-slot="card-title"
+          className="font-handwritten text-2xl leading-none font-semibold"
+        >
+          Screenshots
+        </h2>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         {groups.map((group) => (
@@ -61,6 +65,7 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span
+                  aria-hidden="true"
                   className="size-2.5 rounded-full"
                   style={{ backgroundColor: group.color }}
                 />

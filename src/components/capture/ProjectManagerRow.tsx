@@ -57,10 +57,10 @@ export function ProjectManagerRow({
                 ? `Change project color (currently ${currentColorName})`
                 : "Change project color"
             }
-            className="group/swatch flex size-8 shrink-0 items-center justify-center rounded-full"
+            className="group/swatch flex size-9 shrink-0 items-center justify-center rounded-full focus-visible:outline-none"
           >
             <span
-              className="size-4 rounded-full ring-offset-background transition-shadow group-hover/swatch:ring-2 group-hover/swatch:ring-ring group-hover/swatch:ring-offset-2"
+              className="size-4 rounded-full ring-offset-background transition-shadow group-hover/swatch:ring-2 group-hover/swatch:ring-ring group-hover/swatch:ring-offset-2 group-focus-visible/swatch:ring-2 group-focus-visible/swatch:ring-ring group-focus-visible/swatch:ring-offset-2"
               style={{ backgroundColor: project.color }}
             />
           </button>
@@ -76,7 +76,7 @@ export function ProjectManagerRow({
                   aria-label={`Use ${color.name}`}
                   aria-pressed={active}
                   onClick={() => onRecolor(color.value)}
-                  className="flex size-8 items-center justify-center rounded-full"
+                  className="flex size-9 items-center justify-center rounded-full ring-offset-background transition-shadow hover:ring-2 hover:ring-ring hover:ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                   style={{ backgroundColor: color.value }}
                 >
                   {active && (
@@ -98,7 +98,7 @@ export function ProjectManagerRow({
           if (e.key === "Enter") e.currentTarget.blur()
           if (e.key === "Escape") setName(project.name)
         }}
-        className="h-8"
+        className="h-9"
       />
 
       <AlertDialog>
@@ -107,7 +107,7 @@ export function ProjectManagerRow({
             variant="ghost"
             size="icon"
             aria-label={`Delete ${project.name}`}
-            className={cn("size-8 shrink-0 text-muted-foreground hover:text-destructive")}
+            className={cn("size-9 shrink-0 text-muted-foreground hover:text-destructive")}
           >
             <Trash2 className="size-4" />
           </Button>

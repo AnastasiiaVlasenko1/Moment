@@ -90,7 +90,7 @@ export function ProjectPicker({
                 <button
                   type="button"
                   onClick={handleCreate}
-                  className="flex w-full items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent"
+                  className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent focus-visible:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
                   <Plus className="size-4" /> Create “{query.trim()}”
                 </button>

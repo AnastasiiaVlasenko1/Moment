@@ -34,7 +34,7 @@ export function MoodSection({ model }: { model: ReviewModel }) {
             className={cn("gap-1.5 border-transparent", CATEGORY_CONFIG.mood.chipClass)}
           >
             {label}
-            <span className="rounded-full bg-black/5 px-1.5 text-[11px] dark:bg-white/10">
+            <span className="rounded-full bg-black/5 px-1.5 text-xs dark:bg-white/10">
               {count}
             </span>
           </Badge>

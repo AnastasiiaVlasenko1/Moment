@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { toast } from "sonner"
-import { Image, Link as LinkIcon, X } from "lucide-react"
+import { Check, Image, Link as LinkIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -120,21 +120,26 @@ export function MomentComposer({
 
         {isMood && (
           <div className="flex flex-wrap gap-1.5" data-el="capture-composer-mood-presets">
-            {MOOD_PRESETS.map((mood) => (
-              <button
-                key={mood}
-                type="button"
-                onClick={() => set("text", mood)}
-                className={cn(
-                  "rounded-full border px-3 py-1 text-sm transition-colors",
-                  values.text === mood
-                    ? cn("border-transparent", CATEGORY_CONFIG.mood.chipClass)
-                    : "border-border text-muted-foreground hover:bg-accent",
-                )}
-              >
-                {mood}
-              </button>
-            ))}
+            {MOOD_PRESETS.map((mood) => {
+              const active = values.text === mood
+              return (
+                <button
+                  key={mood}
+                  type="button"
+                  onClick={() => set("text", mood)}
+                  aria-pressed={active}
+                  className={cn(
+                    "inline-flex items-center gap-1 rounded-full border px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+                    active
+                      ? cn("border-transparent font-medium", CATEGORY_CONFIG.mood.chipClass)
+                      : "border-border text-muted-foreground hover:bg-accent",
+                  )}
+                >
+                  {active && <Check className="size-3.5" aria-hidden="true" />}
+                  {mood}
+                </button>
+              )
+            })}
           </div>
         )}
 
@@ -165,9 +170,9 @@ export function MomentComposer({
                 type="button"
                 onClick={removeScreenshot}
                 aria-label="Remove screenshot field"
-                className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground"
+                className="absolute -top-2 -right-2 flex size-9 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
-                <X className="size-3.5" />
+                <X className="size-4" />
               </button>
             </div>
           </div>
@@ -188,7 +193,7 @@ export function MomentComposer({
                 type="button"
                 onClick={removeLink}
                 aria-label="Remove link field"
-                className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
+                className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
                 <X className="size-4" />
               </button>

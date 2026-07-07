@@ -17,7 +17,7 @@ export function MonthPicker({
 }: MonthPickerProps) {
   return (
     <div data-el="review-month-picker" className="flex items-center gap-2">
-      <Button variant="outline" size="icon" onClick={onPrev} aria-label="Previous month">
+      <Button variant="outline" size="icon" className="size-11" onClick={onPrev} aria-label="Previous month">
         <ChevronLeft className="size-4" />
       </Button>
       <span
@@ -26,7 +26,7 @@ export function MonthPicker({
       >
         {monthLabel(monthKey)}
       </span>
-      <Button variant="outline" size="icon" onClick={onNext} aria-label="Next month">
+      <Button variant="outline" size="icon" className="size-11" onClick={onNext} aria-label="Next month">
         <ChevronRight className="size-4" />
       </Button>
       <Button variant="ghost" size="sm" onClick={onThisMonth}>

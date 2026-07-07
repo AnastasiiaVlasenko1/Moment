@@ -6,7 +6,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { Spinner } from "@/components/ui/spinner"
 import type { ReviewModel } from "@/lib/assembly"
@@ -42,7 +41,12 @@ export function AiSummarySection({ model }: { model: ReviewModel }) {
   return (
     <Card data-el="review-ai-summary">
       <CardHeader>
-        <CardTitle className="font-handwritten text-2xl leading-none">AI summary</CardTitle>
+        <h2
+          data-slot="card-title"
+          className="font-handwritten text-2xl leading-none font-semibold"
+        >
+          AI summary
+        </h2>
         <CardDescription>
           Turn this month's moments into a polished paragraph you can drop into
           your review.

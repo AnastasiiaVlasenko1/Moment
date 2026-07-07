@@ -27,7 +27,7 @@ export function GalleryImage({
         type="button"
         onClick={() => moment.imageId && downloadImage(moment.imageId, baseName)}
         aria-label="Download screenshot"
-        className="absolute top-2 right-2 rounded-md bg-background/80 p-1.5 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 hover:bg-background"
+        className="absolute top-2 right-2 rounded-md bg-background/80 p-2.5 opacity-0 shadow-sm transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none hover:bg-background"
       >
         <Download className="size-4" />
       </button>

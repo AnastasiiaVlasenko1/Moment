@@ -32,13 +32,13 @@ export function MomentCard({ moment }: { moment: Moment }) {
       data-el="capture-moment-card"
       className="group relative rounded-md border bg-card p-2.5 text-sm shadow-xs"
     >
-      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
         <button
           type="button"
           onClick={() => setEditing(true)}
           aria-label="Edit moment"
           data-el="capture-moment-card-edit"
-          className="flex size-7 items-center justify-center rounded text-muted-foreground hover:text-foreground"
+          className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           <Pencil className="size-3.5" />
         </button>
@@ -48,7 +48,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
               type="button"
               aria-label="Delete moment"
               data-el="capture-moment-card-delete"
-              className="flex size-7 items-center justify-center rounded text-muted-foreground hover:text-destructive"
+              className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               <Trash2 className="size-3.5" />
             </button>
