@@ -25,7 +25,7 @@ export function AppHeader() {
       data-el="global-header"
       className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur"
     >
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
+      <div className="flex h-14 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
           data-el="global-nav-logo"
