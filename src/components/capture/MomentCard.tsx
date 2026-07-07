@@ -76,7 +76,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
 
       <CategoryChip
         category={moment.category}
-        className="text-[11px]"
+        className="text-xs"
         data-el="capture-moment-card-category"
       />
 
