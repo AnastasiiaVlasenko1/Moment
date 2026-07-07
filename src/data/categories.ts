@@ -27,7 +27,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: Lightbulb,
     section: "highlights",
     chipClass:
-      "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
+      "bg-amber-100/70 text-amber-700 dark:bg-amber-950/60 dark:text-amber-200",
     chartToken: "var(--chart-4)",
   },
   challenge: {
@@ -36,7 +36,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: TriangleAlert,
     section: "highlights",
     chipClass:
-      "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+      "bg-rose-100/70 text-rose-700 dark:bg-rose-950/60 dark:text-rose-200",
     chartToken: "var(--chart-5)",
   },
   achievement: {
@@ -45,7 +45,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: Trophy,
     section: "highlights",
     chipClass:
-      "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300",
+      "bg-emerald-100/70 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-200",
     chartToken: "var(--chart-2)",
   },
   learning: {
@@ -54,7 +54,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: GraduationCap,
     section: "learning",
     chipClass:
-      "bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300",
+      "bg-teal-100/70 text-teal-700 dark:bg-teal-950/60 dark:text-teal-200",
     chartToken: "var(--chart-3)",
   },
   mood: {
@@ -63,7 +63,7 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
     icon: HeartPulse,
     section: "mood",
     chipClass:
-      "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
+      "bg-violet-100/70 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200",
     chartToken: "var(--chart-1)",
   },
 }

@@ -23,11 +23,12 @@ capture
 │       ├── capture-composer-category-picker       — Five colored category chips (first block)
 │       ├── capture-composer-mood-presets  — Quick mood chips (mood category)
 │       ├── capture-composer-text          — Note textarea ("What happened?")
-│       ├── capture-composer-attach-screenshot     — Reveal button for the screenshot field
-│       ├── capture-composer-screenshot-dropzone   — Upload/paste zone (revealed, optional)
+│       ├── capture-composer-screenshot-dropzone   — Upload/paste zone under "Attachments" label (revealed, optional)
 │       ├── capture-composer-screenshot-preview    — Selected image preview
-│       ├── capture-composer-add-link      — Reveal button for the link field
 │       ├── capture-composer-url           — URL input (revealed, optional)
+│       ├── capture-composer-attach-actions        — Subtle text-action row (attach/link)
+│       │   ├── capture-composer-attach-screenshot — Reveal link for the screenshot field
+│       │   └── capture-composer-add-link          — Reveal link for the link field
 │       ├── capture-composer-project-trigger       — Project selector (popover; incl. "Manage projects")
 │       ├── capture-composer-date          — Date input (defaults today, editable)
 │       └── capture-composer-save          — Save button

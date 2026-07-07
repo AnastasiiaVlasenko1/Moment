@@ -152,21 +152,24 @@ export function MomentComposer({
 
         {/* Optional attachments — revealed on demand */}
         {showScreenshot && (
-          <div className="relative">
-            <ScreenshotInput
-              file={values.file}
-              onChange={(f) => set("file", f)}
-              existingUrl={existingImageUrl}
-              onRemoveExisting={() => set("existingImageId", undefined)}
-            />
-            <button
-              type="button"
-              onClick={removeScreenshot}
-              aria-label="Remove screenshot field"
-              className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground"
-            >
-              <X className="size-3.5" />
-            </button>
+          <div className="grid gap-1.5">
+            <Label>Attachments</Label>
+            <div className="relative">
+              <ScreenshotInput
+                file={values.file}
+                onChange={(f) => set("file", f)}
+                existingUrl={existingImageUrl}
+                onRemoveExisting={() => set("existingImageId", undefined)}
+              />
+              <button
+                type="button"
+                onClick={removeScreenshot}
+                aria-label="Remove screenshot field"
+                className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground"
+              >
+                <X className="size-3.5" />
+              </button>
+            </div>
           </div>
         )}
         {showLink && (
@@ -193,30 +196,37 @@ export function MomentComposer({
           </div>
         )}
 
-        <div className="flex flex-wrap gap-1.5">
-          {!showScreenshot && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              data-el="capture-composer-attach-screenshot"
-              onClick={() => setShowScreenshot(true)}
-            >
-              <Image className="size-3.5" /> Attach screenshot
-            </Button>
-          )}
-          {!showLink && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              data-el="capture-composer-add-link"
-              onClick={() => setShowLink(true)}
-            >
-              <LinkIcon className="size-3.5" /> Add link
-            </Button>
-          )}
-        </div>
+        {(!showScreenshot || !showLink) && (
+          <div
+            data-el="capture-composer-attach-actions"
+            className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground"
+          >
+            {!showScreenshot && (
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                data-el="capture-composer-attach-screenshot"
+                className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                onClick={() => setShowScreenshot(true)}
+              >
+                <Image className="size-3.5" /> Attach screenshot
+              </Button>
+            )}
+            {!showLink && (
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                data-el="capture-composer-add-link"
+                className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                onClick={() => setShowLink(true)}
+              >
+                <LinkIcon className="size-3.5" /> Add link
+              </Button>
+            )}
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-3">
           <div className="grid gap-1.5">
