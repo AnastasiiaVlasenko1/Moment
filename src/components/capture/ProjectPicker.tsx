@@ -64,6 +64,7 @@ export function ProjectPicker({
             {selected ? (
               <>
                 <span
+                  aria-hidden="true"
                   className="size-2 rounded-full"
                   style={{ backgroundColor: selected.color }}
                 />
@@ -125,6 +126,7 @@ export function ProjectPicker({
                   }}
                 >
                   <span
+                    aria-hidden="true"
                     className="size-2 rounded-full"
                     style={{ backgroundColor: project.color }}
                   />

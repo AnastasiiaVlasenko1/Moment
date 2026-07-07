@@ -19,7 +19,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { cn } from "@/lib/utils"
-import { PROJECT_COLOR_CYCLE } from "@/data/categories"
+import { PROJECT_COLORS } from "@/data/categories"
 import type { Project } from "@/types/review"
 
 interface ProjectManagerRowProps {
@@ -37,6 +37,8 @@ export function ProjectManagerRow({
   onDelete,
 }: ProjectManagerRowProps) {
   const [name, setName] = useState(project.name)
+  const currentColorName =
+    PROJECT_COLORS.find((c) => c.value === project.color)?.name
 
   const commitName = () => {
     const next = name.trim()
@@ -50,33 +52,46 @@ export function ProjectManagerRow({
         <PopoverTrigger asChild>
           <button
             type="button"
-            aria-label="Change project color"
-            className="size-4 shrink-0 rounded-full ring-offset-background transition-shadow hover:ring-2 hover:ring-ring hover:ring-offset-2"
-            style={{ backgroundColor: project.color }}
-          />
+            aria-label={
+              currentColorName
+                ? `Change project color (currently ${currentColorName})`
+                : "Change project color"
+            }
+            className="group/swatch flex size-8 shrink-0 items-center justify-center rounded-full"
+          >
+            <span
+              className="size-4 rounded-full ring-offset-background transition-shadow group-hover/swatch:ring-2 group-hover/swatch:ring-ring group-hover/swatch:ring-offset-2"
+              style={{ backgroundColor: project.color }}
+            />
+          </button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-2" align="start">
           <div className="flex gap-1.5">
-            {PROJECT_COLOR_CYCLE.map((color) => (
-              <button
-                key={color}
-                type="button"
-                aria-label={`Use color ${color}`}
-                onClick={() => onRecolor(color)}
-                className="flex size-6 items-center justify-center rounded-full"
-                style={{ backgroundColor: color }}
-              >
-                {color === project.color && (
-                  <Check className="size-3.5 text-white" />
-                )}
-              </button>
-            ))}
+            {PROJECT_COLORS.map((color) => {
+              const active = color.value === project.color
+              return (
+                <button
+                  key={color.value}
+                  type="button"
+                  aria-label={`Use ${color.name}`}
+                  aria-pressed={active}
+                  onClick={() => onRecolor(color.value)}
+                  className="flex size-8 items-center justify-center rounded-full"
+                  style={{ backgroundColor: color.value }}
+                >
+                  {active && (
+                    <Check className="size-4 text-white" aria-hidden="true" />
+                  )}
+                </button>
+              )
+            })}
           </div>
         </PopoverContent>
       </Popover>
 
       <Input
         value={name}
+        aria-label={`Rename ${project.name}`}
         onChange={(e) => setName(e.target.value)}
         onBlur={commitName}
         onKeyDown={(e) => {

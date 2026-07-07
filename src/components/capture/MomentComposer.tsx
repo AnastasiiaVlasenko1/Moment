@@ -163,7 +163,7 @@ export function MomentComposer({
               type="button"
               onClick={removeScreenshot}
               aria-label="Remove screenshot field"
-              className="absolute -top-1 -right-1 rounded-full border bg-background p-0.5 text-muted-foreground shadow-sm hover:text-foreground"
+              className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground"
             >
               <X className="size-3.5" />
             </button>
@@ -185,7 +185,7 @@ export function MomentComposer({
                 type="button"
                 onClick={removeLink}
                 aria-label="Remove link field"
-                className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
               >
                 <X className="size-4" />
               </button>

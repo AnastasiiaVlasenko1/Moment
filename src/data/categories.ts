@@ -100,11 +100,17 @@ export const DEFAULT_PROJECTS: Project[] = [
   { id: "proj-marketing", name: "Marketing Site", color: "var(--chart-3)" },
 ]
 
+/**
+ * Named project color palette. Names surface in accessible labels — the chart
+ * tokens shift hue between light/dark, so positional names stay honest.
+ */
+export const PROJECT_COLORS = [
+  { name: "Color 1", value: "var(--chart-1)" },
+  { name: "Color 2", value: "var(--chart-2)" },
+  { name: "Color 3", value: "var(--chart-3)" },
+  { name: "Color 4", value: "var(--chart-4)" },
+  { name: "Color 5", value: "var(--chart-5)" },
+] as const
+
 /** Cycles through chart tokens for newly created projects. */
-export const PROJECT_COLOR_CYCLE = [
-  "var(--chart-1)",
-  "var(--chart-2)",
-  "var(--chart-3)",
-  "var(--chart-4)",
-  "var(--chart-5)",
-]
+export const PROJECT_COLOR_CYCLE = PROJECT_COLORS.map((c) => c.value)

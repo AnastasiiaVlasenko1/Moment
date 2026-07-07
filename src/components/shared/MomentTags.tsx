@@ -35,6 +35,7 @@ export function ProjectChip({
   return (
     <Badge variant="outline" className={cn("gap-1.5", className)}>
       <span
+        aria-hidden="true"
         className="size-2 rounded-full"
         style={{ backgroundColor: project.color }}
       />

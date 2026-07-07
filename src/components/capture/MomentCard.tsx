@@ -2,6 +2,17 @@ import { useState } from "react"
 import { ExternalLink, Pencil, Trash2 } from "lucide-react"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { deleteMoment } from "@/store/momentsSlice"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import type { Moment } from "@/types/review"
 import { CategoryChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
@@ -27,19 +38,40 @@ export function MomentCard({ moment }: { moment: Moment }) {
           onClick={() => setEditing(true)}
           aria-label="Edit moment"
           data-el="capture-moment-card-edit"
-          className="rounded p-1 text-muted-foreground hover:text-foreground"
+          className="flex size-7 items-center justify-center rounded text-muted-foreground hover:text-foreground"
         >
           <Pencil className="size-3.5" />
         </button>
-        <button
-          type="button"
-          onClick={() => dispatch(deleteMoment(moment.id))}
-          aria-label="Delete moment"
-          data-el="capture-moment-card-delete"
-          className="rounded p-1 text-muted-foreground hover:text-destructive"
-        >
-          <Trash2 className="size-3.5" />
-        </button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <button
+              type="button"
+              aria-label="Delete moment"
+              data-el="capture-moment-card-delete"
+              className="flex size-7 items-center justify-center rounded text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="size-3.5" />
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete this moment?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This removes the note, and any attached screenshot or link. This
+                can't be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => dispatch(deleteMoment(moment.id))}
+                className="bg-destructive text-white hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
 
       <CategoryChip
