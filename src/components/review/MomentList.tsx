@@ -24,9 +24,10 @@ export function MomentList({ moments }: { moments: Moment[] }) {
                 href={m.url}
                 target="_blank"
                 rel="noreferrer"
-className="flex min-w-0 items-start gap-1 text-link hover:underline"
+                aria-label={`${m.url} (opens in new tab)`}
+                className="flex min-w-0 items-start gap-1 text-link hover:underline"
               >
-                <ExternalLink className="mt-0.5 size-3.5 shrink-0" />
+                <ExternalLink className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
                 <span className="break-all">{m.url}</span>
               </a>
             )}

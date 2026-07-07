@@ -76,7 +76,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
 
       <CategoryChip
         category={moment.category}
-        className="text-xs"
+        className="text-xs font-medium"
         data-el="capture-moment-card-category"
       />
 
@@ -104,9 +104,10 @@ export function MomentCard({ moment }: { moment: Moment }) {
           target="_blank"
           rel="noreferrer"
           data-el="capture-moment-card-link"
+          aria-label={`${moment.url} (opens in new tab)`}
           className="mt-1.5 flex items-center gap-1 pr-10 text-link hover:underline"
         >
-          <ExternalLink className="size-3.5 shrink-0" />
+          <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
           <span className="min-w-0 truncate">{moment.url}</span>
         </a>
       )}
