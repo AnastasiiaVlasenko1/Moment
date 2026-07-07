@@ -104,10 +104,10 @@ export function MomentCard({ moment }: { moment: Moment }) {
           target="_blank"
           rel="noreferrer"
           data-el="capture-moment-card-link"
-          className="mt-1.5 flex items-start gap-1 pr-10 text-primary hover:underline"
+          className="mt-1.5 flex items-center gap-1 pr-10 text-primary hover:underline"
         >
-          <ExternalLink className="mt-0.5 size-3.5 shrink-0" />
-          <span className="break-all">{moment.url}</span>
+          <ExternalLink className="size-3.5 shrink-0" />
+          <span className="truncate">{moment.url}</span>
         </a>
       )}
 
