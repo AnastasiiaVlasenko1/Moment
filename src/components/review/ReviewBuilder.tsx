@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
 import { useReviewAssembly } from "./useReviewAssembly"
 import { MonthPicker } from "./MonthPicker"
+import { AiSummarySection } from "./AiSummarySection"
 import { WorkloadOverview } from "./WorkloadOverview"
 import { ProjectHighlights } from "./ProjectHighlights"
 import { LearningSection } from "./LearningSection"
@@ -51,6 +52,7 @@ export function ReviewBuilder() {
       ) : (
         <>
           <WorkloadOverview model={model} />
+          <AiSummarySection key={monthKey} model={model} />
           <ProjectHighlights model={model} />
           <LearningSection model={model} />
           <MoodSection model={model} />

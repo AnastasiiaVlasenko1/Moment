@@ -1,4 +1,4 @@
-import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { Moment, MomentDraft } from "@/types/review"
 
 interface MomentsState {
@@ -11,6 +11,10 @@ const momentsSlice = createSlice({
   name: "moments",
   initialState,
   reducers: {
+    /** Replace all moments (used when hydrating from Supabase on login). */
+    setMoments(state, action: PayloadAction<Moment[]>) {
+      state.items = action.payload
+    },
     addMoment: {
       reducer(state, action: PayloadAction<Moment>) {
         state.items.push(action.payload)
@@ -19,7 +23,7 @@ const momentsSlice = createSlice({
         return {
           payload: {
             ...draft,
-            id: nanoid(),
+            id: crypto.randomUUID(),
             createdAt: Date.now(),
           } satisfies Moment,
         }
@@ -52,6 +56,7 @@ const momentsSlice = createSlice({
 })
 
 export const {
+  setMoments,
   addMoment,
   updateMoment,
   moveMomentToDate,

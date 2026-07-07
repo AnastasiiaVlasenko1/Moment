@@ -23,6 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Env files (secrets & local config — never commit)
+.env
+.env.local
+.env.*.local
+
 # CLAUDE
 CLAUDE.md
 

@@ -10,6 +10,10 @@ review
     ├── review-overview                     — Activity overview section
     │   ├── review-overview-stats          — Stat tiles (moments, projects, screenshots, moods)
     │   └── review-overview-chart          — Category distribution bar chart
+    ├── review-ai-summary                    — AI-written prose summary (on demand)
+    │   ├── review-ai-summary-generate     — "Generate summary" button (idle state)
+    │   ├── review-ai-summary-error        — Error message (on failure)
+    │   └── review-ai-summary-text         — Generated prose (done state)
     ├── review-highlights                    — Per-project highlights (copyable)
     │   └── review-highlights-project       — One project's grouped moments (repeated)
     ├── review-learning                      — "What I learned" section (copyable)

@@ -1,28 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit"
 import momentsReducer from "./momentsSlice"
 import projectsReducer from "./projectsSlice"
-import { loadState, saveState } from "@/lib/persistence"
+import { syncMiddleware } from "./sync-middleware"
 
-const persisted = loadState()
-
+// The store starts empty and is hydrated from Supabase after login
+// (see src/components/data/DataProvider.tsx). Every mutation is mirrored back
+// to Supabase by syncMiddleware.
 export const store = configureStore({
   reducer: {
     moments: momentsReducer,
     projects: projectsReducer,
   },
-  preloadedState: {
-    moments: { items: persisted.moments },
-    projects: { items: persisted.projects },
-  },
-})
-
-// Persist moment + project metadata to localStorage on every change.
-store.subscribe(() => {
-  const state = store.getState()
-  saveState({
-    moments: state.moments.items,
-    projects: state.projects.items,
-  })
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(syncMiddleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

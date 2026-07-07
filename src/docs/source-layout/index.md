@@ -5,13 +5,21 @@
 ```
 src/
 ├── pages/
-│   ├── Capture.tsx        # Route "/" — five-day week view for logging moments
-│   ├── Review.tsx         # Route "/review" — month-end assembled review
+│   ├── Capture.tsx        # Route "/" — five-day week view for logging moments (auth-guarded)
+│   ├── Review.tsx         # Route "/review" — month-end assembled review (auth-guarded)
+│   ├── Login.tsx          # Route "/login" — email+password sign-in / sign-up
 │   └── NotFound.tsx       # 404 catch-all page
 ├── components/
 │   ├── ui/                # shadcn/ui primitives (DO NOT manually edit — managed by npx shadcn)
+│   ├── auth/              # Authentication (Supabase email+password)
+│   │   ├── AuthProvider.tsx    # Tracks session; provides sign in/up/out (wraps app in main.tsx)
+│   │   ├── RequireAuth.tsx     # Route guard — redirects to /login when signed out
+│   │   ├── LoginForm.tsx       # Sign-in / sign-up card UI
+│   │   └── use-login-form.ts   # Login form state + submit logic
+│   ├── data/               # Backend data loading
+│   │   └── DataProvider.tsx    # Loads moments/projects from Supabase on login (spinner/retry)
 │   ├── global/
-│   │   └── AppHeader.tsx  # Site-wide header + primary nav (Capture / Review)
+│   │   └── AppHeader.tsx  # Site-wide header + primary nav + user email / sign-out
 │   ├── shared/
 │   │   └── MomentTags.tsx # CategoryChip + ProjectChip (used by capture & review)
 │   ├── capture/           # Capture feature (week view + block picker)
@@ -28,10 +36,12 @@ src/
 │   │   ├── ProjectManagerRow.tsx  # One editable project row (recolor / rename / delete)
 │   │   ├── useWeekNavigation.ts   # Week anchor state + prev/next/today/weekends
 │   │   ├── useMomentComposer.ts   # Compose form state (seeded once per session)
-│   │   └── useMomentImage.ts      # Loads a screenshot object URL from IndexedDB
+│   │   └── useMomentImage.ts      # Loads a screenshot signed URL from Supabase Storage
 │   └── review/            # Month-end review assembly
 │       ├── ReviewBuilder.tsx      # Composed: month picker + all sections
 │       ├── MonthPicker.tsx        # Prev/next month + "This month"
+│       ├── AiSummarySection.tsx   # On-demand AI prose summary (calls summarize-review edge fn)
+│       ├── useReviewSummary.ts    # AI summary state (idle/loading/done/error + generate)
 │       ├── WorkloadOverview.tsx   # Stat tiles + category distribution chart
 │       ├── ProjectHighlights.tsx  # Per-project grouped highlights (copyable)
 │       ├── LearningSection.tsx    # "What I learned" (copyable)
@@ -56,9 +66,10 @@ src/
 │       ├── review.md       # Review page element map
 │       └── not-found.md    # 404 page element map
 ├── store/
-│   ├── index.ts           # Redux store: moments + projects slices, localStorage persistence
-│   ├── momentsSlice.ts    # Moments slice (add/update/move/delete)
-│   ├── projectsSlice.ts   # Projects slice (add/update/remove; seeded with defaults)
+│   ├── index.ts           # Redux store: moments + projects slices + Supabase sync middleware
+│   ├── sync-middleware.ts # Mirrors each mutation to Supabase (optimistic; toast on failure)
+│   ├── momentsSlice.ts    # Moments slice (setMoments/add/update/move/delete)
+│   ├── projectsSlice.ts   # Projects slice (setProjects/add/update/remove; starts empty)
 │   └── hooks.ts           # Typed hooks: useAppDispatch(), useAppSelector()
 ├── assets/
 │   └── fonts/
@@ -70,15 +81,20 @@ src/
 │   └── fonts.css          # @font-face declarations for Inter + base font settings
 ├── hooks/
 │   ├── use-debounce.ts    # useDebouncedValue<T>() — generic debounce hook
-│   └── use-mobile.ts      # useIsMobile() — detects <768px viewport
+│   ├── use-mobile.ts      # useIsMobile() — detects <768px viewport
+│   ├── auth-context.ts    # AuthContext + AuthContextValue type (shared by provider/hook)
+│   └── use-auth.ts        # useAuth() — read session + auth actions
 ├── lib/
 │   ├── utils.ts           # cn() utility (clsx + tailwind-merge)
 │   ├── dates.ts           # date-fns wrappers: work week, ISO keys, month helpers
 │   ├── assembly.ts        # Pure review assembly (AI-ready seam) + text formatters
-│   ├── persistence.ts     # localStorage load/save for moment + project metadata
-│   ├── image-store.ts     # IndexedDB helper for screenshot blobs
+│   ├── ai-summary.ts      # Builds month text + invokes summarize-review edge fn for AI prose
+│   ├── api.ts             # Supabase CRUD for moments/projects + row↔domain mapping
+│   ├── image-store.ts     # Supabase Storage helper for screenshots (putImage/getImage/getImageUrl/deleteImage)
+│   ├── supabase.ts        # Shared Supabase client (backend: db + auth + storage)
 │   ├── clipboard.ts       # copyText() + toast
 │   └── download.ts        # Download screenshot blob(s) as files
+├── vite-env.d.ts          # Vite env var types (VITE_SUPABASE_* etc.)
 ├── main.tsx               # Entry point — wraps <App /> in <StrictMode> + Redux <Provider>
 └── App.tsx                # Router: /, /review, catch-all
 ```

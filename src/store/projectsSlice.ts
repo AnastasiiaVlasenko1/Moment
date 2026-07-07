@@ -1,17 +1,23 @@
-import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { Project } from "@/types/review"
-import { DEFAULT_PROJECTS, PROJECT_COLOR_CYCLE } from "@/data/categories"
+import { PROJECT_COLOR_CYCLE } from "@/data/categories"
 
 interface ProjectsState {
   items: Project[]
 }
 
-const initialState: ProjectsState = { items: DEFAULT_PROJECTS }
+// Starts empty; projects are hydrated from Supabase on login (a brand-new user
+// is seeded with the defaults — see src/lib/api.ts seedDefaultProjects).
+const initialState: ProjectsState = { items: [] }
 
 const projectsSlice = createSlice({
   name: "projects",
   initialState,
   reducers: {
+    /** Replace all projects (used when hydrating from Supabase on login). */
+    setProjects(state, action: PayloadAction<Project[]>) {
+      state.items = action.payload
+    },
     addProject: {
       reducer(state, action: PayloadAction<Project>) {
         state.items.push(action.payload)
@@ -19,7 +25,7 @@ const projectsSlice = createSlice({
       prepare(name: string) {
         return {
           payload: {
-            id: nanoid(),
+            id: crypto.randomUUID(),
             name: name.trim(),
             // spread new projects across the palette by name length
             color: PROJECT_COLOR_CYCLE[name.trim().length % PROJECT_COLOR_CYCLE.length],
@@ -40,6 +46,6 @@ const projectsSlice = createSlice({
   },
 })
 
-export const { addProject, updateProject, removeProject } =
+export const { setProjects, addProject, updateProject, removeProject } =
   projectsSlice.actions
 export default projectsSlice.reducer

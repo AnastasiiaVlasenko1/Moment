@@ -1,69 +1,63 @@
-// Tiny IndexedDB helper for screenshot blobs. Image data is kept out of
-// localStorage (which has a ~5MB quota); only the returned id is persisted
-// on the Moment via Redux.
+// Screenshot storage backed by Supabase Storage (private "screenshots" bucket).
+// Files are stored under "<user_id>/<uuid>.<ext>" so the per-user RLS policy
+// (see supabase/schema.sql) keeps each user's images private.
+//
+// The returned string (the object path) is what gets saved on Moment.imageId
+// and, in the database, on moments.image_path. Function signatures match the
+// old IndexedDB version so callers (MomentComposer, useMomentImage, download)
+// are unchanged.
 
-const DB_NAME = "mrb-images"
-const STORE = "screenshots"
-const VERSION = 1
+import { supabase } from "@/lib/supabase"
 
-let dbPromise: Promise<IDBDatabase> | null = null
+const BUCKET = "screenshots"
 
-function openDB(): Promise<IDBDatabase> {
-  if (dbPromise) return dbPromise
-  dbPromise = new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, VERSION)
-    req.onupgradeneeded = () => {
-      const db = req.result
-      if (!db.objectStoreNames.contains(STORE)) {
-        db.createObjectStore(STORE)
-      }
-    }
-    req.onsuccess = () => resolve(req.result)
-    req.onerror = () => reject(req.error)
-  })
-  return dbPromise
-}
-
-function tx(
-  db: IDBDatabase,
-  mode: IDBTransactionMode,
-): IDBObjectStore {
-  return db.transaction(STORE, mode).objectStore(STORE)
-}
-
-/** Store an image blob and return a generated id. */
-export async function putImage(blob: Blob): Promise<string> {
-  const db = await openDB()
-  const id = crypto.randomUUID()
-  await new Promise<void>((resolve, reject) => {
-    const req = tx(db, "readwrite").put(blob, id)
-    req.onsuccess = () => resolve()
-    req.onerror = () => reject(req.error)
-  })
+async function currentUserId(): Promise<string> {
+  const { data } = await supabase.auth.getUser()
+  const id = data.user?.id
+  if (!id) throw new Error("Not signed in — cannot store image")
   return id
 }
 
-/** Retrieve an image blob by id, or null if missing. */
-export async function getImage(id: string): Promise<Blob | null> {
-  const db = await openDB()
-  return new Promise((resolve, reject) => {
-    const req = tx(db, "readonly").get(id)
-    req.onsuccess = () => resolve((req.result as Blob) ?? null)
-    req.onerror = () => reject(req.error)
-  })
+function extFromType(type: string): string {
+  if (type.includes("png")) return "png"
+  if (type.includes("jpeg") || type.includes("jpg")) return "jpg"
+  if (type.includes("webp")) return "webp"
+  if (type.includes("gif")) return "gif"
+  return "png"
 }
 
-/** Retrieve an image as an object URL (caller must revoke it), or null. */
-export async function getImageUrl(id: string): Promise<string | null> {
-  const blob = await getImage(id)
-  return blob ? URL.createObjectURL(blob) : null
+/** Upload an image blob and return its storage path (saved as the moment's imageId). */
+export async function putImage(blob: Blob): Promise<string> {
+  const userId = await currentUserId()
+  const path = `${userId}/${crypto.randomUUID()}.${extFromType(blob.type)}`
+  const { error } = await supabase.storage.from(BUCKET).upload(path, blob, {
+    contentType: blob.type || undefined,
+    upsert: false,
+  })
+  if (error) throw error
+  return path
 }
 
-export async function deleteImage(id: string): Promise<void> {
-  const db = await openDB()
-  await new Promise<void>((resolve, reject) => {
-    const req = tx(db, "readwrite").delete(id)
-    req.onsuccess = () => resolve()
-    req.onerror = () => reject(req.error)
-  })
+/** Download an image blob by its storage path, or null if missing. */
+export async function getImage(path: string): Promise<Blob | null> {
+  const { data, error } = await supabase.storage.from(BUCKET).download(path)
+  if (error) return null
+  return data
+}
+
+/**
+ * Get a temporary signed URL for an image (the bucket is private).
+ * Callers may pass this to <img src>; revoking it later is a harmless no-op.
+ */
+export async function getImageUrl(path: string): Promise<string | null> {
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .createSignedUrl(path, 60 * 60) // valid for 1 hour
+  if (error) return null
+  return data.signedUrl
+}
+
+/** Delete an image by its storage path. */
+export async function deleteImage(path: string): Promise<void> {
+  await supabase.storage.from(BUCKET).remove([path])
 }
