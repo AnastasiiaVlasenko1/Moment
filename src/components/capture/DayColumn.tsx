@@ -24,7 +24,7 @@ export function DayColumn({ date, moments, onAdd }: DayColumnProps) {
     >
       <div className="flex items-center justify-between px-3 py-2">
         <div className="flex items-baseline gap-1.5">
-          <span className="font-handwritten text-base leading-none text-muted-foreground">
+          <span className="font-handwritten text-xl leading-none text-muted-foreground">
             {weekday}
           </span>
           <span
