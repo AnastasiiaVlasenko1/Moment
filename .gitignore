@@ -28,3 +28,6 @@ CLAUDE.md
 
 # MCP (local, per-developer)
 .mcp.json
+
+# Playwright MCP output
+.playwright-mcp/

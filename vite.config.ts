@@ -18,4 +18,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router'],
+          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
+          'chart-vendor': ['recharts'],
+        },
+      },
+    },
+  },
 })
