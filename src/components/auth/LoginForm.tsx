@@ -109,7 +109,7 @@ export function LoginForm() {
           data-el="login-toggle"
           type="button"
           variant="link"
-          className="h-auto p-0"
+          className="h-auto p-0 font-medium text-foreground underline"
           onClick={toggleMode}
         >
           {isSignup ? "Sign in" : "Create one"}
