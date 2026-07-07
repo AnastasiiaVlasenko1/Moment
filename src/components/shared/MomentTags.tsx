@@ -18,7 +18,7 @@ export function CategoryChip({
       className={cn("gap-1 border-transparent", meta.chipClass, className)}
       {...props}
     >
-      <Icon data-icon="inline-start" />
+      <Icon data-icon="inline-start" aria-hidden="true" className="size-3 shrink-0" />
       {meta.label}
     </Badge>
   )
