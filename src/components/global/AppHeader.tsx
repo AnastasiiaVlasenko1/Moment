@@ -12,7 +12,7 @@ const NAV = [
 /** Site-wide header with primary navigation. */
 export function AppHeader() {
   const { pathname } = useLocation()
-  const { user, signOut } = useAuth()
+  const { signOut } = useAuth()
   const navigate = useNavigate()
 
   async function handleSignOut() {
@@ -32,7 +32,7 @@ export function AppHeader() {
           className="flex items-center gap-2 font-handwritten text-2xl leading-none text-foreground"
         >
           <Sparkles className="size-5 text-primary" />
-          Monthly Review Builder
+          Moments
         </Link>
         <div className="flex items-center gap-3">
           <nav data-el="global-nav-menu" className="flex items-center gap-1">
@@ -63,11 +63,6 @@ export function AppHeader() {
             data-el="global-nav-user"
             className="flex items-center gap-2 border-l pl-3"
           >
-            {user?.email && (
-              <span className="hidden max-w-[14rem] truncate text-sm text-muted-foreground sm:inline">
-                {user.email}
-              </span>
-            )}
             <Button
               data-el="global-signout"
               variant="ghost"

@@ -10,7 +10,8 @@ export default function Capture() {
         <div data-el="capture-intro" className="mb-5">
           <h1 className="font-handwritten text-4xl leading-none">This week</h1>
           <p className="text-sm text-muted-foreground">
-            Capture a quick moment — a note, screenshot, or link — as it happens.
+            Capture a quick moment at work — challenges, achievements, learnings
+            and your feelings.
           </p>
         </div>
         <WeekView />
