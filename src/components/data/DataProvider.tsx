@@ -14,17 +14,57 @@ import { useAuth } from "@/hooks/use-auth"
 import { useAppDispatch } from "@/store/hooks"
 import { setMoments } from "@/store/momentsSlice"
 import { setProjects } from "@/store/projectsSlice"
-import { fetchMoments, fetchProjects, seedDefaultProjects } from "@/lib/api"
+import {
+  dedupeProjects,
+  fetchMoments,
+  fetchProjects,
+  seedDefaultProjects,
+} from "@/lib/api"
+import type { Moment, Project } from "@/types/review"
 
 type Status = "loading" | "ready" | "error"
+
+interface LoadedData {
+  projects: Project[]
+  moments: Moment[]
+}
+
+// One shared load per (user, attempt) key. StrictMode mounts the effect twice
+// in dev, so without this both runs would fetch an empty project list and each
+// seed the defaults — leaving the user with two of every project. Caching the
+// promise means the second mount awaits the first load instead of starting its
+// own. The entry is dropped on failure so a retry starts fresh.
+const loadCache = new Map<string, Promise<LoadedData>>()
+
+function loadUserData(key: string): Promise<LoadedData> {
+  let promise = loadCache.get(key)
+  if (!promise) {
+    promise = (async () => {
+      let projects = await fetchProjects()
+      if (projects.length === 0) {
+        projects = await seedDefaultProjects()
+      } else {
+        // Heal any duplicates left by the legacy double-seed race.
+        projects = await dedupeProjects(projects)
+      }
+      const moments = await fetchMoments()
+      return { projects, moments }
+    })()
+    promise.catch(() => loadCache.delete(key))
+    loadCache.set(key, promise)
+  }
+  return promise
+}
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth()
   const [attempt, setAttempt] = useState(0)
+  const loadKey = `${user?.id ?? "anon"}:${attempt}`
 
   return (
     <DataLoader
-      key={`${user?.id ?? "anon"}:${attempt}`}
+      key={loadKey}
+      loadKey={loadKey}
       onRetry={() => setAttempt((a) => a + 1)}
     >
       {children}
@@ -34,9 +74,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
 function DataLoader({
   children,
+  loadKey,
   onRetry,
 }: {
   children: ReactNode
+  loadKey: string
   onRetry: () => void
 }) {
   const dispatch = useAppDispatch()
@@ -45,28 +87,22 @@ function DataLoader({
   useEffect(() => {
     let active = true
 
-    async function load() {
-      try {
-        let projects = await fetchProjects()
-        if (projects.length === 0) {
-          projects = await seedDefaultProjects()
-        }
-        const moments = await fetchMoments()
+    loadUserData(loadKey)
+      .then(({ projects, moments }) => {
         if (!active) return
         dispatch(setProjects(projects))
         dispatch(setMoments(moments))
         setStatus("ready")
-      } catch (err) {
+      })
+      .catch((err) => {
         console.error("Failed to load your data:", err)
         if (active) setStatus("error")
-      }
-    }
+      })
 
-    load()
     return () => {
       active = false
     }
-  }, [dispatch])
+  }, [dispatch, loadKey])
 
   if (status === "loading") {
     return (

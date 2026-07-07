@@ -65,6 +65,51 @@ export async function fetchMoments(): Promise<Moment[]> {
   return (data as MomentRow[]).map(toMoment)
 }
 
+/**
+ * Remove duplicate-named projects and return the cleaned list.
+ *
+ * A legacy seeding race (the loader effect running twice, e.g. under StrictMode)
+ * could insert the default projects more than once, leaving some users with two
+ * of each. This keeps the earliest-created project for each name, repoints any
+ * moments that were on a removed duplicate to the survivor, and deletes the rest.
+ *
+ * `projects` must be ordered by created_at ascending (as fetchProjects returns
+ * them) so the first occurrence of each name is the one kept.
+ */
+export async function dedupeProjects(projects: Project[]): Promise<Project[]> {
+  const survivors: Project[] = []
+  const keptByName = new Map<string, Project>()
+  const removals: { keepId: string; dropId: string }[] = []
+
+  for (const project of projects) {
+    const kept = keptByName.get(project.name)
+    if (kept) {
+      removals.push({ keepId: kept.id, dropId: project.id })
+    } else {
+      keptByName.set(project.name, project)
+      survivors.push(project)
+    }
+  }
+
+  if (removals.length === 0) return projects
+
+  for (const { keepId, dropId } of removals) {
+    // Rescue any moments assigned to the duplicate before deleting it.
+    const { error: moveErr } = await supabase
+      .from("moments")
+      .update({ project_id: keepId })
+      .eq("project_id", dropId)
+    if (moveErr) throw moveErr
+    const { error: delErr } = await supabase
+      .from("projects")
+      .delete()
+      .eq("id", dropId)
+    if (delErr) throw delErr
+  }
+
+  return survivors
+}
+
 /** Seed a brand-new user with the default projects, returning them (with real ids). */
 export async function seedDefaultProjects(): Promise<Project[]> {
   const seeds = DEFAULT_PROJECTS.map((p) => ({
