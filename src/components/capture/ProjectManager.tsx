@@ -70,6 +70,13 @@ export function ProjectManager({ open, onOpenChange }: ProjectManagerProps) {
           )}
         </div>
 
+        {/* Announces add/remove outcomes to assistive tech. */}
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {projects.length === 0
+            ? "No projects"
+            : `${projects.length} project${projects.length === 1 ? "" : "s"}`}
+        </div>
+
         <form
           data-el="project-manager-add"
           className="flex items-center gap-2 border-t pt-4"
@@ -82,10 +89,15 @@ export function ProjectManager({ open, onOpenChange }: ProjectManagerProps) {
             data-el="project-manager-add-input"
             aria-label="New project name"
             placeholder="New project name…"
+            autoFocus
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
-          <Button type="submit" disabled={!newName.trim()}>
+          <Button
+            type="submit"
+            className="bg-interactive text-interactive-foreground hover:bg-interactive/90"
+            disabled={!newName.trim()}
+          >
             <Plus className="size-4" /> Add
           </Button>
         </form>

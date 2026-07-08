@@ -9,15 +9,18 @@ import type { Category } from "@/types/review"
 interface CategoryPickerProps {
   value: Category
   onChange: (category: Category) => void
+  /** id of a visible label to name the group; falls back to a built-in label. */
+  labelledBy?: string
 }
 
 /** A row of selectable colored category chips (Dovetail-style). */
-export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
+export function CategoryPicker({ value, onChange, labelledBy }: CategoryPickerProps) {
   return (
     <div
       data-el="capture-composer-category-picker"
       role="radiogroup"
-      aria-label="Category"
+      aria-labelledby={labelledBy}
+      aria-label={labelledBy ? undefined : "Category"}
       className="flex flex-wrap gap-1.5"
       onKeyDown={(e) => {
         const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]

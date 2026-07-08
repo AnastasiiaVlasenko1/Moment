@@ -46,6 +46,7 @@ export function WeekView() {
     >
       <WeekHeader
         days={week.days}
+        weekOffset={week.weekOffset}
         showWeekends={week.showWeekends}
         onToggleWeekends={week.toggleWeekends}
         onPrev={week.goPrev}

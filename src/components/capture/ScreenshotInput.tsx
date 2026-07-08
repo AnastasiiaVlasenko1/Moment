@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useId, useMemo, useRef } from "react"
 import { ImagePlus, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -9,6 +9,8 @@ interface ScreenshotInputProps {
   existingUrl?: string | null
   /** Called when the user removes the already-saved screenshot. */
   onRemoveExisting?: () => void
+  /** id of a visible label to name the upload control. */
+  labelledBy?: string
 }
 
 /** Paste-or-upload image drop zone with a live preview. */
@@ -17,8 +19,10 @@ export function ScreenshotInput({
   onChange,
   existingUrl,
   onRemoveExisting,
+  labelledBy,
 }: ScreenshotInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const dropzoneId = useId()
   // Only the newly-selected file owns an object URL that needs revoking here;
   // `existingUrl` is owned by the caller.
   const filePreview = useMemo(
@@ -68,6 +72,8 @@ export function ScreenshotInput({
       type="button"
       onClick={() => inputRef.current?.click()}
       onPaste={handlePaste}
+      id={dropzoneId}
+      aria-labelledby={labelledBy ? `${labelledBy} ${dropzoneId}` : undefined}
       data-el="capture-composer-screenshot-dropzone"
       className={cn(
         "flex w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed py-8 text-sm text-muted-foreground",
