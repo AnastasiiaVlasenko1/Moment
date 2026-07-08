@@ -214,7 +214,7 @@ export function MomentComposer({
                   variant="link"
                   size="sm"
                   data-el="capture-composer-attach-screenshot"
-                  className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                  className="h-auto gap-1.5 p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowScreenshot(true)}
                 >
                   <Image className="size-3.5" aria-hidden="true" /> Attach screenshot
@@ -226,7 +226,7 @@ export function MomentComposer({
                   variant="link"
                   size="sm"
                   data-el="capture-composer-add-link"
-                  className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                  className="h-auto gap-1.5 p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowLink(true)}
                 >
                   <LinkIcon className="size-3.5" aria-hidden="true" /> Add link
