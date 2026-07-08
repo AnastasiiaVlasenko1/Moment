@@ -26,18 +26,18 @@ export function AppHeader() {
       data-el="global-header"
       className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur"
     >
-      <div className="grid h-14 grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-2 [grid-template-areas:'logo_signout''nav_nav'] md:h-14 md:grid-cols-[1fr_auto_1fr] md:gap-4 md:px-6 md:py-0 md:[grid-template-areas:'logo_nav_signout'] lg:px-8">
         <Link
           to="/"
           data-el="global-nav-logo"
           aria-label="Moments home"
-          className="flex items-center justify-self-start"
+          className="flex items-center justify-self-start [grid-area:logo]"
         >
           <MomentsLogo markClassName="size-11" wordmarkClassName="text-3xl" />
         </Link>
         <nav
           data-el="global-nav-menu"
-          className="flex items-center gap-1 justify-self-center rounded-full bg-secondary p-1"
+          className="flex items-center gap-1 justify-self-center rounded-full bg-secondary p-1 [grid-area:nav]"
         >
           {NAV.map((item) => {
             const Icon = item.icon
@@ -65,7 +65,7 @@ export function AppHeader() {
         </nav>
         <div
           data-el="global-nav-user"
-          className="flex items-center justify-self-end"
+          className="flex items-center justify-self-end [grid-area:signout]"
         >
           <Button
             data-el="global-signout"
@@ -76,7 +76,7 @@ export function AppHeader() {
             className="h-11 min-w-11"
           >
             <LogOut className="size-4" />
-            <span className="hidden sm:inline">Sign out</span>
+            <span className="hidden md:inline">Sign out</span>
           </Button>
         </div>
       </div>

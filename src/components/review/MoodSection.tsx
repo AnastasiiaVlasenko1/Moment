@@ -31,10 +31,11 @@ export function MoodSection({ model }: { model: ReviewModel }) {
         {ranked.map(([label, count]) => (
           <Badge
             key={label}
-            className={cn("gap-1.5 border-transparent", CATEGORY_CONFIG.mood.chipClass)}
+            title={label}
+            className={cn("max-w-full gap-1.5 border-transparent", CATEGORY_CONFIG.mood.chipClass)}
           >
-            {label}
-            <span className="rounded-full bg-black/5 px-1.5 text-xs dark:bg-white/10">
+            <span className="min-w-0 truncate">{label}</span>
+            <span className="shrink-0 rounded-full bg-black/5 px-1.5 text-xs dark:bg-white/10">
               {count}
             </span>
           </Badge>

@@ -62,20 +62,20 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
       <CardContent className="flex flex-col gap-6">
         {groups.map((group) => (
           <div key={group.key} data-el="review-gallery-group">
-            <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-2">
                 <span
                   aria-hidden="true"
-                  className="size-2.5 rounded-full"
+                  className="size-2.5 shrink-0 rounded-full"
                   style={{ backgroundColor: group.color }}
                 />
-                <h3 className="font-medium">{group.name}</h3>
-                <span className="text-xs text-muted-foreground">
+                <h3 className="min-w-0 truncate font-medium">{group.name}</h3>
+                <span className="shrink-0 text-xs text-muted-foreground">
                   {group.moments.length} image
                   {group.moments.length === 1 ? "" : "s"}
                 </span>
               </div>
-              <CardAction>
+              <CardAction className="shrink-0">
                 <Button
                   variant="ghost"
                   size="sm"
