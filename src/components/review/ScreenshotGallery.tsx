@@ -69,7 +69,12 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
                   className="size-2.5 shrink-0 rounded-full"
                   style={{ backgroundColor: group.color }}
                 />
-                <h3 className="min-w-0 truncate font-medium">{group.name}</h3>
+                <h3
+                  title={group.name}
+                  className="min-w-16 truncate font-medium"
+                >
+                  {group.name}
+                </h3>
                 <span className="shrink-0 text-xs text-muted-foreground">
                   {group.moments.length} image
                   {group.moments.length === 1 ? "" : "s"}

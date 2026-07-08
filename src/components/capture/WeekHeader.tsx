@@ -39,7 +39,10 @@ export function WeekHeader({
       disabled={weekOffset === 0}
       aria-current={weekOffset === 0 ? "true" : undefined}
     >
-      <TodayIcon className="size-4" />
+      <TodayIcon
+        key={weekOffset > 0 ? "back" : weekOffset < 0 ? "forward" : "current"}
+        className="size-4 animate-in fade-in-0 duration-200"
+      />
       This week
     </Button>
   )
