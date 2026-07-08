@@ -16,13 +16,13 @@ export function MonthPicker({
   onThisMonth,
 }: MonthPickerProps) {
   return (
-    <div data-el="review-month-picker" className="flex items-center gap-2">
+    <div data-el="review-month-picker" className="flex flex-wrap items-center gap-2">
       <Button variant="outline" size="icon" className="size-11" onClick={onPrev} aria-label="Previous month">
         <ChevronLeft className="size-4" />
       </Button>
       <span
         data-el="review-month-label"
-        className="min-w-36 text-center font-handwritten text-2xl leading-none"
+        className="min-w-32 text-center font-handwritten text-2xl leading-none"
       >
         {monthLabel(monthKey)}
       </span>

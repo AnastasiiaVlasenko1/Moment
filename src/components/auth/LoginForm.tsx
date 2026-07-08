@@ -108,6 +108,7 @@ export function LoginForm() {
             <Button
               data-el="login-submit"
               type="submit"
+              variant="interactive"
               className="w-full"
               disabled={submitting}
             >

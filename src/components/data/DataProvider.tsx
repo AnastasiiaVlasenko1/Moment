@@ -128,7 +128,7 @@ function DataLoader({
             Check your connection and try again.
           </p>
         </div>
-        <Button data-el="data-error-retry" onClick={onRetry}>
+        <Button data-el="data-error-retry" variant="interactive" onClick={onRetry}>
           Retry
         </Button>
       </div>

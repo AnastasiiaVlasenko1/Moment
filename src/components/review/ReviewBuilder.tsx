@@ -45,7 +45,7 @@ export function ReviewBuilder() {
               they'll assemble here.
             </EmptyDescription>
           </EmptyHeader>
-          <Button asChild>
+          <Button asChild variant="interactive">
             <Link to="/">Go to capture</Link>
           </Button>
         </Empty>

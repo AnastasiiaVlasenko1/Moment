@@ -150,6 +150,22 @@ export function ButtonDefault() {
 
 ```
 
+### Interactive (sage CTA)
+
+Use for filled primary calls-to-action (Save, Log a moment, Sign in, Retry, Generate).
+Renders in the app's sage `--interactive` (#a7bd7f) color rather than the amber `--primary`
+used by the `default` variant. Prefer this over the `default` variant for filled CTAs so
+they stay visually consistent across the app.
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export function ButtonInteractive() {
+  return <Button variant="interactive">Save moment</Button>
+}
+
+```
+
 ### Outline
 
 ```tsx
