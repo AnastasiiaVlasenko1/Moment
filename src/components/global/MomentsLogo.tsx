@@ -49,9 +49,16 @@ interface MomentsLogoProps {
 /** Full brand lockup — the Moments mark next to the "Moments" wordmark in Caveat. */
 export function MomentsLogo({ className, markClassName, wordmarkClassName }: MomentsLogoProps) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
+    <span
+      className={cn("inline-flex items-center gap-2", className)}
+      role="img"
+      aria-label="Moments"
+    >
       <MomentsMark className={markClassName} label="" />
-      <span className={cn("font-handwritten text-2xl leading-none text-foreground", wordmarkClassName)}>
+      <span
+        aria-hidden="true"
+        className={cn("font-handwritten text-2xl leading-none text-foreground", wordmarkClassName)}
+      >
         Moments
       </span>
     </span>

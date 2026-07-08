@@ -27,7 +27,12 @@ export function AppHeader() {
       className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur"
     >
       <div className="flex h-14 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link to="/" data-el="global-nav-logo" className="flex items-center">
+        <Link
+          to="/"
+          data-el="global-nav-logo"
+          aria-label="Moments home"
+          className="flex items-center"
+        >
           <MomentsLogo markClassName="size-11" wordmarkClassName="text-3xl" />
         </Link>
         <div className="flex items-center gap-3">
