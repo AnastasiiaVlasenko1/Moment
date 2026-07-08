@@ -1,7 +1,8 @@
 // The email + password sign-in / sign-up card. Logic lives in use-login-form.ts.
 
-import { MailCheck, Sparkles } from "lucide-react"
+import { MailCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { MomentsMark } from "@/components/global/MomentsLogo"
 import {
   Card,
   CardContent,
@@ -47,7 +48,7 @@ export function LoginForm() {
   return (
     <Card data-el="login-card" className="w-full max-w-sm">
       <CardHeader className="items-center text-center">
-        <Sparkles className="size-8 text-primary" />
+        <MomentsMark className="size-12" />
         <CardTitle data-el="login-title" className="font-handwritten text-3xl leading-none">
           {isSignup ? "Create your account" : "Welcome back"}
         </CardTitle>

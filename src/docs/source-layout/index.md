@@ -19,7 +19,8 @@ src/
 │   ├── data/               # Backend data loading
 │   │   └── DataProvider.tsx    # Loads moments/projects from Supabase on login (spinner/retry)
 │   ├── global/
-│   │   └── AppHeader.tsx  # Site-wide header + primary nav + user email / sign-out
+│   │   ├── AppHeader.tsx    # Site-wide header + primary nav + user email / sign-out
+│   │   └── MomentsLogo.tsx  # Brand logo: MomentsMark (Bloom app icon) + MomentsLogo lockup (mark + Caveat wordmark)
 │   ├── shared/
 │   │   └── MomentTags.tsx # CategoryChip + ProjectChip (used by capture & review)
 │   ├── capture/           # Capture feature (week view + block picker)
