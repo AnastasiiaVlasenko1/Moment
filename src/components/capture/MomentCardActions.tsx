@@ -55,8 +55,8 @@ export function MomentCardActions({ moment }: { moment: Moment }) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              variant="destructive"
               onClick={() => dispatch(deleteMoment(moment.id))}
-              className="bg-destructive text-white hover:bg-destructive/90"
             >
               Delete moment
             </AlertDialogAction>

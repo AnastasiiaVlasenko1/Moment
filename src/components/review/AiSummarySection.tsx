@@ -54,6 +54,7 @@ export function AiSummarySection({ model }: { model: ReviewModel }) {
         <CardAction>
           <Button
             data-el="review-ai-summary-generate"
+            variant="interactive"
             size="sm"
             onClick={generate}
             disabled={status === "loading"}

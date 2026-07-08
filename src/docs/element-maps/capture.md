@@ -5,7 +5,8 @@ Route: `/` — the five-day week view for logging moments.
 capture
 ├── capture-week                           — Week-view container
 │   ├── capture-week-header                — Week nav ("This week" + prev/next) + weekend toggle
-│   │   └── capture-week-range             — "Jul 6 – 10, 2026" range label
+│   │   ├── capture-week-range             — "Jul 6 – 10, 2026" range label (desktop/tablet layout)
+│   │   └── capture-week-range-mobile      — Same range label in the stacked mobile layout
 │   ├── capture-week-grid                  — Grid of day columns
 │   │   └── capture-day-column             — One day (repeated); header + moment list
 │   │       └── capture-moment-card        — A single logged moment, diary-entry style (repeated)
