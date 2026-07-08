@@ -9,12 +9,14 @@ capture
 │   │   └── capture-week-range             — "Jul 6 – 10, 2026" range label
 │   ├── capture-week-grid                  — Grid of day columns
 │   │   └── capture-day-column             — One day (repeated); header + moment list
-│   │       └── capture-moment-card        — A single logged moment (repeated)
-│   │           ├── capture-moment-card-category    — Category tag (top-left)
-│   │           ├── capture-moment-card-project     — Project name in bold (if set)
-│   │           ├── capture-moment-card-note        — The note text (if any)
-│   │           ├── capture-moment-card-link        — External link (if any)
-│   │           ├── capture-moment-card-attachment  — Small screenshot preview (if any)
+│   │       └── capture-moment-card        — A single logged moment, diary-entry style (repeated)
+│   │           ├── capture-moment-card-band        — Category-tinted header band
+│   │           │   ├── capture-moment-card-category    — Category icon + label (uppercase)
+│   │           │   └── capture-moment-card-time        — Handwritten capture time (e.g. "9:14 AM")
+│   │           ├── capture-moment-card-note        — The note text on ruled paper (if any)
+│   │           ├── capture-moment-card-attachment  — Screenshot preview, full-width (if any)
+│   │           ├── capture-moment-card-link        — External link, muted (if any)
+│   │           ├── capture-moment-card-project     — Project pill (if set)
 │   │           ├── capture-moment-card-edit    — Opens the composer to edit this moment
 │   │           └── capture-moment-card-delete  — Deletes this moment
 │   ├── capture-bar                        — Floating "Log a moment" bar

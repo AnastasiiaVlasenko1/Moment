@@ -27,13 +27,14 @@ export function CategoryChip({
 export function ProjectChip({
   project,
   className,
+  ...props
 }: {
   project: Project | undefined
   className?: string
-}) {
+} & React.ComponentProps<typeof Badge>) {
   if (!project) return null
   return (
-    <Badge variant="outline" className={cn("gap-1.5", className)}>
+    <Badge variant="outline" className={cn("gap-1.5", className)} {...props}>
       <span
         aria-hidden="true"
         className="size-2 rounded-full"
