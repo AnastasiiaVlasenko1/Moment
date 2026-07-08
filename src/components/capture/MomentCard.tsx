@@ -2,15 +2,16 @@ import type { CSSProperties } from "react"
 import { ExternalLink } from "lucide-react"
 import { useAppSelector } from "@/store/hooks"
 import { formatTime } from "@/lib/dates"
+import { cn } from "@/lib/utils"
 import { CATEGORY_CONFIG } from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { ProjectChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
 import { MomentCardActions } from "./MomentCardActions"
 
-// Notebook ruling: a hairline sits under each line of text — none above the
-// first line, one closing the last — tinted with the category color.
-const RULE = "color-mix(in srgb, var(--cat) 20%, var(--border))"
+// Notebook ruling: a faint neutral hairline sits under each line of text —
+// none above the first line, one closing the last.
+const RULE = "color-mix(in srgb, var(--foreground) 12%, transparent)"
 const ruledNote: CSSProperties = {
   lineHeight: "1.6rem",
   backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), ${RULE} calc(1.6rem - 1px), ${RULE} 1.6rem)`,
@@ -31,22 +32,24 @@ export function MomentCard({ moment }: { moment: Moment }) {
     <div
       data-el="capture-moment-card"
       className="group shrink-0 overflow-hidden rounded-lg border bg-card transition-shadow shadow-[0_2px_8px_-4px_rgba(90,70,45,0.10)] hover:shadow-[0_10px_28px_-10px_rgba(90,70,45,0.18)] dark:shadow-[0_2px_8px_-4px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_12px_32px_-10px_rgba(0,0,0,0.55)]"
-      style={{ "--cat": meta.chartToken } as CSSProperties}
     >
       <div
         data-el="capture-moment-card-band"
-        className="flex items-center justify-between gap-2 border-b px-2.5 py-1.5 border-[color-mix(in_srgb,var(--cat)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat)_32%,var(--card))]"
+        className={cn(
+          "flex items-center justify-between gap-2 border-b border-border px-2.5 py-1.5",
+          meta.chipClass,
+        )}
       >
         <span
           data-el="capture-moment-card-category"
-          className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-wide uppercase text-[color-mix(in_srgb,var(--cat)_80%,var(--foreground))]"
+          className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-wide uppercase"
         >
           <Icon aria-hidden="true" className="size-3.5 shrink-0" />
           <span className="truncate">{meta.label}</span>
         </span>
         <span
           data-el="capture-moment-card-time"
-          className="font-handwritten shrink-0 text-lg leading-none text-[color-mix(in_srgb,var(--cat)_68%,var(--foreground))]"
+          className="font-handwritten shrink-0 text-lg leading-none opacity-80"
         >
           {formatTime(moment.createdAt)}
         </span>
