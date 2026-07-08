@@ -51,7 +51,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
         </span>
         <span
           data-el="capture-moment-card-time"
-          className="font-handwritten shrink-0 text-lg leading-none opacity-80"
+          className="font-handwritten shrink-0 text-lg leading-none"
         >
           {formatTime(moment.createdAt)}
         </span>
@@ -84,7 +84,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
               target="_blank"
               rel="noreferrer"
               data-el="capture-moment-card-link"
-              className="flex max-w-full items-center gap-1 text-muted-foreground hover:text-link hover:underline"
+              className="flex max-w-full items-center gap-1 rounded-sm text-muted-foreground hover:text-link hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
               <span className="truncate" title={moment.url}>

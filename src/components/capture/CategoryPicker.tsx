@@ -16,6 +16,8 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
   return (
     <div
       data-el="capture-composer-category-picker"
+      role="radiogroup"
+      aria-label="Category"
       className="flex flex-wrap gap-1.5"
     >
       {CATEGORY_ORDER.map((id) => {
@@ -27,6 +29,8 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
           <button
             key={id}
             type="button"
+            role="radio"
+            aria-checked={active}
             onClick={() => onChange(id)}
             style={active ? surface.style : undefined}
             className={cn(
@@ -36,7 +40,7 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
                 : "border-border text-muted-foreground hover:bg-accent",
             )}
           >
-            <Icon className="size-3.5" />
+            <Icon aria-hidden="true" className="size-3.5" />
             {meta.label}
           </button>
         )
