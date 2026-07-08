@@ -19,6 +19,19 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
       role="radiogroup"
       aria-label="Category"
       className="flex flex-wrap gap-1.5"
+      onKeyDown={(e) => {
+        const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]
+        if (!keys.includes(e.key)) return
+        e.preventDefault()
+        const currentIndex = CATEGORY_ORDER.indexOf(value)
+        const delta = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1
+        const nextIndex =
+          (currentIndex + delta + CATEGORY_ORDER.length) % CATEGORY_ORDER.length
+        onChange(CATEGORY_ORDER[nextIndex])
+        const radios =
+          e.currentTarget.querySelectorAll<HTMLButtonElement>("[role=radio]")
+        radios[nextIndex]?.focus()
+      }}
     >
       {CATEGORY_ORDER.map((id) => {
         const meta = CATEGORY_CONFIG[id]
@@ -31,10 +44,11 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
             type="button"
             role="radio"
             aria-checked={active}
+            tabIndex={active ? 0 : -1}
             onClick={() => onChange(id)}
             style={active ? surface.style : undefined}
             className={cn(
-              "inline-flex items-center gap-1 rounded-md border px-2.5 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+              "inline-flex items-center gap-1 rounded-md border px-2.5 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none",
               active
                 ? cn("font-medium", surface.className)
                 : "border-border text-muted-foreground hover:bg-accent",

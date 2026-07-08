@@ -51,7 +51,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
         </span>
         <span
           data-el="capture-moment-card-time"
-          className="font-handwritten shrink-0 text-lg leading-none"
+          className="font-handwritten shrink-0 text-lg leading-tight"
         >
           {formatTime(moment.createdAt)}
         </span>

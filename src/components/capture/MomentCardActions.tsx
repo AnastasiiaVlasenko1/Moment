@@ -29,7 +29,7 @@ export function MomentCardActions({ moment }: { moment: Moment }) {
         onClick={() => setEditing(true)}
         aria-label="Edit moment"
         data-el="capture-moment-card-edit"
-        className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className="flex size-11 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         <Pencil className="size-3.5" />
       </button>
@@ -39,7 +39,7 @@ export function MomentCardActions({ moment }: { moment: Moment }) {
             type="button"
             aria-label="Delete moment"
             data-el="capture-moment-card-delete"
-            className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="flex size-11 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <Trash2 className="size-3.5" />
           </button>
@@ -58,7 +58,7 @@ export function MomentCardActions({ moment }: { moment: Moment }) {
               onClick={() => dispatch(deleteMoment(moment.id))}
               className="bg-destructive text-white hover:bg-destructive/90"
             >
-              Delete
+              Delete moment
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
