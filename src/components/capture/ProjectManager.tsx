@@ -70,6 +70,13 @@ export function ProjectManager({ open, onOpenChange }: ProjectManagerProps) {
           )}
         </div>
 
+        {/* Announces add/remove outcomes to assistive tech. */}
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {projects.length === 0
+            ? "No projects"
+            : `${projects.length} project${projects.length === 1 ? "" : "s"}`}
+        </div>
+
         <form
           data-el="project-manager-add"
           className="flex items-center gap-2 border-t pt-4"

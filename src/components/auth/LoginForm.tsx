@@ -10,7 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field"
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useLoginForm } from "@/components/auth/use-login-form"
 
@@ -82,11 +88,17 @@ export function LoginForm() {
                 type="password"
                 autoComplete={isSignup ? "new-password" : "current-password"}
                 placeholder="••••••••"
+                aria-describedby={isSignup ? "login-password-hint" : undefined}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 minLength={6}
                 required
               />
+              {isSignup && (
+                <FieldDescription id="login-password-hint">
+                  Must be at least 6 characters.
+                </FieldDescription>
+              )}
               {error && (
                 <FieldError role="alert" data-el="login-error">
                   {error}

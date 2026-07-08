@@ -110,151 +110,151 @@ export function MomentComposer({
         </SheetHeader>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
-        <div className="grid gap-1.5">
-          <Label id="composer-category-label">Category</Label>
-          <CategoryPicker
-            labelledBy="composer-category-label"
-            value={values.category}
-            onChange={(c) => set("category", c)}
-          />
-        </div>
+          <div className="grid gap-1.5">
+            <Label id="composer-category-label">Category</Label>
+            <CategoryPicker
+              labelledBy="composer-category-label"
+              value={values.category}
+              onChange={(c) => set("category", c)}
+            />
+          </div>
 
-        {isMood && (
-          <div className="flex flex-wrap gap-1.5" data-el="capture-composer-mood-presets">
-            {MOOD_PRESETS.map((mood) => {
-              const active = values.text === mood
-              return (
+          {isMood && (
+            <div className="flex flex-wrap gap-1.5" data-el="capture-composer-mood-presets">
+              {MOOD_PRESETS.map((mood) => {
+                const active = values.text === mood
+                return (
+                  <button
+                    key={mood}
+                    type="button"
+                    onClick={() => set("text", mood)}
+                    aria-pressed={active}
+                    className={cn(
+                      "inline-flex items-center gap-1 rounded-full border px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+                      active
+                        ? cn("border-transparent font-medium", CATEGORY_CONFIG.mood.chipClass)
+                        : "border-border text-muted-foreground hover:bg-accent",
+                    )}
+                  >
+                    {active && <Check className="size-3.5" aria-hidden="true" />}
+                    {mood}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
+          <div className="grid gap-1.5">
+            <Label htmlFor="moment-note">Note</Label>
+            <Textarea
+              id="moment-note"
+              data-el="capture-composer-text"
+              placeholder={isMood ? "How did the day feel?" : "What happened?"}
+              value={values.text}
+              onChange={(e) => set("text", e.target.value)}
+              rows={3}
+            />
+          </div>
+
+          {/* Optional attachments — revealed on demand */}
+          {showScreenshot && (
+            <div className="grid gap-1.5">
+              <Label>Attachments</Label>
+              <div className="relative">
+                <ScreenshotInput
+                  file={values.file}
+                  onChange={(f) => set("file", f)}
+                  existingUrl={existingImageUrl}
+                  onRemoveExisting={() => set("existingImageId", undefined)}
+                />
                 <button
-                  key={mood}
                   type="button"
-                  onClick={() => set("text", mood)}
-                  aria-pressed={active}
-                  className={cn(
-                    "inline-flex items-center gap-1 rounded-full border px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
-                    active
-                      ? cn("border-transparent font-medium", CATEGORY_CONFIG.mood.chipClass)
-                      : "border-border text-muted-foreground hover:bg-accent",
-                  )}
+                  onClick={removeScreenshot}
+                  aria-label="Remove screenshot field"
+                  className="absolute -top-2 -right-2 flex size-9 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
-                  {active && <Check className="size-3.5" aria-hidden="true" />}
-                  {mood}
+                  <X className="size-4" />
                 </button>
-              )
-            })}
-          </div>
-        )}
-
-        <div className="grid gap-1.5">
-          <Label htmlFor="moment-note">Note</Label>
-          <Textarea
-            id="moment-note"
-            data-el="capture-composer-text"
-            placeholder={isMood ? "How did the day feel?" : "What happened?"}
-            value={values.text}
-            onChange={(e) => set("text", e.target.value)}
-            rows={3}
-          />
-        </div>
-
-        {/* Optional attachments — revealed on demand */}
-        {showScreenshot && (
-          <div className="grid gap-1.5">
-            <Label>Attachments</Label>
-            <div className="relative">
-              <ScreenshotInput
-                file={values.file}
-                onChange={(f) => set("file", f)}
-                existingUrl={existingImageUrl}
-                onRemoveExisting={() => set("existingImageId", undefined)}
-              />
-              <button
-                type="button"
-                onClick={removeScreenshot}
-                aria-label="Remove screenshot field"
-                className="absolute -top-2 -right-2 flex size-9 items-center justify-center rounded-full border bg-background text-muted-foreground shadow-sm hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              >
-                <X className="size-4" />
-              </button>
+              </div>
             </div>
-          </div>
-        )}
-        {showLink && (
-          <div className="grid gap-1.5">
-            <Label htmlFor="moment-url">Link</Label>
-            <div className="flex items-center gap-2">
+          )}
+          {showLink && (
+            <div className="grid gap-1.5">
+              <Label htmlFor="moment-url">Link</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="moment-url"
+                  data-el="capture-composer-url"
+                  placeholder="https://…"
+                  value={values.url}
+                  onChange={(e) => set("url", e.target.value)}
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={removeLink}
+                  aria-label="Remove link field"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {(!showScreenshot || !showLink) && (
+            <div
+              data-el="capture-composer-attach-actions"
+              className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground"
+            >
+              {!showScreenshot && (
+                <Button
+                  type="button"
+                  variant="link"
+                  size="sm"
+                  data-el="capture-composer-attach-screenshot"
+                  className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowScreenshot(true)}
+                >
+                  <Image className="size-3.5" /> Attach screenshot
+                </Button>
+              )}
+              {!showLink && (
+                <Button
+                  type="button"
+                  variant="link"
+                  size="sm"
+                  data-el="capture-composer-add-link"
+                  className="h-auto p-0 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowLink(true)}
+                >
+                  <LinkIcon className="size-3.5" /> Add link
+                </Button>
+              )}
+            </div>
+          )}
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="grid gap-1.5">
+              <Label id="composer-project-label">Project</Label>
+              <ProjectPicker
+                labelledBy="composer-project-label"
+                value={values.projectId}
+                onChange={(p) => set("projectId", p)}
+                allowNone={isMood}
+              />
+            </div>
+            <div className="grid gap-1.5">
+              <Label htmlFor="moment-date">Date</Label>
               <Input
-                id="moment-url"
-                data-el="capture-composer-url"
-                placeholder="https://…"
-                value={values.url}
-                onChange={(e) => set("url", e.target.value)}
-                autoFocus
+                id="moment-date"
+                data-el="capture-composer-date"
+                type="date"
+                value={values.date}
+                onChange={(e) => set("date", e.target.value)}
               />
-              <button
-                type="button"
-                onClick={removeLink}
-                aria-label="Remove link field"
-                className="flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              >
-                <X className="size-4" />
-              </button>
             </div>
           </div>
-        )}
-
-        {(!showScreenshot || !showLink) && (
-          <div
-            data-el="capture-composer-attach-actions"
-            className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground"
-          >
-            {!showScreenshot && (
-              <Button
-                type="button"
-                variant="link"
-                size="sm"
-                data-el="capture-composer-attach-screenshot"
-                className="h-auto p-0 text-muted-foreground hover:text-foreground"
-                onClick={() => setShowScreenshot(true)}
-              >
-                <Image className="size-3.5" /> Attach screenshot
-              </Button>
-            )}
-            {!showLink && (
-              <Button
-                type="button"
-                variant="link"
-                size="sm"
-                data-el="capture-composer-add-link"
-                className="h-auto p-0 text-muted-foreground hover:text-foreground"
-                onClick={() => setShowLink(true)}
-              >
-                <LinkIcon className="size-3.5" /> Add link
-              </Button>
-            )}
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 gap-3">
-          <div className="grid gap-1.5">
-            <Label id="composer-project-label">Project</Label>
-            <ProjectPicker
-              labelledBy="composer-project-label"
-              value={values.projectId}
-              onChange={(p) => set("projectId", p)}
-              allowNone={isMood}
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="moment-date">Date</Label>
-            <Input
-              id="moment-date"
-              data-el="capture-composer-date"
-              type="date"
-              value={values.date}
-              onChange={(e) => set("date", e.target.value)}
-            />
-          </div>
-        </div>
         </div>
 
         <SheetFooter className="flex-row justify-end gap-2 border-t">
