@@ -7,6 +7,9 @@ import { RequireAuth } from "@/components/auth/RequireAuth"
 const Capture = lazy(() => import("@/pages/Capture"))
 const Review = lazy(() => import("@/pages/Review"))
 const Login = lazy(() => import("@/pages/Login"))
+const Signup = lazy(() => import("@/pages/Signup"))
+const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
+const ResetPassword = lazy(() => import("@/pages/ResetPassword"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
 
 function RouteFallback() {
@@ -14,6 +17,8 @@ function RouteFallback() {
     <div
       data-el="app-route-fallback"
       className="flex min-h-svh items-center justify-center"
+      role="status"
+      aria-label="Loading"
     >
       <Spinner className="size-6 text-muted-foreground" />
     </div>
@@ -26,6 +31,9 @@ function App() {
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Capture />} />
             <Route path="/review" element={<Review />} />
