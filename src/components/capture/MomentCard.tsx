@@ -30,7 +30,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
   return (
     <div
       data-el="capture-moment-card"
-      className="group shrink-0 overflow-hidden rounded-lg border bg-card shadow-xs transition-shadow hover:shadow-md"
+      className="group shrink-0 overflow-hidden rounded-lg border bg-card transition-shadow shadow-[0_2px_8px_-4px_rgba(90,70,45,0.10)] hover:shadow-[0_10px_28px_-10px_rgba(90,70,45,0.18)] dark:shadow-[0_2px_8px_-4px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_12px_32px_-10px_rgba(0,0,0,0.55)]"
       style={{ "--cat": meta.chartToken } as CSSProperties}
     >
       <div
