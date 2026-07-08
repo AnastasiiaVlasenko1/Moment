@@ -85,7 +85,11 @@ export function ProjectManager({ open, onOpenChange }: ProjectManagerProps) {
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
-          <Button type="submit" disabled={!newName.trim()}>
+          <Button
+            type="submit"
+            className="bg-interactive text-interactive-foreground hover:bg-interactive/90"
+            disabled={!newName.trim()}
+          >
             <Plus className="size-4" /> Add
           </Button>
         </form>

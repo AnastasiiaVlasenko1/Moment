@@ -49,6 +49,7 @@ export function WeekHeader({
           id="weekend-toggle"
           checked={showWeekends}
           onCheckedChange={onToggleWeekends}
+          className="data-[state=checked]:bg-interactive"
         />
         <Label htmlFor="weekend-toggle" className="text-sm text-muted-foreground">
           Weekends

@@ -261,6 +261,7 @@ export function MomentComposer({
           </Button>
           <Button
             data-el="capture-composer-save"
+            className="bg-interactive text-interactive-foreground hover:bg-interactive/90"
             onClick={handleSubmit}
             disabled={!canSubmit}
           >

@@ -11,6 +11,10 @@
     --popover-foreground: #3b342b;
     --primary: #d8a24a;
     --primary-foreground: #3b342b;
+    /* Pastel sage — a lightened take on the logo's moss green (#5f6e38).
+       Used for filled interactive CTAs (Log a moment, Weekends toggle, Save). */
+    --interactive: #a7bd7f;
+    --interactive-foreground: #3b342b;
     --secondary: #efe6d6;
     --secondary-foreground: #6b5a3e;
     --muted: #ede6da;
@@ -25,7 +29,9 @@
     --switch-background: #d9cdb8;
     --font-weight-medium: 500;
     --font-weight-normal: 400;
-    --ring: #d8a24a;
+    /* Focus ring follows the green "action" language; deepened from the pastel
+       fill so it stays visible (>= 3:1) against the cream background. */
+    --ring: #6f8043;
     /* Amber is too light for text on cream; use a darker amber for link/interactive text (>= 4.5:1). */
     --link: #8c5e18;
     /* Warm categorical accents: mood(1) achievement(2) learning(3) interesting(4) challenge(5) */
@@ -42,7 +48,7 @@
     --sidebar-accent: #ede0c8;
     --sidebar-accent-foreground: #5c4a2e;
     --sidebar-border: rgba(90, 70, 45, 0.15);
-    --sidebar-ring: #d8a24a;
+    --sidebar-ring: #6f8043;
 }
 
 .dark {
@@ -55,6 +61,9 @@
     --popover-foreground: #ede3d2;
     --primary: #e0b15e;
     --primary-foreground: #241e19;
+    /* Pastel sage brightened for espresso; keeps dark text readable. */
+    --interactive: #a9c07a;
+    --interactive-foreground: #241e19;
     --secondary: #3a322a;
     --secondary-foreground: #e0d4bf;
     --muted: #352d26;
@@ -67,7 +76,8 @@
     --input: rgba(237, 227, 210, 0.15);
     --input-background: #2e2721;
     --switch-background: #4a4038;
-    --ring: #e0b15e;
+    /* Brighter sage so the ring reads against the espresso background. */
+    --ring: #a9c07a;
     /* On espresso the bright amber already clears 4.5:1, so link text can match the accent. */
     --link: #e0b15e;
     --font-weight-medium: 500;
@@ -85,7 +95,7 @@
     --sidebar-accent: #3f352a;
     --sidebar-accent-foreground: #edd9b4;
     --sidebar-border: rgba(237, 227, 210, 0.12);
-    --sidebar-ring: #e0b15e;
+    --sidebar-ring: #a9c07a;
 }
 
 @theme inline {
@@ -98,6 +108,8 @@
     --color-popover-foreground: var(--popover-foreground);
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+    --color-interactive: var(--interactive);
+    --color-interactive-foreground: var(--interactive-foreground);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
     --color-muted: var(--muted);
