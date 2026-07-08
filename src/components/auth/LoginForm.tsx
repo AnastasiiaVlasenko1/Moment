@@ -55,7 +55,7 @@ export function LoginForm() {
         <CardDescription data-el="login-subtitle">
           {isSignup
             ? "Sign up to start capturing your monthly moments."
-            : "Sign in to Monthly Review Builder."}
+            : "Sign in to Moments."}
         </CardDescription>
       </CardHeader>
       <CardContent>

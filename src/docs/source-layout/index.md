@@ -102,3 +102,24 @@ src/
 ├── main.tsx               # Entry point — wraps <App /> in <StrictMode> + Redux <Provider>
 └── App.tsx                # Router: /, /review, catch-all
 ```
+
+## Project root (non-`src/`)
+
+App-icon / PWA assets that ship as static files:
+
+```
+public/
+├── moments-logo.svg          # SVG favicon — Bloom mark on rounded cream tile
+├── icon-source.svg           # Full-bleed square Bloom mark; source for the PNG icons below
+├── apple-touch-icon.png      # 180×180 — iOS home-screen icon
+├── icon-192.png              # 192×192 — manifest / Android
+├── icon-512.png              # 512×512 — manifest / Android (also used maskable)
+├── favicon-32.png            # 32×32 — browser tab fallback
+├── favicon-16.png            # 16×16 — browser tab fallback
+├── manifest.webmanifest      # PWA manifest — name "Moments", standalone, theme/bg colors
+└── _redirects                # SPA fallback for the host
+
+scripts/
+└── generate-icons.mjs        # Rasterizes icon-source.svg → the PNGs above (npm run icons)
+```
+
