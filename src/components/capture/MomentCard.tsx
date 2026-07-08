@@ -3,15 +3,15 @@ import { ExternalLink } from "lucide-react"
 import { useAppSelector } from "@/store/hooks"
 import { formatTime } from "@/lib/dates"
 import { cn } from "@/lib/utils"
-import { CATEGORY_CONFIG } from "@/data/categories"
+import { CATEGORY_CONFIG, categorySurface } from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { ProjectChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
 import { MomentCardActions } from "./MomentCardActions"
 
-// Notebook ruling: a faint neutral hairline sits under each line of text —
-// none above the first line, one closing the last.
-const RULE = "color-mix(in srgb, var(--foreground) 12%, transparent)"
+// Notebook ruling: a hairline sits under each line of text — none above the
+// first line, one closing the last — tinted with the category color.
+const RULE = "color-mix(in srgb, var(--cat) 20%, var(--border))"
 const ruledNote: CSSProperties = {
   lineHeight: "1.6rem",
   backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), ${RULE} calc(1.6rem - 1px), ${RULE} 1.6rem)`,
@@ -26,18 +26,20 @@ export function MomentCard({ moment }: { moment: Moment }) {
   )
   const imageUrl = useMomentImage(moment.imageId)
   const meta = CATEGORY_CONFIG[moment.category]
+  const surface = categorySurface(moment.category)
   const Icon = meta.icon
 
   return (
     <div
       data-el="capture-moment-card"
       className="group shrink-0 overflow-hidden rounded-lg border bg-card transition-shadow shadow-[0_2px_8px_-4px_rgba(90,70,45,0.10)] hover:shadow-[0_10px_28px_-10px_rgba(90,70,45,0.18)] dark:shadow-[0_2px_8px_-4px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_12px_32px_-10px_rgba(0,0,0,0.55)]"
+      style={surface.style}
     >
       <div
         data-el="capture-moment-card-band"
         className={cn(
-          "flex items-center justify-between gap-2 border-b border-border px-2.5 py-1.5",
-          meta.chipClass,
+          "flex items-center justify-between gap-2 border-b px-2.5 py-1.5",
+          surface.className,
         )}
       >
         <span

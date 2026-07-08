@@ -1,5 +1,9 @@
 import { cn } from "@/lib/utils"
-import { CATEGORY_CONFIG, CATEGORY_ORDER } from "@/data/categories"
+import {
+  CATEGORY_CONFIG,
+  CATEGORY_ORDER,
+  categorySurface,
+} from "@/data/categories"
 import type { Category } from "@/types/review"
 
 interface CategoryPickerProps {
@@ -18,15 +22,17 @@ export function CategoryPicker({ value, onChange }: CategoryPickerProps) {
         const meta = CATEGORY_CONFIG[id]
         const Icon = meta.icon
         const active = id === value
+        const surface = categorySurface(id)
         return (
           <button
             key={id}
             type="button"
             onClick={() => onChange(id)}
+            style={active ? surface.style : undefined}
             className={cn(
               "inline-flex items-center gap-1 rounded-md border px-2.5 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
               active
-                ? cn("border-current font-medium", meta.chipClass)
+                ? cn("font-medium", surface.className)
                 : "border-border text-muted-foreground hover:bg-accent",
             )}
           >

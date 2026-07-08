@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import {
   Lightbulb,
   TriangleAlert,
@@ -66,6 +67,23 @@ export const CATEGORY_CONFIG: Record<Category, CategoryMeta> = {
       "bg-violet-100/70 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200",
     chartToken: "var(--chart-1)",
   },
+}
+
+/**
+ * Shared styling for a category-tinted surface — the moment-card header band
+ * and the active category-picker chip — so the two stay visually identical.
+ * Sets `--cat` to the category's chart token; the classes tint the background,
+ * darken the text for contrast, and color the border off that same token.
+ */
+export function categorySurface(category: Category): {
+  style: CSSProperties
+  className: string
+} {
+  return {
+    style: { "--cat": CATEGORY_CONFIG[category].chartToken } as CSSProperties,
+    className:
+      "bg-[color-mix(in_srgb,var(--cat)_32%,var(--card))] text-[color-mix(in_srgb,var(--cat)_40%,var(--foreground))] border-[color-mix(in_srgb,var(--cat)_45%,transparent)]",
+  }
 }
 
 export const CATEGORY_ORDER: Category[] = [
