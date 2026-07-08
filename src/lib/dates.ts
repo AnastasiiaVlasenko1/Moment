@@ -1,5 +1,6 @@
 import {
   addWeeks,
+  differenceInCalendarWeeks,
   eachDayOfInterval,
   endOfWeek,
   format,
@@ -32,6 +33,11 @@ export function getWorkWeek(anchor: Date, showWeekends = false): Date[] {
 
 export function shiftWeek(anchor: Date, direction: number): Date {
   return addWeeks(anchor, direction)
+}
+
+/** Whole weeks between `anchor`'s week and the current week: 0 = this week, >0 future, <0 past. */
+export function weekOffsetFromToday(anchor: Date): number {
+  return differenceInCalendarWeeks(anchor, new Date(), { weekStartsOn: 1 })
 }
 
 /** Label like "Jul 6 – 10, 2026" for a set of week days. */
