@@ -35,18 +35,18 @@ export function MomentCard({ moment }: { moment: Moment }) {
     >
       <div
         data-el="capture-moment-card-band"
-        className="flex items-center justify-between gap-2 border-b px-2.5 py-1.5 border-[color-mix(in_srgb,var(--cat)_30%,transparent)] bg-[color-mix(in_srgb,var(--cat)_15%,var(--card))]"
+        className="flex items-center justify-between gap-2 border-b px-2.5 py-1.5 border-[color-mix(in_srgb,var(--cat)_45%,transparent)] bg-[color-mix(in_srgb,var(--cat)_32%,var(--card))]"
       >
         <span
           data-el="capture-moment-card-category"
-          className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-wide uppercase text-[color-mix(in_srgb,var(--cat)_72%,var(--foreground))]"
+          className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-wide uppercase text-[color-mix(in_srgb,var(--cat)_80%,var(--foreground))]"
         >
           <Icon aria-hidden="true" className="size-3.5 shrink-0" />
           <span className="truncate">{meta.label}</span>
         </span>
         <span
           data-el="capture-moment-card-time"
-          className="font-handwritten shrink-0 text-lg leading-none text-[color-mix(in_srgb,var(--cat)_60%,var(--foreground))]"
+          className="font-handwritten shrink-0 text-lg leading-none text-[color-mix(in_srgb,var(--cat)_68%,var(--foreground))]"
         >
           {formatTime(moment.createdAt)}
         </span>
