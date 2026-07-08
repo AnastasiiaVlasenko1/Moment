@@ -87,7 +87,11 @@ export function LoginForm() {
                 minLength={6}
                 required
               />
-              {error && <FieldError data-el="login-error">{error}</FieldError>}
+              {error && (
+                <FieldError role="alert" data-el="login-error">
+                  {error}
+                </FieldError>
+              )}
             </Field>
             <Button
               data-el="login-submit"

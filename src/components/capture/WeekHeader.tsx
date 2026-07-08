@@ -34,7 +34,12 @@ export function WeekHeader({
       className="flex shrink-0 flex-wrap items-center justify-between gap-3"
     >
       <div className="flex items-center gap-2">
-        <Button variant="outline" onClick={onToday}>
+        <Button
+          variant="outline"
+          onClick={onToday}
+          disabled={weekOffset === 0}
+          aria-current={weekOffset === 0 ? "true" : undefined}
+        >
           <TodayIcon className="size-4" />
           This week
         </Button>

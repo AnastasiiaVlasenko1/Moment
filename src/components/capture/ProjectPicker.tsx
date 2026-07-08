@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useId, useState } from "react"
 import { Check, ChevronsUpDown, Plus, Settings2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -25,6 +25,8 @@ interface ProjectPickerProps {
   onChange: (projectId: string | undefined) => void
   /** When true, a "No project" option is offered (used for mood moments). */
   allowNone?: boolean
+  /** id of a visible label to name the combobox trigger. */
+  labelledBy?: string
 }
 
 /** Colored, searchable project selector with create-on-the-fly (Dovetail pattern). */
@@ -32,7 +34,9 @@ export function ProjectPicker({
   value,
   onChange,
   allowNone,
+  labelledBy,
 }: ProjectPickerProps) {
+  const triggerId = useId()
   const [open, setOpen] = useState(false)
   const [manageOpen, setManageOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -57,6 +61,8 @@ export function ProjectPicker({
           variant="outline"
           role="combobox"
           aria-expanded={open}
+          id={triggerId}
+          aria-labelledby={labelledBy ? `${labelledBy} ${triggerId}` : undefined}
           data-el="capture-composer-project-trigger"
           className="justify-between font-normal"
         >

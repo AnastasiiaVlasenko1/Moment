@@ -111,8 +111,9 @@ export function MomentComposer({
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
         <div className="grid gap-1.5">
-          <Label>Category</Label>
+          <Label id="composer-category-label">Category</Label>
           <CategoryPicker
+            labelledBy="composer-category-label"
             value={values.category}
             onChange={(c) => set("category", c)}
           />
@@ -235,8 +236,9 @@ export function MomentComposer({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="grid gap-1.5">
-            <Label>Project</Label>
+            <Label id="composer-project-label">Project</Label>
             <ProjectPicker
+              labelledBy="composer-project-label"
               value={values.projectId}
               onChange={(p) => set("projectId", p)}
               allowNone={isMood}
