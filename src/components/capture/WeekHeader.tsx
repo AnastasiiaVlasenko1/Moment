@@ -46,15 +46,15 @@ export function WeekHeader({
         <Button variant="outline" size="icon" onClick={onPrev} aria-label="Previous week">
           <ChevronLeft className="size-4" />
         </Button>
-        <Button variant="outline" size="icon" onClick={onNext} aria-label="Next week">
-          <ChevronRight className="size-4" />
-        </Button>
         <span
           data-el="capture-week-range"
-          className="ml-1 font-handwritten text-2xl leading-none text-foreground/80"
+          className="min-w-32 text-center font-handwritten text-2xl leading-none text-foreground/80"
         >
           {weekRangeLabel(days)}
         </span>
+        <Button variant="outline" size="icon" onClick={onNext} aria-label="Next week">
+          <ChevronRight className="size-4" />
+        </Button>
       </div>
 
       <div className="flex items-center gap-2">
