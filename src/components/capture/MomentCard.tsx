@@ -1,134 +1,112 @@
-import { useState } from "react"
-import { ExternalLink, Pencil, Trash2 } from "lucide-react"
-import { useAppDispatch, useAppSelector } from "@/store/hooks"
-import { deleteMoment } from "@/store/momentsSlice"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import type { CSSProperties } from "react"
+import { ExternalLink } from "lucide-react"
+import { useAppSelector } from "@/store/hooks"
+import { formatTime } from "@/lib/dates"
+import { cn } from "@/lib/utils"
+import { CATEGORY_CONFIG, categorySurface } from "@/data/categories"
 import type { Moment } from "@/types/review"
-import { CategoryChip } from "@/components/shared/MomentTags"
+import { ProjectChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
-import { MomentComposer } from "./MomentComposer"
+import { MomentCardActions } from "./MomentCardActions"
 
-/** A single logged moment: text, screenshot, or link, with its tags. */
+// Notebook ruling: a hairline sits under each line of text — none above the
+// first line, one closing the last — tinted with the category color.
+const RULE = "color-mix(in srgb, var(--cat) 20%, var(--border))"
+const ruledNote: CSSProperties = {
+  lineHeight: "1.6rem",
+  backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), ${RULE} calc(1.6rem - 1px), ${RULE} 1.6rem)`,
+}
+
+/** A single logged moment as a diary entry: a category-tinted header band with
+ * the capture time, the note on ruled paper, then any link, screenshot, and
+ * project. Hovering reveals edit/delete. */
 export function MomentCard({ moment }: { moment: Moment }) {
-  const dispatch = useAppDispatch()
   const project = useAppSelector((s) =>
     s.projects.items.find((p) => p.id === moment.projectId),
   )
   const imageUrl = useMomentImage(moment.imageId)
-  const [editing, setEditing] = useState(false)
+  const meta = CATEGORY_CONFIG[moment.category]
+  const surface = categorySurface(moment.category)
+  const Icon = meta.icon
 
   return (
     <div
       data-el="capture-moment-card"
-      className="group relative rounded-md border bg-card p-2.5 text-sm shadow-xs"
+      className="group shrink-0 overflow-hidden rounded-lg border bg-card transition-shadow shadow-[0_2px_8px_-4px_rgba(90,70,45,0.10)] hover:shadow-[0_10px_28px_-10px_rgba(90,70,45,0.18)] dark:shadow-[0_2px_8px_-4px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_12px_32px_-10px_rgba(0,0,0,0.55)]"
+      style={surface.style}
     >
-      <div className="absolute top-1.5 right-1.5 flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-        <button
-          type="button"
-          onClick={() => setEditing(true)}
-          aria-label="Edit moment"
-          data-el="capture-moment-card-edit"
-          className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      <div
+        data-el="capture-moment-card-band"
+        className={cn(
+          "flex items-center justify-between gap-2 border-b px-2.5 py-1.5",
+          surface.className,
+        )}
+      >
+        <span
+          data-el="capture-moment-card-category"
+          className="flex min-w-0 items-center gap-1.5 text-xs font-bold tracking-wide uppercase"
         >
-          <Pencil className="size-3.5" />
-        </button>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <button
-              type="button"
-              aria-label="Delete moment"
-              data-el="capture-moment-card-delete"
-              className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-destructive focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-            >
-              <Trash2 className="size-3.5" />
-            </button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Delete this moment?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This removes the note, and any attached screenshot or link. This
-                can't be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => dispatch(deleteMoment(moment.id))}
-                className="bg-destructive text-white hover:bg-destructive/90"
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+          <Icon aria-hidden="true" className="size-3.5 shrink-0" />
+          <span className="truncate">{meta.label}</span>
+        </span>
+        <span
+          data-el="capture-moment-card-time"
+          className="font-handwritten shrink-0 text-lg leading-tight"
+        >
+          {formatTime(moment.createdAt)}
+        </span>
       </div>
 
-      <CategoryChip
-        category={moment.category}
-        className="text-xs font-medium"
-        data-el="capture-moment-card-category"
-      />
+      <div className="px-2.5 pt-2 pb-2.5 text-sm">
+        {moment.text && (
+          <p
+            data-el="capture-moment-card-note"
+            className="m-0 break-words"
+            style={ruledNote}
+          >
+            {moment.text}
+          </p>
+        )}
 
-      {project && (
-        <p
-          data-el="capture-moment-card-project"
-          className="mt-1.5 font-semibold break-words"
-        >
-          {project.name}
-        </p>
-      )}
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={moment.text || "Screenshot"}
+            data-el="capture-moment-card-attachment"
+            className="mt-2 aspect-[16/10] w-full rounded-md border object-cover"
+          />
+        )}
 
-      {moment.text && (
-        <p
-          data-el="capture-moment-card-note"
-          className="mt-1.5 pr-10 break-words"
-        >
-          {moment.text}
-        </p>
-      )}
+        <div className="mt-3 flex flex-col items-start gap-2">
+          {moment.url && (
+            <a
+              href={moment.url}
+              target="_blank"
+              rel="noreferrer"
+              data-el="capture-moment-card-link"
+              className="flex max-w-full items-center gap-1 rounded-sm text-muted-foreground hover:text-link hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
+              <span className="truncate" title={moment.url}>
+                {moment.url}
+              </span>
+              <span className="sr-only">(opens in new tab)</span>
+            </a>
+          )}
 
-      {moment.url && (
-        <a
-          href={moment.url}
-          target="_blank"
-          rel="noreferrer"
-          data-el="capture-moment-card-link"
-          className="mt-1.5 flex items-center gap-1 pr-10 text-link hover:underline"
-        >
-          <ExternalLink className="size-3.5 shrink-0" aria-hidden="true" />
-          <span className="min-w-0 truncate" title={moment.url}>{moment.url}</span>
-          <span className="sr-only">(opens in new tab)</span>
-        </a>
-      )}
-
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt={moment.text || "Screenshot"}
-          data-el="capture-moment-card-attachment"
-          className="mt-1.5 max-h-20 rounded border object-cover"
-        />
-      )}
-
-      {editing && (
-        <MomentComposer
-          open
-          onOpenChange={setEditing}
-          initialDate={moment.date}
-          moment={moment}
-        />
-      )}
+          <div className="flex w-full items-center justify-between gap-2">
+            {project ? (
+              <ProjectChip
+                project={project}
+                data-el="capture-moment-card-project"
+              />
+            ) : (
+              <span />
+            )}
+            <MomentCardActions moment={moment} />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

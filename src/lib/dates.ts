@@ -73,3 +73,8 @@ export function monthMoments(moments: Moment[], monthKey: string): Moment[] {
 export function dayLabels(date: Date): { weekday: string; day: string } {
   return { weekday: format(date, "EEE"), day: format(date, "d") }
 }
+
+/** Capture time-of-day label for a moment, e.g. "9:14 AM". */
+export function formatTime(epochMs: number): string {
+  return format(new Date(epochMs), "h:mm a")
+}

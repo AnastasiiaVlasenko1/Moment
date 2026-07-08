@@ -27,7 +27,8 @@ src/
 │   │   ├── WeekView.tsx           # Composed: header + day columns + composer
 │   │   ├── WeekHeader.tsx         # Week nav (prev/next/today) + weekend toggle
 │   │   ├── DayColumn.tsx          # One day column with its moment cards
-│   │   ├── MomentCard.tsx         # A single logged moment (text/screenshot/link)
+│   │   ├── MomentCard.tsx         # A single logged moment, diary-entry style (band + ruled note + attachment)
+│   │   ├── MomentCardActions.tsx  # Edit/delete controls for a moment card (hover-revealed)
 │   │   ├── CaptureBar.tsx         # Floating "+" content-type block picker
 │   │   ├── MomentComposer.tsx     # Compose panel (right fly-out sheet): fields + save
 │   │   ├── ScreenshotInput.tsx    # Paste/upload image zone with preview
