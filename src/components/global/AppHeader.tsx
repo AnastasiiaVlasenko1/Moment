@@ -1,7 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router"
-import { CalendarDays, FileText, LogOut, Sparkles } from "lucide-react"
+import { CalendarDays, FileText, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { MomentsLogo } from "@/components/global/MomentsLogo"
 import { useAuth } from "@/hooks/use-auth"
 
 const NAV = [
@@ -29,10 +30,10 @@ export function AppHeader() {
         <Link
           to="/"
           data-el="global-nav-logo"
-          className="flex items-center gap-2 font-handwritten text-2xl leading-none text-foreground"
+          aria-label="Moments home"
+          className="flex items-center"
         >
-          <Sparkles className="size-5 text-primary" />
-          Moments
+          <MomentsLogo markClassName="size-11" wordmarkClassName="text-3xl" />
         </Link>
         <div className="flex items-center gap-3">
           <nav data-el="global-nav-menu" className="flex items-center gap-1">
