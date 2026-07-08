@@ -130,7 +130,7 @@ export function MomentComposer({
                     onClick={() => set("text", mood)}
                     aria-pressed={active}
                     className={cn(
-                      "inline-flex items-center gap-1 rounded-full border px-3 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+                      "inline-flex items-center gap-1 rounded-full border px-3 py-2.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
                       active
                         ? cn("border-transparent font-medium", CATEGORY_CONFIG.mood.chipClass)
                         : "border-border text-muted-foreground hover:bg-accent",
@@ -159,9 +159,10 @@ export function MomentComposer({
           {/* Optional attachments — revealed on demand */}
           {showScreenshot && (
             <div className="grid gap-1.5">
-              <Label>Attachments</Label>
+              <Label id="composer-attachments-label">Attachments</Label>
               <div className="relative">
                 <ScreenshotInput
+                  labelledBy="composer-attachments-label"
                   file={values.file}
                   onChange={(f) => set("file", f)}
                   existingUrl={existingImageUrl}
@@ -216,7 +217,7 @@ export function MomentComposer({
                   className="h-auto p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowScreenshot(true)}
                 >
-                  <Image className="size-3.5" /> Attach screenshot
+                  <Image className="size-3.5" aria-hidden="true" /> Attach screenshot
                 </Button>
               )}
               {!showLink && (
@@ -228,7 +229,7 @@ export function MomentComposer({
                   className="h-auto p-0 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowLink(true)}
                 >
-                  <LinkIcon className="size-3.5" /> Add link
+                  <LinkIcon className="size-3.5" aria-hidden="true" /> Add link
                 </Button>
               )}
             </div>
