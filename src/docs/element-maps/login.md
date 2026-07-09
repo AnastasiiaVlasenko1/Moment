@@ -7,6 +7,8 @@ login                                   — Page wrapper (centered auth screen)
 ├── login-card                          — Sign-in card
 │   ├── login-title                     — Heading ("Welcome back")
 │   ├── login-subtitle                  — Supporting text
+│   ├── auth-google-button              — "Continue with Google" OAuth button (shared with signup)
+│   ├── login-oauth-divider             — "or continue with email" divider
 │   ├── login-form                      — Email + password form (aria-busy while submitting)
 │   │   ├── login-email                 — Email input
 │   │   ├── login-forgot-link           — "Forgot password?" link → /forgot-password

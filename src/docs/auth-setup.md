@@ -52,6 +52,28 @@ Supabase rate-limits reset/confirmation emails per address. The app surfaces a
 friendly "Too many attempts — please wait a moment" message when this triggers
 (see `auth-errors.ts`).
 
+## 5. Google sign-in (OAuth) — required for the "Continue with Google" button
+
+The login/sign-up screens show a **Continue with Google** button. Until the
+Google provider is enabled, clicking it lands on a Supabase error page
+(`"Unsupported provider: provider is not enabled"`). Two places to configure:
+
+**a) Google Cloud Console** (console.cloud.google.com)
+1. Create an OAuth 2.0 Client ID (type: Web application).
+2. Under **Authorized redirect URIs**, add your Supabase callback:
+   `https://<your-project-ref>.supabase.co/auth/v1/callback`
+3. Copy the generated **Client ID** and **Client secret**.
+
+**b) Supabase → Authentication → Providers → Google**
+1. Toggle **Enable**.
+2. Paste the Client ID and Client secret from step (a).
+3. Save.
+
+The app calls `signInWithOAuth({ provider: "google", redirectTo: origin })`, so
+Google returns the user to the app root — make sure your app origins are on the
+**Redirect URLs** allow-list (see section 1). New Google users are created
+automatically; no email confirmation step is needed for OAuth.
+
 ---
 
 That's it. No server code lives in this repo — auth is handled entirely by the

@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { PasswordInput } from "@/components/auth/PasswordInput"
 import { PasswordStrengthMeter } from "@/components/auth/PasswordStrengthMeter"
 import { CheckEmailCard } from "@/components/auth/CheckEmailCard"
+import { GoogleButton } from "@/components/auth/GoogleButton"
 import { useLoginForm, type AuthMode } from "@/components/auth/use-login-form"
 import { PASSWORD_MIN_LENGTH } from "@/components/auth/password-strength"
 
@@ -77,7 +78,18 @@ export function LoginForm({ mode }: { mode: AuthMode }) {
             : "Sign in to Moments."}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-5">
+        <GoogleButton />
+        <div
+          data-el={`${el}-oauth-divider`}
+          className="relative text-center"
+          aria-hidden="true"
+        >
+          <span className="bg-border absolute inset-x-0 top-1/2 h-px" />
+          <span className="bg-card text-muted-foreground relative px-3 text-xs">
+            or continue with email
+          </span>
+        </div>
         <form data-el={`${el}-form`} onSubmit={onSubmit} aria-busy={submitting}>
           <FieldGroup>
             <Field data-invalid={!!error}>

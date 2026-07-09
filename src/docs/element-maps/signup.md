@@ -7,6 +7,8 @@ signup                                   — Page wrapper (centered auth screen)
 ├── signup-card                          — Sign-up card
 │   ├── signup-title                     — Heading ("Create your account")
 │   ├── signup-subtitle                  — Supporting text
+│   ├── auth-google-button               — "Continue with Google" OAuth button (shared with login)
+│   ├── signup-oauth-divider             — "or continue with email" divider
 │   ├── signup-form                      — Email + password form (aria-busy while submitting)
 │   │   ├── signup-email                 — Email input
 │   │   ├── signup-password              — Password input (with show/hide toggle)
