@@ -20,6 +20,13 @@ Also set **Site URL** to your production origin (e.g. `https://app.example.com`)
 > The app builds the redirect as `${window.location.origin}/reset-password`, so
 > whatever origin the user is on must be on this list.
 
+> **If the reset link isn't on the allow-list**, Supabase falls back to the
+> **Site URL** (usually `/`). The app handles this gracefully — a recovery
+> session landing anywhere in the app is detected (via the `PASSWORD_RECOVERY`
+> event) and redirected to `/reset-password` so the user can still set a new
+> password. Allow-listing the exact `/reset-password` URL is still preferred so
+> the link lands there directly.
+
 ## 2. Email templates (optional but recommended)
 
 **Authentication → Email Templates** — two templates matter:
