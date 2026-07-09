@@ -15,6 +15,8 @@ export function RequireAuth() {
       <div
         data-el="auth-loading"
         className="flex min-h-svh items-center justify-center"
+        role="status"
+        aria-label="Checking your session"
       >
         <Spinner className="size-6 text-muted-foreground" />
       </div>
