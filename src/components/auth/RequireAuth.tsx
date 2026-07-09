@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/use-auth"
 import { DataProvider } from "@/components/data/DataProvider"
 
 export function RequireAuth() {
-  const { session, loading } = useAuth()
+  const { session, loading, passwordRecovery } = useAuth()
 
   if (loading) {
     return (
@@ -21,6 +21,14 @@ export function RequireAuth() {
         <Spinner className="size-6 text-muted-foreground" />
       </div>
     )
+  }
+
+  // A password-recovery link establishes a real session, so the user would
+  // otherwise land straight in the app. Send them to set a new password first.
+  // (Robust even when Supabase redirects the link to the site root instead of
+  // /reset-password.) Cleared once the password is updated.
+  if (passwordRecovery) {
+    return <Navigate to="/reset-password" replace />
   }
 
   if (!session) {

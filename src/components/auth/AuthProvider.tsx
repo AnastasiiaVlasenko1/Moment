@@ -52,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const signOut = useCallback(async () => {
+    setPasswordRecovery(false)
     await supabase.auth.signOut()
   }, [])
 
@@ -67,6 +68,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updatePassword = useCallback(async (password: string) => {
     const { error } = await supabase.auth.updateUser({ password })
+    // Recovery is done once the password is set — clear the flag so RequireAuth
+    // stops redirecting back to /reset-password and lets the user into the app.
+    if (!error) {
+      setPasswordRecovery(false)
+    }
     return { error: error?.message ?? null }
   }, [])
 
