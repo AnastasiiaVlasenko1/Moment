@@ -34,5 +34,8 @@ CLAUDE.md
 # MCP (local, per-developer)
 .mcp.json
 
+# Claude Code local settings (per-developer)
+.claude/settings.local.json
+
 # Playwright MCP output
 .playwright-mcp/

@@ -56,6 +56,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut()
   }, [])
 
+  const signInWithGoogle = useCallback(async () => {
+    // Return to the app root after Google auth; the session lands in the URL,
+    // the provider picks it up, and RequireAuth lets the user in.
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    })
+    return { error: error?.message ?? null }
+  }, [])
+
   const resetPassword = useCallback(async (email: string) => {
     // Supabase emails a link back to this route; the click establishes a
     // short-lived recovery session that /reset-password uses to set the password.
@@ -90,6 +100,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      signInWithGoogle,
       resetPassword,
       updatePassword,
       resendConfirmation,
@@ -101,6 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      signInWithGoogle,
       resetPassword,
       updatePassword,
       resendConfirmation,

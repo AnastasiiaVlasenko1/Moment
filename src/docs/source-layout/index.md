@@ -15,7 +15,7 @@ src/
 ├── components/
 │   ├── ui/                # shadcn/ui primitives (DO NOT manually edit — managed by npx shadcn)
 │   ├── auth/              # Authentication (Supabase email+password)
-│   │   ├── AuthProvider.tsx         # Tracks session; sign in/up/out + reset/update password (wraps app in main.tsx)
+│   │   ├── AuthProvider.tsx         # Tracks session; sign in/up/out + Google OAuth + reset/update password (wraps app in main.tsx)
 │   │   ├── RequireAuth.tsx          # Route guard — redirects to /login when signed out
 │   │   ├── AuthScreen.tsx           # Shared centered layout + redirect-if-authed wrapper
 │   │   ├── LoginForm.tsx            # Sign-in / sign-up card UI (mode driven by route)
@@ -24,6 +24,8 @@ src/
 │   │   ├── use-forgot-password-form.ts  # Forgot-password form state + submit logic
 │   │   ├── ResetPasswordForm.tsx    # "Set a new password" card UI (from email link)
 │   │   ├── use-reset-password-form.ts   # Reset-password form state + validation + submit
+│   │   ├── GoogleButton.tsx         # "Continue with Google" OAuth button (shared by login/signup)
+│   │   ├── GoogleIcon.tsx           # Inline multicolor Google "G" brand SVG
 │   │   ├── PasswordInput.tsx        # Password <Input> with built-in show/hide toggle
 │   │   ├── PasswordStrengthMeter.tsx    # Four-segment password strength bar
 │   │   ├── password-strength.ts     # PASSWORD_MIN_LENGTH + scorePassword() heuristic

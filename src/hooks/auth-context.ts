@@ -19,6 +19,8 @@ export interface AuthContextValue {
     password: string,
   ) => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
+  /** Start the Google OAuth flow (redirects the browser to Google). */
+  signInWithGoogle: () => Promise<{ error: string | null }>
   /** Email a password-reset link (lands the user on /reset-password). */
   resetPassword: (email: string) => Promise<{ error: string | null }>
   /** Set a new password for the currently-authenticated (or recovering) user. */
