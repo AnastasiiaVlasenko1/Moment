@@ -202,19 +202,24 @@
         font-weight: var(--font-weight-normal);
         line-height: 1.5;
     }
+}
 
-    /**
-     * Neutralize the browser's autofill styling (Chrome/Safari paint a pale
-     * blue background that clashes with the warm theme and, inside grouped
-     * inputs, bleeds past the rounded edge). Paint the fill with the card
-     * surface instead so an autofilled field looks the same as an empty one.
-     */
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-        -webkit-text-fill-color: var(--foreground);
-        -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
-        caret-color: var(--foreground);
-    }
+/**
+ * Neutralize the browser's autofill styling (Chrome/Safari paint a pale blue
+ * background that clashes with the warm theme and, inside grouped inputs,
+ * bleeds past the rounded edge). Paint the fill with the card surface instead
+ * so an autofilled field looks the same as an empty one.
+ *
+ * Kept OUTSIDE @layer so it beats Tailwind's `shadow-*` utility classes (which
+ * live in the utilities layer and would otherwise override the box-shadow
+ * trick), and marked !important to win over Chrome's autofill styling.
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--foreground) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--card) inset !important;
+    box-shadow: 0 0 0 1000px var(--card) inset !important;
+    caret-color: var(--foreground);
 }
