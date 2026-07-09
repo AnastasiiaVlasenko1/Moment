@@ -7,15 +7,28 @@ src/
 ├── pages/
 │   ├── Capture.tsx        # Route "/" — five-day week view for logging moments (auth-guarded)
 │   ├── Review.tsx         # Route "/review" — month-end assembled review (auth-guarded)
-│   ├── Login.tsx          # Route "/login" — email+password sign-in / sign-up
+│   ├── Login.tsx          # Route "/login" — sign-in (renders LoginForm mode=signin)
+│   ├── Signup.tsx         # Route "/signup" — sign-up (renders LoginForm mode=signup)
+│   ├── ForgotPassword.tsx # Route "/forgot-password" — request a reset email
+│   ├── ResetPassword.tsx  # Route "/reset-password" — set a new password (from email link)
 │   └── NotFound.tsx       # 404 catch-all page
 ├── components/
 │   ├── ui/                # shadcn/ui primitives (DO NOT manually edit — managed by npx shadcn)
 │   ├── auth/              # Authentication (Supabase email+password)
-│   │   ├── AuthProvider.tsx    # Tracks session; provides sign in/up/out (wraps app in main.tsx)
-│   │   ├── RequireAuth.tsx     # Route guard — redirects to /login when signed out
-│   │   ├── LoginForm.tsx       # Sign-in / sign-up card UI
-│   │   └── use-login-form.ts   # Login form state + submit logic
+│   │   ├── AuthProvider.tsx         # Tracks session; sign in/up/out + reset/update password (wraps app in main.tsx)
+│   │   ├── RequireAuth.tsx          # Route guard — redirects to /login when signed out
+│   │   ├── AuthScreen.tsx           # Shared centered layout + redirect-if-authed wrapper
+│   │   ├── LoginForm.tsx            # Sign-in / sign-up card UI (mode driven by route)
+│   │   ├── use-login-form.ts        # Login/sign-up form state + submit logic
+│   │   ├── ForgotPasswordForm.tsx   # "Request a reset email" card UI
+│   │   ├── use-forgot-password-form.ts  # Forgot-password form state + submit logic
+│   │   ├── ResetPasswordForm.tsx    # "Set a new password" card UI (from email link)
+│   │   ├── use-reset-password-form.ts   # Reset-password form state + validation + submit
+│   │   ├── PasswordInput.tsx        # Password <Input> with built-in show/hide toggle
+│   │   ├── PasswordStrengthMeter.tsx    # Four-segment password strength bar
+│   │   ├── password-strength.ts     # PASSWORD_MIN_LENGTH + scorePassword() heuristic
+│   │   ├── CheckEmailCard.tsx       # Shared "check your email" confirmation (focus + resend)
+│   │   └── auth-errors.ts           # friendlyAuthError() — maps Supabase errors to friendly copy
 │   ├── data/               # Backend data loading
 │   │   └── DataProvider.tsx    # Loads moments/projects from Supabase on login (spinner/retry)
 │   ├── global/
@@ -62,11 +75,15 @@ src/
 │   │   └── index.md        # Full annotated file tree (this file)
 │   ├── components/         # Usage reference docs for each shadcn/ui component (.md files)
 │   └── element-maps/       # Element map files — one per page
-│       ├── index.md        # Index of all element maps with routes
-│       ├── global.md       # Shared header/nav element map
-│       ├── capture.md      # Capture page element map
-│       ├── review.md       # Review page element map
-│       └── not-found.md    # 404 page element map
+│       ├── index.md            # Index of all element maps with routes
+│       ├── global.md           # Shared header/nav element map
+│       ├── login.md            # Login (/login) element map
+│       ├── signup.md           # Sign-up (/signup) element map
+│       ├── forgot-password.md  # Forgot-password (/forgot-password) element map
+│       ├── reset-password.md   # Reset-password (/reset-password) element map
+│       ├── capture.md          # Capture page element map
+│       ├── review.md           # Review page element map
+│       └── not-found.md        # 404 page element map
 ├── store/
 │   ├── index.ts           # Redux store: moments + projects slices + Supabase sync middleware
 │   ├── sync-middleware.ts # Mirrors each mutation to Supabase (optimistic; toast on failure)
