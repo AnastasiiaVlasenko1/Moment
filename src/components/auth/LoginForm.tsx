@@ -64,7 +64,7 @@ export function LoginForm({ mode }: { mode: AuthMode }) {
   return (
     <Card data-el={`${el}-card`} className="w-full max-w-sm">
       <CardHeader className="items-center text-center">
-        <MomentsMark className="size-12" />
+        <MomentsMark className="mx-auto size-20" />
         <CardTitle
           data-el={`${el}-title`}
           className="font-handwritten text-3xl leading-none"

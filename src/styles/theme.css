@@ -202,4 +202,19 @@
         font-weight: var(--font-weight-normal);
         line-height: 1.5;
     }
+
+    /**
+     * Neutralize the browser's autofill styling (Chrome/Safari paint a pale
+     * blue background that clashes with the warm theme and, inside grouped
+     * inputs, bleeds past the rounded edge). Paint the fill with the card
+     * surface instead so an autofilled field looks the same as an empty one.
+     */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-text-fill-color: var(--foreground);
+        -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
+        caret-color: var(--foreground);
+    }
 }
