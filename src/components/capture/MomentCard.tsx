@@ -12,9 +12,12 @@ import { MomentCardActions } from "./MomentCardActions"
 // Notebook ruling: a hairline sits under each line of text — none above the
 // first line, one closing the last — tinted with the category color.
 const RULE = "color-mix(in srgb, var(--cat) 20%, var(--border))"
+// An integer-pixel period is essential: a fractional line-height (e.g. 1.6rem =
+// 25.6px) lets Safari's per-line pixel snapping drift away from the continuous
+// gradient, so rules stop sitting under the text further down the card.
 const ruledNote: CSSProperties = {
-  lineHeight: "1.6rem",
-  backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), ${RULE} calc(1.6rem - 1px), ${RULE} 1.6rem)`,
+  lineHeight: "26px",
+  backgroundImage: `repeating-linear-gradient(to bottom, transparent 0, transparent 25px, ${RULE} 25px, ${RULE} 26px)`,
 }
 
 /** A single logged moment as a diary entry: a category-tinted header band with
