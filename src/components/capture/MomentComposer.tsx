@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { Image, Link as LinkIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -51,6 +51,8 @@ export function MomentComposer({
   )
   const [showLink, setShowLink] = useState(() => values.url.trim().length > 0)
   const isMood = values.category === "mood"
+  // Per-tile refs so arrow-key navigation can move focus within the radiogroup.
+  const radioRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   const removeScreenshot = () => {
     set("file", null)
@@ -151,7 +153,7 @@ export function MomentComposer({
 radioRefs.current[nextIndex]?.focus()
                 }}
               >
-                {MOOD_PRESETS.map(({ label, emoji }) => {
+                {MOOD_PRESETS.map(({ label, emoji }, index) => {
                   const active = values.mood === label
                   // Selected tile uses the same warm mood surface as the active
                   // category chip and the moment-card header band, so the whole
@@ -160,6 +162,9 @@ radioRefs.current[nextIndex]?.focus()
                   return (
                     <button
                       key={label}
+                      ref={(el) => {
+                        radioRefs.current[index] = el
+                      }}
                       type="button"
                       role="radio"
                       aria-checked={active}
