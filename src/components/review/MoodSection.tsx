@@ -36,13 +36,16 @@ export function MoodSection({ model }: { model: ReviewModel }) {
       dataEl="review-mood"
       copyValue={formatMomentsText("How the month felt", model.moods)}
     >
-      {allUnlabeled ? (
-        <p data-el="review-mood-empty" className="text-sm text-muted-foreground">
-          {model.moods.length} mood{" "}
-          {model.moods.length === 1 ? "check-in was" : "check-ins were"} logged
-          without a feeling or note.
-        </p>
-      ) : (
+{allUnlabeled ? (
+  <>
+    <p data-el="review-mood-empty" className="mb-2 text-sm text-muted-foreground">
+      {model.moods.length} mood{" "}
+      {model.moods.length === 1 ? "check-in was" : "check-ins were"} logged
+      without a feeling or note.
+    </p>
+    {/* timeline still renders below so dates aren't lost */}
+  </>
+) : (
         <>
       <div data-el="review-mood-distribution" className="mb-4 flex flex-wrap gap-1.5">
         {ranked.map(([label, count]) => (
