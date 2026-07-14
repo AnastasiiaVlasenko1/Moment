@@ -148,11 +148,7 @@ export function MomentComposer({
                   const nextIndex =
                     (currentIndex + delta + labels.length) % labels.length
                   set("mood", labels[nextIndex])
-                  const radios =
-                    e.currentTarget.querySelectorAll<HTMLButtonElement>(
-                      "[role=radio]",
-                    )
-                  radios[nextIndex]?.focus()
+radioRefs.current[nextIndex]?.focus()
                 }}
               >
                 {MOOD_PRESETS.map(({ label, emoji }) => {
