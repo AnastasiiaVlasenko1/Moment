@@ -85,7 +85,7 @@ export function MomentCard({ moment }: { moment: Moment }) {
         {moment.text && (
           <p
             data-el="capture-moment-card-note"
-            className="m-0 break-words"
+            className="m-0 break-words whitespace-pre-wrap"
             style={ruledNote}
           >
             {moment.text}
@@ -95,7 +95,11 @@ export function MomentCard({ moment }: { moment: Moment }) {
         {imageUrl && (
           <img
             src={imageUrl}
-            alt={moment.text || "Screenshot"}
+            alt={
+              moment.text
+                ? `Screenshot for note: ${moment.text}`.slice(0, 120)
+                : "Screenshot attachment"
+            }
             data-el="capture-moment-card-attachment"
             className="mt-2 aspect-[16/10] w-full rounded-md border object-cover"
           />

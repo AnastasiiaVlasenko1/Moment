@@ -25,12 +25,25 @@ export function MoodSection({ model }: { model: ReviewModel }) {
   // Category-tinted label on a neutral outline, matching the moment-card tag.
   const moodAccent = categoryAccentText("mood")
 
+  // When nothing carries a feeling or a note, the whole section would otherwise
+  // collapse to a single "Unlabeled" bucket and a column repeating that word —
+  // which reads as a bug. Explain the sparse logging instead.
+  const allUnlabeled = ranked.length === 1 && ranked[0][0] === "Unlabeled"
+
   return (
     <CopyableSection
       title="How the month felt"
       dataEl="review-mood"
       copyValue={formatMomentsText("How the month felt", model.moods)}
     >
+      {allUnlabeled ? (
+        <p data-el="review-mood-empty" className="text-sm text-muted-foreground">
+          {model.moods.length} mood{" "}
+          {model.moods.length === 1 ? "check-in was" : "check-ins were"} logged
+          without a feeling or note.
+        </p>
+      ) : (
+        <>
       <div data-el="review-mood-distribution" className="mb-4 flex flex-wrap gap-1.5">
         {ranked.map(([label, count]) => (
           <Badge
@@ -70,6 +83,8 @@ export function MoodSection({ model }: { model: ReviewModel }) {
           )
         })}
       </ol>
+        </>
+      )}
     </CopyableSection>
   )
 }

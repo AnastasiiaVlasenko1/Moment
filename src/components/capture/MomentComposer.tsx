@@ -67,7 +67,13 @@ export function MomentComposer({
     const url = values.url.trim()
     // A new file wins; otherwise keep whatever existing image survived edits.
     let imageId = values.existingImageId
-    if (values.file) imageId = await putImage(values.file)
+    try {
+      if (values.file) imageId = await putImage(values.file)
+    } catch {
+      // Surface the failure instead of silently dropping it and closing the sheet.
+      toast.error("Couldn't save the screenshot. Please try again.")
+      return
+    }
     // Release the previous blob if it was replaced or removed.
     if (isEdit && moment.imageId && moment.imageId !== imageId) {
       deleteImage(moment.imageId)
@@ -129,6 +135,25 @@ export function MomentComposer({
                 aria-labelledby="composer-mood-label"
                 className="grid grid-cols-3 gap-1.5"
                 data-el="capture-composer-mood-presets"
+                onKeyDown={(e) => {
+                  // One Tab stop; arrows move (and select) between feelings,
+                  // matching the native radiogroup pattern (see CategoryPicker).
+                  const keys = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]
+                  if (!keys.includes(e.key)) return
+                  e.preventDefault()
+                  const labels: string[] = MOOD_PRESETS.map((m) => m.label)
+                  const currentIndex = values.mood ? labels.indexOf(values.mood) : 0
+                  const delta =
+                    e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : -1
+                  const nextIndex =
+                    (currentIndex + delta + labels.length) % labels.length
+                  set("mood", labels[nextIndex])
+                  const radios =
+                    e.currentTarget.querySelectorAll<HTMLButtonElement>(
+                      "[role=radio]",
+                    )
+                  radios[nextIndex]?.focus()
+                }}
               >
                 {MOOD_PRESETS.map(({ label, emoji }) => {
                   const active = values.mood === label
@@ -142,6 +167,13 @@ export function MomentComposer({
                       type="button"
                       role="radio"
                       aria-checked={active}
+                      // Roving tabindex: the selected tile (or the first, when
+                      // none is chosen) is the group's single Tab stop.
+                      tabIndex={
+                        active || (!values.mood && label === MOOD_PRESETS[0].label)
+                          ? 0
+                          : -1
+                      }
                       // Tapping the selected feeling again clears it.
                       onClick={() => set("mood", active ? undefined : label)}
                       style={active ? surface.style : undefined}
