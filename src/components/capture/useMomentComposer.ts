@@ -5,6 +5,8 @@ export interface ComposerValues {
   text: string
   url: string
   category: Category
+  /** Selected feeling for a mood moment; kept separate from `text`. */
+  mood: string | undefined
   projectId: string | undefined
   date: string
   /** Newly selected screenshot file, if one is attached this session. */
@@ -23,6 +25,7 @@ const emptyValues = (date: string): ComposerValues => ({
   text: "",
   url: "",
   category: "interesting",
+  mood: undefined,
   projectId: undefined,
   date,
   file: null,
@@ -35,6 +38,7 @@ const seedValues = ({ date, moment }: ComposerInit): ComposerValues =>
         text: moment.text,
         url: moment.url ?? "",
         category: moment.category,
+        mood: moment.mood,
         projectId: moment.projectId,
         date: moment.date,
         file: null,
@@ -61,7 +65,9 @@ export function useMomentComposer(init: ComposerInit) {
     values.text.trim().length > 0 ||
     values.file !== null ||
     values.existingImageId !== undefined ||
-    values.url.trim().length > 0
+    values.url.trim().length > 0 ||
+    // A mood moment is complete once a feeling is picked, even with no note.
+    (values.category === "mood" && values.mood !== undefined)
 
   return { values, set, canSubmit }
 }

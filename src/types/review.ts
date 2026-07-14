@@ -29,6 +29,13 @@ export interface Moment {
   /** Optional for `mood` moments (mood is often about the day, not a project). */
   projectId?: string
   category: Category
+  /**
+   * The selected feeling for a `mood` moment (e.g. "Calm"), stored as its own
+   * structured tag — independent of `text`, which stays free for optional
+   * context. Undefined for non-mood moments (and legacy mood moments logged
+   * before feelings were split out of the note).
+   */
+  mood?: string
   /** ISO `yyyy-mm-dd` — the day the moment is filed under. Defaults to today, editable. */
   date: string
   /** Epoch ms, used for stable ordering. */

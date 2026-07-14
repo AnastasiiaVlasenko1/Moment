@@ -3,7 +3,12 @@ import { ExternalLink } from "lucide-react"
 import { useAppSelector } from "@/store/hooks"
 import { formatTime } from "@/lib/dates"
 import { cn } from "@/lib/utils"
-import { CATEGORY_CONFIG, categorySurface } from "@/data/categories"
+import {
+  CATEGORY_CONFIG,
+  categoryAccentText,
+  categorySurface,
+  moodEmoji,
+} from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { ProjectChip } from "@/components/shared/MomentTags"
 import { useMomentImage } from "./useMomentImage"
@@ -61,6 +66,22 @@ export function MomentCard({ moment }: { moment: Moment }) {
       </div>
 
       <div className="px-2.5 pt-2 pb-2.5 text-sm">
+        {moment.mood && (
+          <span
+            data-el="capture-moment-card-mood"
+            // Outline tag: transparent fill + neutral border, with only the
+            // label tinted in the category color — lighter than the header band.
+            style={categoryAccentText(moment.category).style}
+            className={cn(
+              "mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-transparent px-2.5 py-1 text-xs font-medium",
+              categoryAccentText(moment.category).className,
+            )}
+          >
+            <span aria-hidden="true">{moodEmoji(moment.mood)}</span>
+            {moment.mood}
+          </span>
+        )}
+
         {moment.text && (
           <p
             data-el="capture-moment-card-note"

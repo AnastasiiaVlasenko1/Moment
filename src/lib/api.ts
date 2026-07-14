@@ -22,6 +22,7 @@ interface MomentRow {
   image_path: string | null
   project_id: string | null
   category: Moment["category"]
+  mood: string | null
   date: string
   created_at: string
 }
@@ -40,6 +41,7 @@ function toMoment(r: MomentRow): Moment {
     imageId: r.image_path ?? undefined,
     projectId: r.project_id ?? undefined,
     category: r.category,
+    mood: r.mood ?? undefined,
     date: r.date,
     createdAt: Date.parse(r.created_at),
   }
@@ -161,6 +163,7 @@ export async function insertMoment(m: Moment): Promise<void> {
     image_path: m.imageId ?? null,
     project_id: m.projectId ?? null,
     category: m.category,
+    mood: m.mood ?? null,
     date: m.date,
     created_at: new Date(m.createdAt).toISOString(),
   })
@@ -177,6 +180,7 @@ export async function updateMomentRow(
   if ("imageId" in changes) patch.image_path = changes.imageId ?? null
   if ("projectId" in changes) patch.project_id = changes.projectId ?? null
   if ("category" in changes) patch.category = changes.category
+  if ("mood" in changes) patch.mood = changes.mood ?? null
   if ("date" in changes) patch.date = changes.date
   const { error } = await supabase.from("moments").update(patch).eq("id", id)
   if (error) throw error

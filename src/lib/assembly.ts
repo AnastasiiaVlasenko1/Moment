@@ -133,6 +133,8 @@ function momentLine(m: Moment): string {
   const text = m.text.trim()
   // Base label: the note text, or a fallback describing the attachment.
   let label = text || (m.imageId ? "[Screenshot]" : m.url ? "" : "")
+  // Mood moments lead with the feeling tag; the note (if any) becomes context.
+  if (m.mood) label = text ? `${m.mood} — ${text}` : m.mood
   if (m.url) label = label ? `${label} (${m.url})` : m.url
   return `- ${label}`
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { toast } from "sonner"
-import { Check, Image, Link as LinkIcon, X } from "lucide-react"
+import { Image, Link as LinkIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/store/hooks"
 import { addMoment, updateMoment } from "@/store/momentsSlice"
 import { deleteImage, putImage } from "@/lib/image-store"
-import { CATEGORY_CONFIG, MOOD_PRESETS } from "@/data/categories"
+import { MOOD_PRESETS, categorySurface } from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { useMomentComposer } from "./useMomentComposer"
 import { useMomentImage } from "./useMomentImage"
@@ -79,6 +79,8 @@ export function MomentComposer({
       imageId,
       projectId: values.projectId,
       category: values.category,
+      // Mood is a feeling tag; only carry it for mood moments.
+      mood: values.category === "mood" ? values.mood : undefined,
       date: values.date,
     }
 
@@ -120,27 +122,44 @@ export function MomentComposer({
           </div>
 
           {isMood && (
-            <div className="flex flex-wrap gap-1.5" data-el="capture-composer-mood-presets">
-              {MOOD_PRESETS.map((mood) => {
-                const active = values.text === mood
-                return (
-                  <button
-                    key={mood}
-                    type="button"
-                    onClick={() => set("text", mood)}
-                    aria-pressed={active}
-                    className={cn(
-                      "inline-flex items-center gap-1 rounded-full border px-3 py-2.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
-                      active
-                        ? cn("border-transparent font-medium", CATEGORY_CONFIG.mood.chipClass)
-                        : "border-border text-muted-foreground hover:bg-accent",
-                    )}
-                  >
-                    {active && <Check className="size-3.5" aria-hidden="true" />}
-                    {mood}
-                  </button>
-                )
-              })}
+            <div className="grid gap-1.5">
+              <Label id="composer-mood-label">Feeling</Label>
+              <div
+                role="radiogroup"
+                aria-labelledby="composer-mood-label"
+                className="grid grid-cols-3 gap-1.5"
+                data-el="capture-composer-mood-presets"
+              >
+                {MOOD_PRESETS.map(({ label, emoji }) => {
+                  const active = values.mood === label
+                  // Selected tile uses the same warm mood surface as the active
+                  // category chip and the moment-card header band, so the whole
+                  // mood language stays in one key.
+                  const surface = categorySurface("mood")
+                  return (
+                    <button
+                      key={label}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      // Tapping the selected feeling again clears it.
+                      onClick={() => set("mood", active ? undefined : label)}
+                      style={active ? surface.style : undefined}
+                      className={cn(
+                        "flex flex-col items-center gap-1 rounded-xl border px-2 py-2.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none",
+                        active
+                          ? surface.className
+                          : "border-border text-muted-foreground hover:bg-accent",
+                      )}
+                    >
+                      <span aria-hidden="true" className="text-xl leading-none">
+                        {emoji}
+                      </span>
+                      {label}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           )}
 
