@@ -28,9 +28,14 @@ create table if not exists public.moments (
   image_path text,                        -- path in the "screenshots" bucket (replaces old IndexedDB imageId)
   project_id uuid references public.projects (id) on delete set null,  -- matches unassignProject behavior
   category   text not null check (category in ('interesting','challenge','achievement','learning','mood')),
+  mood       text,                        -- feeling tag for a mood moment (e.g. "Calm"); null otherwise
   date       date not null,               -- the day the moment is filed under ("yyyy-mm-dd")
   created_at timestamptz not null default now()
 );
+
+-- Add the mood column to tables created before feelings were split out of the
+-- note (create table above only runs for brand-new installs).
+alter table public.moments add column if not exists mood text;
 
 -- Helpful indexes for the queries the app makes (by owner, by month/date).
 create index if not exists moments_user_date_idx on public.moments (user_id, date);
