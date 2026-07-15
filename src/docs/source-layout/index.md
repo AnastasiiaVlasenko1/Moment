@@ -55,11 +55,12 @@ src/
 │   │   ├── useMomentComposer.ts   # Compose form state (seeded once per session)
 │   │   └── useMomentImage.ts      # Loads a screenshot signed URL from Supabase Storage
 │   └── review/            # Month-end review assembly
-│       ├── ReviewBuilder.tsx      # Composed: month picker + all sections
-│       ├── MonthPicker.tsx        # Prev/next month + "This month"
+│       ├── ReviewBuilder.tsx      # Composed: range + filters + at-a-glance + sections
+│       ├── TimeRangeControl.tsx   # Range dropdown (this week / this month / custom calendar)
+│       ├── ReviewFilters.tsx      # Search + project + category filters
+│       ├── StatsOverview.tsx      # At-a-glance cards (moments/projects/achievements/learnings/mood arc)
 │       ├── AiSummarySection.tsx   # On-demand AI prose summary (calls summarize-review edge fn)
 │       ├── useReviewSummary.ts    # AI summary state (idle/loading/done/error + generate)
-│       ├── WorkloadOverview.tsx   # Stat tiles + category distribution chart
 │       ├── ProjectHighlights.tsx  # Per-project grouped highlights (copyable)
 │       ├── LearningSection.tsx    # "What I learned" (copyable)
 │       ├── MoodSection.tsx        # Mood distribution + timeline (copyable)

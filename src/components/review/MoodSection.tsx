@@ -25,9 +25,12 @@ export function MoodSection({ model }: { model: ReviewModel }) {
   // Category-tinted label on a neutral outline, matching the moment-card tag.
   const moodAccent = categoryAccentText("mood")
 
-  // When nothing carries a feeling or a note, the whole section would otherwise
-  // collapse to a single "Unlabeled" bucket and a column repeating that word —
-  // which reads as a bug. Explain the sparse logging instead.
+  // The frequency chips only earn their place when a feeling actually repeats;
+  // if every feeling appears once they just duplicate the dated timeline below.
+  const hasRepeats = ranked.some(([, count]) => count > 1)
+
+  // When nothing carries a feeling or a note, the section would collapse to a
+  // single "Unlabeled" bucket and a column repeating that word — reads as a bug.
   const allUnlabeled = ranked.length === 1 && ranked[0][0] === "Unlabeled"
 
   return (
@@ -36,56 +39,67 @@ export function MoodSection({ model }: { model: ReviewModel }) {
       dataEl="review-mood"
       copyValue={formatMomentsText("How the month felt", model.moods)}
     >
-{allUnlabeled ? (
-  <>
-    <p data-el="review-mood-empty" className="mb-2 text-sm text-muted-foreground">
-      {model.moods.length} mood{" "}
-      {model.moods.length === 1 ? "check-in was" : "check-ins were"} logged
-      without a feeling or note.
-    </p>
-    {/* timeline still renders below so dates aren't lost */}
-  </>
-) : (
+      {allUnlabeled ? (
+        <p data-el="review-mood-empty" className="text-sm text-muted-foreground">
+          {model.moods.length} mood{" "}
+          {model.moods.length === 1 ? "check-in was" : "check-ins were"} logged
+          without a feeling or note.
+        </p>
+      ) : (
         <>
-      <div data-el="review-mood-distribution" className="mb-4 flex flex-wrap gap-1.5">
-        {ranked.map(([label, count]) => (
-          <Badge
-            key={label}
-            variant="outline"
-            title={label}
-            style={moodAccent.style}
-            className={cn("max-w-full gap-1.5", moodAccent.className)}
-          >
-            {moodEmoji(label) && <span aria-hidden="true">{moodEmoji(label)}</span>}
-            <span className="min-w-0 truncate">{label}</span>
-            <span className="shrink-0 rounded-full bg-black/5 px-1.5 text-xs dark:bg-white/10">
-              {count}
-            </span>
-          </Badge>
-        ))}
-      </div>
+          {hasRepeats && (
+            <div
+              data-el="review-mood-distribution"
+              className="mb-4 flex flex-wrap gap-1.5"
+            >
+              {ranked.map(([label, count]) => (
+                <Badge
+                  key={label}
+                  variant="outline"
+                  title={label}
+                  style={moodAccent.style}
+                  className={cn("max-w-full gap-1.5", moodAccent.className)}
+                >
+                  {moodEmoji(label) && (
+                    <span aria-hidden="true">{moodEmoji(label)}</span>
+                  )}
+                  <span className="min-w-0 truncate">{label}</span>
+                  <span className="shrink-0 rounded-full bg-black/5 px-1.5 text-xs dark:bg-white/10">
+                    {count}
+                  </span>
+                </Badge>
+              ))}
+            </div>
+          )}
 
-      <ol data-el="review-mood-timeline" className="flex flex-col gap-1.5 text-sm">
-        {timeline.map((m) => {
-          const note = m.text.trim()
-          return (
-            <li key={m.id} className="flex items-center gap-3">
-              <span className="w-14 shrink-0 text-xs text-muted-foreground tabular-nums">
-                {format(parseISO(m.date), "MMM d")}
-              </span>
-              <span className="flex min-w-0 items-center gap-1.5">
-                {m.mood && moodEmoji(m.mood) && (
-                  <span aria-hidden="true">{moodEmoji(m.mood)}</span>
-                )}
-                <span className="font-medium">{m.mood ?? (note || "Unlabeled")}</span>
-                {m.mood && note && (
-                  <span className="truncate text-muted-foreground">— {note}</span>
-                )}
-              </span>
-            </li>
-          )
-        })}
-      </ol>
+          <ol
+            data-el="review-mood-timeline"
+            className="flex flex-col gap-1.5 text-sm"
+          >
+            {timeline.map((m) => {
+              const note = m.text.trim()
+              return (
+                <li key={m.id} className="flex items-center gap-3">
+                  <span className="w-14 shrink-0 text-xs text-muted-foreground tabular-nums">
+                    {format(parseISO(m.date), "MMM d")}
+                  </span>
+                  <span className="flex min-w-0 items-center gap-1.5">
+                    {m.mood && moodEmoji(m.mood) && (
+                      <span aria-hidden="true">{moodEmoji(m.mood)}</span>
+                    )}
+                    <span className="font-medium">
+                      {m.mood ?? (note || "Unlabeled")}
+                    </span>
+                    {m.mood && note && (
+                      <span className="truncate text-muted-foreground">
+                        — {note}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
         </>
       )}
     </CopyableSection>

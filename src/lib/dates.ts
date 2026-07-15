@@ -2,13 +2,21 @@ import {
   addWeeks,
   differenceInCalendarWeeks,
   eachDayOfInterval,
+  endOfMonth,
   endOfWeek,
   format,
   isSameMonth,
   parseISO,
+  startOfMonth,
   startOfWeek,
 } from "date-fns"
 import type { Moment } from "@/types/review"
+
+/** An inclusive span of days, as ISO `yyyy-mm-dd` keys. */
+export interface DateRange {
+  start: string
+  end: string
+}
 
 /** Format a Date as an ISO `yyyy-mm-dd` day key (local time, no timezone shift). */
 export function toISODate(date: Date): string {
@@ -73,6 +81,42 @@ export function monthMoments(moments: Moment[], monthKey: string): Moment[] {
   return moments
     .filter((m) => m.date.startsWith(monthKey))
     .sort((a, b) => b.createdAt - a.createdAt)
+}
+
+/** The Mon–Sun week containing `anchor` (default today) as an inclusive range. */
+export function weekRange(anchor: Date = new Date()): DateRange {
+  return {
+    start: toISODate(startOfWeek(anchor, { weekStartsOn: 1 })),
+    end: toISODate(endOfWeek(anchor, { weekStartsOn: 1 })),
+  }
+}
+
+/** The calendar month containing `anchor` (default today) as an inclusive range. */
+export function monthRange(anchor: Date = new Date()): DateRange {
+  return {
+    start: toISODate(startOfMonth(anchor)),
+    end: toISODate(endOfMonth(anchor)),
+  }
+}
+
+/** Moments filed within `[start, end]` inclusive, newest first. ISO day keys sort lexically. */
+export function momentsInRange(
+  moments: Moment[],
+  { start, end }: DateRange,
+): Moment[] {
+  return moments
+    .filter((m) => m.date >= start && m.date <= end)
+    .sort((a, b) => b.createdAt - a.createdAt)
+}
+
+/** Human label for a range, e.g. "Jul 1 – 14, 2026" or "Jul 14, 2026" for a single day. */
+export function rangeLabel({ start, end }: DateRange): string {
+  const from = parseISO(start)
+  const to = parseISO(end)
+  if (start === end) return format(from, "MMM d, yyyy")
+  const left = format(from, "MMM d")
+  const right = isSameMonth(from, to) ? format(to, "d") : format(to, "MMM d")
+  return `${left} – ${right}, ${format(to, "yyyy")}`
 }
 
 /** Short weekday + day-of-month labels for a day, e.g. { weekday: "Mon", day: "6" }. */

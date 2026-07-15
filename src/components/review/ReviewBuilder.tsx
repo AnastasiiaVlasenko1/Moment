@@ -1,37 +1,70 @@
 import { Link } from "react-router"
-import { CalendarPlus } from "lucide-react"
+import { CalendarPlus, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
+import { copyText } from "@/lib/clipboard"
+import { formatReviewSummary } from "@/lib/assembly"
 import { useReviewAssembly } from "./useReviewAssembly"
-import { MonthPicker } from "./MonthPicker"
+import { TimeRangeControl } from "./TimeRangeControl"
+import { ReviewFilters } from "./ReviewFilters"
+import { StatsOverview } from "./StatsOverview"
 import { AiSummarySection } from "./AiSummarySection"
-import { WorkloadOverview } from "./WorkloadOverview"
 import { ProjectHighlights } from "./ProjectHighlights"
 import { LearningSection } from "./LearningSection"
 import { MoodSection } from "./MoodSection"
 import { ScreenshotGallery } from "./ScreenshotGallery"
 
-/** Composed month-end review: month picker + assembled, copy-ready sections. */
+/** Composed review dashboard: range + filters, at-a-glance cards, then sections. */
 export function ReviewBuilder() {
-  const { monthKey, model, goPrevMonth, goNextMonth, goThisMonth } =
-    useReviewAssembly()
+  const {
+    model,
+    rangeType,
+    customRange,
+    setRange,
+    filters,
+    setSearch,
+    setProjectId,
+    setCategory,
+  } = useReviewAssembly()
 
   return (
     <div data-el="review-builder" className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-handwritten text-4xl leading-none">Monthly review</h1>
-          <p className="text-sm text-muted-foreground">
-            Copy each section into your Figma Slides template.
-          </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <h1 className="font-handwritten text-4xl leading-none">Monthly review</h1>
+        <div className="flex items-center gap-2">
+          <TimeRangeControl
+            rangeType={rangeType}
+            customRange={customRange}
+            onChange={setRange}
+          />
+          <Button
+            variant="interactive"
+            size="sm"
+            data-el="review-copy-summary"
+            disabled={model.totalMoments === 0}
+            onClick={() =>
+              copyText(formatReviewSummary(model), "Summary copied")
+            }
+          >
+            <Copy className="size-3.5" /> Copy summary
+          </Button>
         </div>
-        <MonthPicker
-          monthKey={monthKey}
-          onPrev={goPrevMonth}
-          onNext={goNextMonth}
-          onThisMonth={goThisMonth}
-        />
       </div>
+
+      <ReviewFilters
+        search={filters.search}
+        onSearch={setSearch}
+        projectId={filters.projectId}
+        onProject={setProjectId}
+        category={filters.category}
+        onCategory={setCategory}
+      />
 
       {model.totalMoments === 0 ? (
         <Empty data-el="review-empty" className="rounded-xl border">
@@ -39,10 +72,13 @@ export function ReviewBuilder() {
             <EmptyMedia variant="icon">
               <CalendarPlus />
             </EmptyMedia>
-            <EmptyTitle>No moments this month</EmptyTitle>
+            <EmptyTitle>No moments here</EmptyTitle>
             <EmptyDescription>
-              Nothing was logged for {model.monthLabel}. Capture a few moments and
-              they'll assemble here.
+              Nothing matches {model.monthLabel}
+              {filters.search || filters.projectId !== "all" || filters.category !== "all"
+                ? " with the current filters"
+                : ""}
+              . Capture a few moments — or widen the range.
             </EmptyDescription>
           </EmptyHeader>
           <Button asChild variant="interactive">
@@ -51,8 +87,8 @@ export function ReviewBuilder() {
         </Empty>
       ) : (
         <>
-          <WorkloadOverview model={model} />
-          <AiSummarySection key={monthKey} model={model} />
+          <StatsOverview model={model} />
+          <AiSummarySection key={model.monthKey} model={model} />
           <ProjectHighlights model={model} />
           <LearningSection model={model} />
           <MoodSection model={model} />
