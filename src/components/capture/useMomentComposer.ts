@@ -1,5 +1,6 @@
 import { useState } from "react"
 import type { Category, Moment } from "@/types/review"
+import { isLinkAcceptable } from "@/lib/url"
 
 export interface ComposerValues {
   text: string
@@ -61,7 +62,14 @@ export function useMomentComposer(init: ComposerInit) {
     value: ComposerValues[K],
   ) => setValues((v) => ({ ...v, [key]: value }))
 
-  const canSubmit =
+  // A non-empty link must be a plausible web address, or it saves as a dead
+  // ExternalLink on the card. Empty is fine (the link is optional).
+  const urlError =
+    values.url.trim().length > 0 && !isLinkAcceptable(values.url)
+      ? "Enter a valid link, like example.com"
+      : null
+
+  const hasContent =
     values.text.trim().length > 0 ||
     values.file !== null ||
     values.existingImageId !== undefined ||
@@ -69,5 +77,8 @@ export function useMomentComposer(init: ComposerInit) {
     // A mood moment is complete once a feeling is picked, even with no note.
     (values.category === "mood" && values.mood !== undefined)
 
-  return { values, set, canSubmit }
+  // Block save while an invalid link sits in the field — fix it or clear it.
+  const canSubmit = hasContent && urlError === null
+
+  return { values, set, canSubmit, urlError }
 }

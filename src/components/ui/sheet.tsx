@@ -35,8 +35,11 @@ function SheetOverlay({
   return (
     <SheetPrimitive.Overlay
       data-slot="sheet-overlay"
+      // Warm, low scrim + a hair of blur (not a cold black dim): enough to
+      // signal the page behind is inert and to detach the sheet, while staying
+      // on the calm/warm register. Intentional override of shadcn's default.
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-transparent",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-[#241e19]/20 backdrop-blur-[2px] dark:bg-black/55",
         className
       )}
       {...props}

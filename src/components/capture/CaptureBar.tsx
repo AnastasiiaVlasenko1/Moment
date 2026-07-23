@@ -1,11 +1,14 @@
 import { Plus } from "lucide-react"
 
-/** Floating "Log a moment" button docked at the bottom. */
+/** Floating "Log a moment" button docked at the bottom. A soft gradient veil
+ * fades page content out behind the button as it scrolls under, so the button
+ * never abruptly covers a moment card, and the bottom inset clears the iOS
+ * home indicator. */
 export function CaptureBar({ onAdd }: { onAdd: () => void }) {
   return (
     <div
       data-el="capture-bar"
-      className="pointer-events-none fixed inset-x-0 bottom-6 z-40 flex justify-center"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center bg-gradient-to-t from-background via-background/85 to-transparent pt-10 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
     >
       <button
         data-el="capture-bar-add"

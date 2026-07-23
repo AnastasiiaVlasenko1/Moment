@@ -128,3 +128,9 @@ export function dayLabels(date: Date): { weekday: string; day: string } {
 export function formatTime(epochMs: number): string {
   return format(new Date(epochMs), "h:mm a")
 }
+
+/** Friendly label for the day a moment is filed under, e.g. "Today · Wed, Jul 22". */
+export function filingDateLabel(iso: string): string {
+  const label = format(parseISO(iso), "EEE, MMM d")
+  return iso === todayISO() ? `Today · ${label}` : label
+}

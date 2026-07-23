@@ -1,12 +1,7 @@
 import { useMemo } from "react"
 import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { useAppSelector } from "@/store/hooks"
 import { downloadImages } from "@/lib/download"
 import type { Moment } from "@/types/review"
@@ -33,7 +28,7 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
       const project = projects.find((p) => p.id === key)
       return {
         key,
-        name: project?.name ?? "Unassigned",
+        name: project?.name ?? "Screenshots",
         color: project?.color ?? "var(--muted-foreground)",
         moments,
       }
@@ -42,54 +37,54 @@ export function ScreenshotGallery({ model }: { model: ReviewModel }) {
 
   if (model.screenshots.length === 0) return null
 
-  const downloadGroup = (group: Group) =>
+  const total = model.screenshots.length
+  const downloadAll = () =>
     downloadImages(
-      group.moments
-        .filter((m) => m.imageId)
-        .map((m, i) => ({ imageId: m.imageId!, baseName: `${group.name}-${i + 1}` })),
+      groups.flatMap((group) =>
+        group.moments
+          .filter((m) => m.imageId)
+          .map((m, i) => ({ imageId: m.imageId!, baseName: `${group.name}-${i + 1}` })),
+      ),
     )
 
   return (
     <Card data-el="review-gallery">
-      <CardHeader>
-        <h2
-          data-slot="card-title"
-          className="font-handwritten text-2xl leading-none font-semibold"
-        >
-          Screenshots
-        </h2>
-      </CardHeader>
       <CardContent className="flex flex-col gap-6">
+        <div className="flex items-center gap-2">
+          <h2
+            data-slot="card-title"
+            className="font-handwritten text-2xl leading-none font-semibold"
+          >
+            Screenshots
+          </h2>
+          <span className="text-xs text-muted-foreground">
+            {total} image{total === 1 ? "" : "s"}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto"
+            data-el="review-gallery-download-all"
+            onClick={downloadAll}
+          >
+            <Download className="size-3.5" /> Download all
+          </Button>
+        </div>
+
         {groups.map((group) => (
           <div key={group.key} data-el="review-gallery-group">
-            <div className="mb-2 flex items-center justify-between gap-2">
-              <div className="flex min-w-0 items-center gap-2">
+            {group.key !== "__none__" && (
+              <div className="mb-2 flex items-center gap-2">
                 <span
                   aria-hidden="true"
                   className="size-2.5 shrink-0 rounded-full"
                   style={{ backgroundColor: group.color }}
                 />
-                <h3
-                  title={group.name}
-                  className="min-w-16 truncate font-medium"
-                >
+                <h3 title={group.name} className="min-w-0 truncate font-medium">
                   {group.name}
                 </h3>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {group.moments.length} image
-                  {group.moments.length === 1 ? "" : "s"}
-                </span>
               </div>
-              <CardAction className="shrink-0">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => downloadGroup(group)}
-                >
-                  <Download className="size-3.5" /> Download all
-                </Button>
-              </CardAction>
-            </div>
+            )}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {group.moments.map((m) => (
                 <GalleryImage

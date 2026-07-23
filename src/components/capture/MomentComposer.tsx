@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import { toast } from "sonner"
-import { Image, Link as LinkIcon, X } from "lucide-react"
+import { CalendarDays, Image, Link as LinkIcon, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/store/hooks"
 import { addMoment, updateMoment } from "@/store/momentsSlice"
 import { deleteImage, putImage } from "@/lib/image-store"
+import { filingDateLabel } from "@/lib/dates"
+import { normalizeUrl } from "@/lib/url"
 import { MOOD_PRESETS, categorySurface } from "@/data/categories"
 import type { Moment } from "@/types/review"
 import { useMomentComposer } from "./useMomentComposer"
@@ -41,7 +43,7 @@ export function MomentComposer({
 }: MomentComposerProps) {
   const dispatch = useAppDispatch()
   const isEdit = moment !== undefined
-  const { values, set, canSubmit } = useMomentComposer({
+  const { values, set, canSubmit, urlError } = useMomentComposer({
     date: initialDate,
     moment,
   })
@@ -66,7 +68,9 @@ export function MomentComposer({
 
   const handleSubmit = async () => {
     if (!canSubmit) return
-    const url = values.url.trim()
+    // canSubmit guarantees the link is empty or valid; normalize adds the
+    // scheme so "example.com" is stored as a real, clickable URL.
+    const url = normalizeUrl(values.url) ?? ""
     // A new file wins; otherwise keep whatever existing image survived edits.
     let imageId = values.existingImageId
     try {
@@ -117,6 +121,19 @@ export function MomentComposer({
           <SheetDescription>
             Capture a note, screenshot, or link — pick a category to file it.
           </SheetDescription>
+          {/* Surface the day this will be filed under up front, so a moment
+              logged while browsing another week is never a surprise. Editable
+              via the Date field below; this stays in sync. */}
+          <p
+            data-el="capture-composer-filing-date"
+            className="mt-1 flex items-center gap-1.5 text-sm font-medium text-foreground"
+          >
+            <CalendarDays
+              className="size-3.5 text-muted-foreground"
+              aria-hidden="true"
+            />
+            {filingDateLabel(values.date)}
+          </p>
         </SheetHeader>
 
         <div className="flex-1 space-y-4 overflow-y-auto p-4">
@@ -238,9 +255,13 @@ radioRefs.current[nextIndex]?.focus()
                 <Input
                   id="moment-url"
                   data-el="capture-composer-url"
+                  type="url"
+                  inputMode="url"
                   placeholder="https://…"
                   value={values.url}
                   onChange={(e) => set("url", e.target.value)}
+                  aria-invalid={urlError !== null}
+                  aria-describedby={urlError ? "moment-url-error" : undefined}
                   autoFocus
                 />
                 <button
@@ -252,6 +273,15 @@ radioRefs.current[nextIndex]?.focus()
                   <X className="size-4" />
                 </button>
               </div>
+              {urlError && (
+                <p
+                  id="moment-url-error"
+                  data-el="capture-composer-url-error"
+                  className="text-xs text-destructive"
+                >
+                  {urlError}
+                </p>
+              )}
             </div>
           )}
 
@@ -316,7 +346,9 @@ radioRefs.current[nextIndex]?.focus()
           </Button>
           <Button
             data-el="capture-composer-save"
-            className="bg-interactive text-interactive-foreground hover:bg-interactive/90"
+            // Disabled reads as a clearly-inactive neutral button, not a faded
+            // sage (50% opacity of the fill looked broken rather than disabled).
+            className="bg-interactive text-interactive-foreground hover:bg-interactive/90 disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100"
             onClick={handleSubmit}
             disabled={!canSubmit}
           >

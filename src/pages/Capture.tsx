@@ -11,7 +11,7 @@ export default function Capture() {
       <AppHeader />
       <main
         aria-label="Daily capture"
-        className="flex flex-1 flex-col px-4 pt-6 pb-24 sm:px-6 lg:px-8 xl:min-h-0"
+        className="flex flex-1 flex-col px-4 pt-6 pb-28 sm:px-6 lg:px-8 xl:min-h-0"
       >
         <WeekView />
       </main>

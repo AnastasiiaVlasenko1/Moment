@@ -47,12 +47,24 @@ export function WeekHeader({
     </Button>
   )
   const prevButton = (
-    <Button variant="outline" size="icon" onClick={onPrev} aria-label="Previous week">
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={onPrev}
+      aria-label="Previous week"
+      className="pointer-coarse:size-11"
+    >
       <ChevronLeft className="size-4" />
     </Button>
   )
   const nextButton = (
-    <Button variant="outline" size="icon" onClick={onNext} aria-label="Next week">
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={onNext}
+      aria-label="Next week"
+      className="pointer-coarse:size-11"
+    >
       <ChevronRight className="size-4" />
     </Button>
   )

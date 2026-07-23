@@ -40,7 +40,7 @@ export function DayColumn({ date, moments, onAdd }: DayColumnProps) {
           type="button"
           onClick={() => onAdd(iso)}
           aria-label={`Add moment on ${weekday} ${day}`}
-          className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="flex size-9 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none pointer-coarse:size-11"
         >
           <Plus className="size-4" />
         </button>
@@ -51,9 +51,11 @@ export function DayColumn({ date, moments, onAdd }: DayColumnProps) {
           <button
             type="button"
             onClick={() => onAdd(iso)}
-            className="rounded-md border border-dashed py-6 text-xs text-muted-foreground hover:bg-accent"
+            aria-label={`Add a moment on ${weekday} ${day}`}
+            className="flex items-center justify-center gap-1.5 rounded-md border border-dashed py-6 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            No moments
+            <Plus className="size-3.5" aria-hidden="true" />
+            Add a moment
           </button>
         ) : (
           moments.map((moment) => (

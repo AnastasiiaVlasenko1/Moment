@@ -16,14 +16,16 @@ import {
 import type { Moment } from "@/types/review"
 import { MomentComposer } from "./MomentComposer"
 
-/** Edit / delete controls for a moment card. Hidden until the card is hovered
- * or focused (the parent card owns the `group` that reveals this). */
+/** Edit / delete controls for a moment card. On pointer devices these stay
+ * hidden until the card is hovered or focused (the parent card owns the `group`
+ * that reveals them). On touch devices there is no hover, so they're always
+ * visible — otherwise a user could create moments but never edit or delete them. */
 export function MomentCardActions({ moment }: { moment: Moment }) {
   const dispatch = useAppDispatch()
   const [editing, setEditing] = useState(false)
 
   return (
-    <div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+    <div className="flex gap-0.5 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 pointer-coarse:opacity-100">
       <button
         type="button"
         onClick={() => setEditing(true)}

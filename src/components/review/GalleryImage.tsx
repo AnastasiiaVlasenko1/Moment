@@ -31,11 +31,6 @@ export function GalleryImage({
       >
         <Download className="size-4" />
       </button>
-      {moment.text && (
-        <figcaption className="truncate px-2 py-1.5 text-xs text-muted-foreground">
-          {moment.text}
-        </figcaption>
-      )}
     </figure>
   )
 }

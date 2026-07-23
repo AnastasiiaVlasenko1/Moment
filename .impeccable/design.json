@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-21T00:00:00.000Z",
+  "title": "Design System: Moments",
+  "extensions": {
+    "colorMeta": {
+      "amber": { "role": "primary", "displayName": "Amber", "canonical": "#d8a24a", "tonalRamp": ["#3a2a0e", "#5c441a", "#7e5f24", "#a07a2f", "#c28f39", "#d8a24a", "#e6bd7c", "#f1d9ad", "#faeed3"] },
+      "sage": { "role": "secondary", "displayName": "Sage", "canonical": "#a7bd7f", "tonalRamp": ["#2f3a1c", "#45532a", "#5c6d38", "#748749", "#8ca35e", "#a7bd7f", "#c0d1a0", "#d8e3c3", "#eef2e3"] },
+      "cream-bg": { "role": "neutral", "displayName": "Cream", "canonical": "#f7f3ec", "tonalRamp": ["#241e19", "#3a322a", "#524940", "#6d6154", "#8a7c6c", "#a99b84", "#cabfa9", "#e5ddcd", "#f7f3ec"] },
+      "card-paper": { "role": "neutral", "displayName": "Paper", "canonical": "#fffdf8", "tonalRamp": ["#2e2721", "#3f352a", "#5c4a2e", "#7d6a48", "#a99b84", "#cabfa9", "#e5ddcd", "#f2eadd", "#fffdf8"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#3b342b", "tonalRamp": ["#241e19", "#3b342b", "#524940", "#6b5a3e", "#736550", "#8a7c6c", "#a99b84", "#cabfa9", "#ede3d2"] },
+      "cat-mood": { "role": "tertiary", "displayName": "Mood Mauve", "canonical": "#b5798f", "tonalRamp": ["#3b2530", "#563644", "#724759", "#8d5b6f", "#a16a80", "#b5798f", "#caa0af", "#ddc3cd", "#f0e4e9"] },
+      "cat-achievement": { "role": "tertiary", "displayName": "Achievement Moss", "canonical": "#5f6e38", "tonalRamp": ["#1f2412", "#333c1d", "#485229", "#5f6e38", "#788a45", "#93a566", "#b0be8f", "#cfd8ba", "#eef2e3"] },
+      "cat-learning": { "role": "tertiary", "displayName": "Learning Teal", "canonical": "#4e8a85", "tonalRamp": ["#152826", "#22403c", "#305953", "#3f726b", "#4e8a85", "#6ba9a3", "#93c3be", "#c0dedb", "#e6f2f0"] },
+      "cat-interesting": { "role": "tertiary", "displayName": "Interesting Ochre", "canonical": "#c28a2e", "tonalRamp": ["#3a2a0c", "#573f14", "#74551d", "#916b26", "#a97e2b", "#c28a2e", "#d6a758", "#e7c78e", "#f5e6c4"] },
+      "cat-challenge": { "role": "tertiary", "displayName": "Challenge Terracotta", "canonical": "#c2673e", "tonalRamp": ["#3a1c0e", "#572c17", "#743c20", "#914b29", "#a95a33", "#c2673e", "#d68a65", "#e7b499", "#f5ddce"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Handwritten (Caveat)", "purpose": "Dates, times, greetings, and the wordmark ONLY. Never body copy." },
+      "heading": { "displayName": "Heading (Inter Medium)", "purpose": "Page and section titles, h1-h3." },
+      "body": { "displayName": "Body (Inter Regular)", "purpose": "Notes, descriptions, and all reading text." },
+      "label": { "displayName": "Micro Label (Inter Bold, uppercase)", "purpose": "Category names on moment-card bands and typed micro-labels." }
+    },
+    "shadows": [
+      { "name": "moment-rest", "value": "0 2px 8px -4px rgba(90,70,45,0.10)", "purpose": "Resting lift of a moment card in light mode — a warm, barely-there shadow." },
+      { "name": "moment-hover", "value": "0 10px 28px -10px rgba(90,70,45,0.18)", "purpose": "Moment card rising toward the reader on hover (light mode)." },
+      { "name": "moment-rest-dark", "value": "0 2px 8px -4px rgba(0,0,0,0.35)", "purpose": "Resting moment-card lift on espresso — the one place true-black shadow is allowed." },
+      { "name": "moment-hover-dark", "value": "0 12px 32px -10px rgba(0,0,0,0.55)", "purpose": "Moment card hover lift in dark mode." }
+    ],
+    "motion": [
+      { "name": "shadow-lift", "value": "transition-shadow", "purpose": "Moment cards transition shadow only on hover — no layout shift." },
+      { "name": "color-state", "value": "transition-colors", "purpose": "Nav pills and hover states transition color only." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single most-important action on a surface — amber fill, ink text.",
+      "html": "<button class=\"ds-btn-primary\">Log a moment</button>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:36px; padding:8px 16px; background:#d8a24a; color:#3b342b; font-family:Inter,system-ui,sans-serif; font-weight:500; font-size:14px; border:none; border-radius:12px; cursor:pointer; transition:background .2s; } .ds-btn-primary:hover { background:#cf9740; } .ds-btn-primary:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(111,128,67,0.5); }"
+    },
+    {
+      "name": "Interactive Button",
+      "kind": "button",
+      "refersTo": "button-interactive",
+      "description": "The app's true 'act here' button — sage fill for logging, saving, toggles.",
+      "html": "<button class=\"ds-btn-interactive\">Save</button>",
+      "css": ".ds-btn-interactive { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:36px; padding:8px 16px; background:#a7bd7f; color:#3b342b; font-family:Inter,system-ui,sans-serif; font-weight:500; font-size:14px; border:none; border-radius:12px; cursor:pointer; transition:background .2s; } .ds-btn-interactive:hover { background:#9cb372; } .ds-btn-interactive:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(111,128,67,0.5); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Lower-priority action — warm background, hairline border, accent hover.",
+      "html": "<button class=\"ds-btn-outline\">Cancel</button>",
+      "css": ".ds-btn-outline { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:36px; padding:8px 16px; background:#f7f3ec; color:#3b342b; font-family:Inter,system-ui,sans-serif; font-weight:500; font-size:14px; border:1px solid rgba(90,70,45,0.15); border-radius:12px; cursor:pointer; transition:background .2s,color .2s; box-shadow:0 1px 2px rgba(90,70,45,0.06); } .ds-btn-outline:hover { background:#ede0c8; color:#5c4a2e; } .ds-btn-outline:focus-visible { outline:none; box-shadow:0 0 0 3px rgba(111,128,67,0.5); }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Recessed warm field with a warm stroke; sage focus ring.",
+      "html": "<input class=\"ds-input\" placeholder=\"Search moments\" />",
+      "css": ".ds-input { height:36px; width:220px; padding:4px 12px; background:#f2eadd; color:#3b342b; font-family:Inter,system-ui,sans-serif; font-size:16px; border:1px solid #e3d8c4; border-radius:12px; outline:none; transition:border-color .2s,box-shadow .2s; } .ds-input::placeholder { color:#736550; } .ds-input:focus-visible { border-color:#6f8043; box-shadow:0 0 0 3px rgba(111,128,67,0.5); }"
+    },
+    {
+      "name": "Nav Pill Group",
+      "kind": "nav",
+      "refersTo": "nav-pill-active",
+      "description": "Sage-tinted rounded track holding the Capture / Review pills; active pill fills with sage.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-pill ds-nav-pill--active\">Capture</a><a class=\"ds-nav-pill\">Review</a></nav>",
+      "css": ".ds-nav { display:inline-flex; align-items:center; gap:4px; padding:4px; background:#efe6d6; border-radius:9999px; } .ds-nav-pill { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:0 16px; font-family:Inter,system-ui,sans-serif; font-size:14px; font-weight:500; color:#6b5a3e; border-radius:9999px; text-decoration:none; cursor:pointer; transition:color .2s; } .ds-nav-pill:hover { color:#3b342b; } .ds-nav-pill--active { background:#a7bd7f; color:#3b342b; box-shadow:0 1px 2px rgba(90,70,45,0.1); }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "category-chip",
+      "description": "Category-tinted pill — background mixed ~32% toward the category token, text darkened for contrast.",
+      "html": "<span class=\"ds-chip\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/></svg>Achievement</span>",
+      "css": ".ds-chip { --cat:#5f6e38; display:inline-flex; align-items:center; gap:6px; padding:4px 10px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; border-radius:9999px; background:color-mix(in srgb, var(--cat) 32%, #fffdf8); color:color-mix(in srgb, var(--cat) 40%, #3b342b); border:1px solid color-mix(in srgb, var(--cat) 45%, transparent); }"
+    },
+    {
+      "name": "Moment Card",
+      "kind": "card",
+      "refersTo": "moment-card",
+      "description": "The signature component: a diary entry with a category-tinted band, handwritten time, and a note on genuinely ruled paper.",
+      "html": "<article class=\"ds-moment\"><header class=\"ds-moment-band\"><span class=\"ds-moment-cat\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12c.5.5 1 1.5 1 2h6c0-.5.5-1.5 1-2a7 7 0 0 0-4-12Z\"/></svg>Interesting</span><time class=\"ds-moment-time\">2:14 pm</time></header><p class=\"ds-moment-note\">Found a cleaner way to snap the ruled lines to the text baseline.</p></article>",
+      "css": ".ds-moment { --cat:#c28a2e; width:260px; overflow:hidden; background:#fffdf8; border:1px solid rgba(90,70,45,0.15); border-radius:14px; box-shadow:0 2px 8px -4px rgba(90,70,45,0.10); transition:box-shadow .2s; } .ds-moment:hover { box-shadow:0 10px 28px -10px rgba(90,70,45,0.18); } .ds-moment-band { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 10px; background:color-mix(in srgb, var(--cat) 32%, #fffdf8); color:color-mix(in srgb, var(--cat) 40%, #3b342b); border-bottom:1px solid color-mix(in srgb, var(--cat) 45%, transparent); } .ds-moment-cat { display:inline-flex; align-items:center; gap:6px; font-family:Inter,system-ui,sans-serif; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; } .ds-moment-time { font-family:Caveat,ui-rounded,cursive; font-size:18px; line-height:1.1; } .ds-moment-note { margin:0; padding:8px 10px 10px; color:#3b342b; font-family:Inter,system-ui,sans-serif; font-size:14px; line-height:26px; background-image:repeating-linear-gradient(to bottom, transparent 0, transparent 25px, color-mix(in srgb, var(--cat) 20%, rgba(90,70,45,0.15)) 25px, color-mix(in srgb, var(--cat) 20%, rgba(90,70,45,0.15)) 26px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Warm Diary",
+    "overview": "Moments is a personal journal you actually want to open. The whole system is built to feel like cream paper under a warm desk lamp: unhurried, tactile, and quietly personal. Moments are logged as diary entries on ruled paper, dates and times are set in a handwritten hand, and the surface everywhere reads as warm paper rather than cold UI chrome. The palette is a committed warm neutral — a cream body, off-white paper cards, and soft brown-black ink, with amber as the identity color and a pastel sage green reserved for interactive actions. The dark theme is not an inversion but a second scene: deep espresso with the same amber warming it, as if the same diary were open at night. This system explicitly rejects the SaaS-tool aesthetic: no cold blue-grays, no neon, no glassmorphism, no gradient text, no hero-metric template.",
+    "keyCharacteristics": [
+      "Warm cream-paper surfaces with soft brown-black ink; amber is identity, sage green is action — the two never blur.",
+      "A handwritten accent font (Caveat) used only for dates, times, greetings, and the wordmark — never body text.",
+      "Diary-entry moment cards: a category-tinted header band, the note on genuinely ruled paper, and a hover-revealed edit/delete affordance.",
+      "Five warm categorical accents (mood, achievement, learning, interesting, challenge) that stay muted and legible in both themes.",
+      "Flat by default; shadow appears only as a response to elevation or hover."
+    ],
+    "rules": [
+      { "name": "The Two-Voice Rule", "body": "Amber is identity; sage is action. A user must never wonder which color means 'click me' — filled sage always does. Amber fills are reserved for the single primary CTA and brand moments.", "section": "colors" },
+      { "name": "The No-Gray Rule", "body": "There are no true grays in this system. Every 'gray' is a warm brown mixed toward the cream. A cold #888 anywhere is a bug.", "section": "colors" },
+      { "name": "The Handwriting-Is-Sacred Rule", "body": "Caveat is only for dates, times, greetings, and the wordmark. It never sets body copy, button labels, form fields, or paragraphs.", "section": "typography" },
+      { "name": "The One-Weight-Family Rule", "body": "Hierarchy comes from Inter's weight (400 to 500 to 700) and size, not from a third font. Do not introduce a second sans.", "section": "typography" },
+      { "name": "The Warm-Shadow Rule", "body": "In light mode, every shadow is tinted brown (rgba(90,70,45,...)), never rgba(0,0,0,...). A neutral-black shadow on cream paper looks like a bruise.", "section": "elevation" },
+      { "name": "The Flat-At-Rest Rule", "body": "Surfaces are flat or near-flat at rest. Shadow is a response to state (hover, elevation, focus), not a default decoration.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep amber for identity and sage green for action. Filled sage (#a7bd7f) is always 'act here'; amber (#d8a24a) is the brand and the single primary CTA.",
+      "Do reserve Caveat handwriting for dates, times, greetings, and the wordmark only.",
+      "Do make every surface warm paper (#fffdf8) on cream (#f7f3ec) with soft brown-black ink (#3b342b).",
+      "Do tint shadows and borders brown (rgba(90,70,45,...)) in light mode.",
+      "Do keep body and metadata text at or above 4.5:1 — use muted-ink (#736550) for secondary text and amber-ink (#8c5e18) for amber link text on cream.",
+      "Do use the category chart tokens (--chart-1...--chart-5) for all categorical color.",
+      "Do keep surfaces flat at rest; let shadow be a response to hover/focus/elevation.",
+      "Do use an integer-pixel line-height period for the ruled-note gradient (26px), or Safari drifts the rules off the text."
+    ],
+    "donts": [
+      "Don't introduce cold grays, blue-grays, or a #000 shadow on light surfaces — this is the SaaS-tool look the diary rejects.",
+      "Don't use the bright amber (#d8a24a) for small text on cream; it fails contrast. Use amber-ink.",
+      "Don't set body copy, buttons, or form fields in Caveat.",
+      "Don't blur amber and sage into one 'accent' — the two-voice separation is the point.",
+      "Don't reach for gradient text, background-clip: text, glassmorphism, or a big-number hero-metric block.",
+      "Don't add drop shadows as default decoration; flat-at-rest is the rule.",
+      "Don't use border-left/border-right colored stripes on cards or list items; the category color lives in the header band and ruled lines.",
+      "Don't invent a third font or a second sans."
+    ]
+  }
+}
